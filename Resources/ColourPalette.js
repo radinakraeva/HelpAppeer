@@ -2,4 +2,5 @@
 
 export default {
     darkBlue: '#00296B',
+    yellow: '#FDC500'
 };

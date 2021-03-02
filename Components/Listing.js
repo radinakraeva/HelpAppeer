@@ -25,7 +25,6 @@ export default function Listing({title, category, image, profilePicture, timeSin
                 <View style = {styles.lowerRightSection}>
                     <Text style = {{color: ColourPalette.darkBlue}}>{timeSincePosting} min ago</Text>
                     <Text style = {{color: ColourPalette.darkBlue, opacity: .6}}><Icon name="location" size={19} color={ColourPalette.darkBlue} />{distance}km away</Text>
-
                 </View>
             </View>
         </View>
@@ -75,6 +74,6 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 17,
-        color: '#00296B'
+        color: ColourPalette.darkBlue
     },
 })
