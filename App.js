@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View, ScrollView,Text} from 'react-native';
 
 import FeedScreen from './Screens/FeedScreen';
+import CircleIcon from './Components/CircleIcon';
 
 
 const App = () => {

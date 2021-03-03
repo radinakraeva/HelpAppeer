@@ -2,9 +2,10 @@
 import React from 'react';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import Feed from '../Components/Feed';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 import ColourPalette from '../Resources/ColourPalette';
+import CircleIcon from '../Components/CircleIcon';
+import Button from '../Components/Button';
 
 export default function FeedScreen(){
     return (
@@ -16,37 +17,45 @@ export default function FeedScreen(){
                     <Text style = {styles.locationText}>Glasgow</Text>
                 </View>
                 <View style = {styles.topRightSection}>
-
-                    <Icon name="filter" size={25} color={ColourPalette.darkBlue} />
+                    <CircleIcon iconName='filter' iconColor = {ColourPalette.darkBlue} size ={43} />
                 </View>
             </View>
 
             <Feed style = {styles.feed}/>
+
+            <View style = {styles.bottomSection}>
+                <Button title = "Add" />
+            </View>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     feedScreen: {
-        height: '100%'
+        height: '100%',
     },
     topSection: {
         height: '15%',
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     topLeftSection:{
         flex:1,
         justifyContent: 'center',
     },
     topRightSection:{
-        flex:1,
+        marginTop: 13,
         alignItems: 'flex-end',
     },
     locationText:{
         fontSize: 24,
-        color: ColourPalette.yellow
+        color: ColourPalette.yellow,
     },
     text:{
         fontSize: 15,
+    },
+    bottomSection:{
+        paddingTop: 10,
+        alignItems: 'center',
+        height: '8%',
     }
 })
