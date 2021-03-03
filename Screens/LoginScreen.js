@@ -65,9 +65,6 @@ const LoginScreen = (signUp)=> {
 
             </View>
         </View>
-
-
-
     );
 }
 
