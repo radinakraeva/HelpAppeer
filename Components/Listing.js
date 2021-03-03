@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
-import CircleButton from './CircleButton';
+import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 import ColourPalette from '../Resources/ColourPalette';
@@ -12,7 +12,7 @@ export default function Listing({title, category, image, profilePicture, timeSin
         <View style = {styles.listing}>
             <View style = {styles.upperSection}>
                 <Image style = {styles.image} source={image} />
-                <CircleButton size = {45} image ={profilePicture}/>
+                <CircleImage size = {45} image ={profilePicture}/>
             </View>
             <View style = {styles.lowerSection}>
                 <View style = {styles.lowerLeftSection}>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         width: '100%',
         height: 230,
-
+        elevation: 0.5,
     },
     upperSection: {
         flex: 7,
