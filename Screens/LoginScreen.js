@@ -1,12 +1,16 @@
 /* eslint-disable prettier/prettier */
+
 import React from 'react';
-import {View,Image,TextInput,StyleSheet,Dimensions,TouchableOpacity,Text } from 'react-native';
+import {SafeAreaView,View,Image,TextInput,StyleSheet,Dimensions,Text,TouchableOpacity} from 'react-native';
+
+import 'react-native-gesture-handler';
 
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColourPalette from '../Resources/ColourPalette';
+import FeedScreen from './FeedScreen';
 
-const LoginScreen = (signUp)=> {
+const LoginScreen = () => {
 
     const [data, setData] = React.useState({
         password: '',
@@ -29,8 +33,13 @@ const LoginScreen = (signUp)=> {
         });
     };
 
+    const message = () => {
+        alert('For Testing Username: MarkD , Password: LovesThisApp');
+    };
+
     return (
-        <View style={styles.backing}>
+
+        <SafeAreaView style={styles.backing}>
             <View style={styles.alin}>
                 <Image style={styles.pic} source={require('../Resources/Images/SignIn.png')}/>
                 <View style={styles.input} >
@@ -48,7 +57,7 @@ const LoginScreen = (signUp)=> {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.alin} onPress= {() => signUp.navigate('SignUp')}>
+                    <TouchableOpacity style={styles.alin} onPress={message}>
                         <Text style={{fontSize: 15, paddingTop:5, color:'gray' }}>Forgotten Password?</Text>
                     </TouchableOpacity>
                 </View>
@@ -64,9 +73,9 @@ const LoginScreen = (signUp)=> {
                 </View>
 
             </View>
-        </View>
+        </SafeAreaView>
     );
-}
+};
 
 const {height} = Dimensions.get("screen");
 const picHeight = height*0.33;
@@ -85,19 +94,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icon: {
-        flexDirection: 'row',
-        paddingLeft: 210,
+        paddingRight: 15,
         paddingTop: 20,
         color: ColourPalette.yellow,
     },
     icon2: {
-        flexDirection: 'row',
-        paddingLeft: 202,
+        paddingRight: 15,
         paddingTop: 20,
         color: ColourPalette.yellow,
     },
     input: {
         flexDirection: 'row',
+        justifyContent: 'space-between',
         width: 350,
         height: 80,
         borderRadius: 20,
