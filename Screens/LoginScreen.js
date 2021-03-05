@@ -33,8 +33,12 @@ const LoginScreen = () => {
         });
     };
 
-    const message = () => {
+    const forgot = () => {
         alert('For Testing Username: MarkD , Password: LovesThisApp');
+    };
+
+    const sign = () => {
+        alert('You Are Already Signed Up MarkD');
     };
 
     return (
@@ -57,7 +61,7 @@ const LoginScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.alin} onPress={message}>
+                    <TouchableOpacity style={styles.alin} onPress={forgot}>
                         <Text style={{fontSize: 15, paddingTop:5, color:'gray' }}>Forgotten Password?</Text>
                     </TouchableOpacity>
                 </View>
@@ -67,7 +71,7 @@ const LoginScreen = () => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <TouchableOpacity style={styles.alin}>
+                    <TouchableOpacity style={styles.alin} onPress={sign}>
                         <Text style={{fontSize: 20, paddingTop:15, fontWeight:'bold', color: ColourPalette.yellow,}}>New User? Sign Up</Text>
                     </TouchableOpacity>
                 </View>

@@ -7,11 +7,11 @@ import FeedScreen from './Screens/FeedScreen';
 import LoginScreen from './Screens/LoginScreen';
 import ProfileScreen from './Screens/ProfileScreen';
 
-
 const App = () => {
-  return (
-        <LoginScreen/>
 
+  return (
+
+      <LoginScreen/>
       //<ProfileScreen/>
 
       /*<View style = {{backgroundColor: '#fafdf3', padding: 20}}>
