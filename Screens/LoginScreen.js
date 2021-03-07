@@ -11,13 +11,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColourPalette from '../Resources/ColourPalette';
 import FeedScreen from './FeedScreen';
 
-const LoginScreen = () => {
+const LoginScreen  = () => {
 
     // eslint-disable-next-line no-undef
     const navigation = useNavigation();
 
     const [data, setData] = React.useState({
         password: '',
+        username: '',
         check_text: false,
         secureTextEntry: true,
     });
@@ -30,6 +31,13 @@ const LoginScreen = () => {
             });
         };
 
+    const usernameChange = (input) => {
+        setData({
+            ...data,
+            username: input,
+        });
+    };
+
     const update = () => {
         setData({
             ...data,
@@ -41,13 +49,21 @@ const LoginScreen = () => {
         alert('For Testing Username: MarkD , Password: LovesThisApp');
     };
 
+    const loginCheck = () => {
+        if(data.username === 'MarkD' && data.password === 'LovesThisApp') {
+            navigation.navigate("feedScreen");
+        } else {
+            alert('Sorry That Is Incorrect. Please Try Again');
+        }
+    };
+
 
     return (
 
         <SafeAreaView style={styles.backing}>
                 <Image style={styles.pic} source={require('../Resources/Images/SignIn.png')}/>
                 <View style={styles.input} >
-                    <TextInput style={styles.textInput} placeholder="Username"/>
+                    <TextInput style={styles.textInput} placeholder="Username" onChangeText={(input)=> usernameChange(input)}/>
                     <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
                 </View>
 
@@ -68,9 +84,8 @@ const LoginScreen = () => {
                     </TouchableOpacity>
                 </View>
 
-                {/*<View><Button title="Login" onPress={() => navigation.navigate("FeedScreen")}/></View>*/}
                 <View style={styles.button}>
-                    <TouchableOpacity style={styles.alin} onPress={() => navigation.navigate("feedScreen")}>
+                    <TouchableOpacity style={styles.alin} onPress={loginCheck}>
                         <Text style={{fontSize: 30, paddingTop:15, fontWeight:'bold', color:'white'}}>Login</Text>
                     </TouchableOpacity>
                 </View>
