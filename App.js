@@ -1,24 +1,24 @@
 /* eslint-disable prettier/prettier */
+import 'react-native-gesture-handler';
 
-import React from 'react';
-import { StyleSheet, View, ScrollView,Text} from 'react-native';
-
-import FeedScreen from './Screens/FeedScreen';
+import * as React from 'react';
+import { View, Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './Screens/LoginScreen';
-import ProfileScreen from './Screens/ProfileScreen';
+import FeedScreen from './Screens/FeedScreen';
 
+const Stack = createStackNavigator();
 
-const App = () => {
-  return (
-        <LoginScreen/>
-
-      //<ProfileScreen/>
-
-      /*<View style = {{backgroundColor: '#fafdf3', padding: 20}}>
-              <FeedScreen/>
-      </View>*/
-
-  );
-};
+function App() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator  screenOptions={{ headerShown: false }}>
+                <Stack.Screen name="loginScreen"component={LoginScreen} />
+                <Stack.Screen name="feedScreen" component={FeedScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
+}
 
 export default App;

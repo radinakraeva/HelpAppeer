@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 
 import React from 'react';
-import {SafeAreaView,View,Image,TextInput,StyleSheet,Dimensions,Text,TouchableOpacity} from 'react-native';
+import {SafeAreaView,View,Image,TextInput,StyleSheet,Dimensions,Text,TouchableOpacity,Button} from 'react-native';
 
 import 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -11,6 +12,9 @@ import ColourPalette from '../Resources/ColourPalette';
 import FeedScreen from './FeedScreen';
 
 const LoginScreen = () => {
+
+    // eslint-disable-next-line no-undef
+    const navigation = useNavigation();
 
     const [data, setData] = React.useState({
         password: '',
@@ -37,53 +41,58 @@ const LoginScreen = () => {
         alert('For Testing Username: MarkD , Password: LovesThisApp');
     };
 
+
     return (
 
         <SafeAreaView style={styles.backing}>
-            <View style={styles.alin}>
                 <Image style={styles.pic} source={require('../Resources/Images/SignIn.png')}/>
                 <View style={styles.input} >
                     <TextInput style={styles.textInput} placeholder="Username"/>
                     <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
                 </View>
+
                 <View style={styles.input} >
                     <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={data.secureTextEntry} onChangeText={(input)=> passwordChange(input)}/>
                     <TouchableOpacity onPress={update}>
                         {data.secureTextEntry ?
-                            <Feather style={styles.icon2} name='eye-off' size={30}/>
+                            <Feather style={styles.icon2} name="eye-off" size={30}/>
                             :
-                            <Feather style={styles.icon} name='eye' size={30}/>
+                            <Feather style={styles.icon} name="eye" size={30}/>
                         }
                     </TouchableOpacity>
                 </View>
+
                 <View>
-                    <TouchableOpacity style={styles.alin} onPress={message}>
+                    <TouchableOpacity onPress={message}>
                         <Text style={{fontSize: 15, paddingTop:5, color:'gray' }}>Forgotten Password?</Text>
                     </TouchableOpacity>
                 </View>
+
+                {/*<View><Button title="Login" onPress={() => navigation.navigate("FeedScreen")}/></View>*/}
                 <View style={styles.button}>
-                    <TouchableOpacity style={styles.alin}>
+                    <TouchableOpacity style={styles.alin} onPress={() => navigation.navigate("feedScreen")}>
                         <Text style={{fontSize: 30, paddingTop:15, fontWeight:'bold', color:'white'}}>Login</Text>
                     </TouchableOpacity>
                 </View>
+
                 <View>
-                    <TouchableOpacity style={styles.alin}>
-                        <Text style={{fontSize: 20, paddingTop:15, fontWeight:'bold', color: ColourPalette.yellow,}}>New User? Sign Up</Text>
+                    <TouchableOpacity>
+                        <Text style={{fontSize: 20, paddingTop:15, fontWeight:'bold', color: ColourPalette.yellow}}>New User? Sign Up</Text>
                     </TouchableOpacity>
                 </View>
-
-            </View>
         </SafeAreaView>
     );
 };
 
-const {height} = Dimensions.get("screen");
-const picHeight = height*0.33;
+const {height} = Dimensions.get('screen');
+const picHeight = height * 0.33;
 
 const styles = StyleSheet.create({
     backing: {
         backgroundColor: 'white',
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     pic: {
         width: picHeight,
