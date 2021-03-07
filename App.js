@@ -6,12 +6,15 @@ import { StyleSheet, View, ScrollView,Text} from 'react-native';
 import FeedScreen from './Screens/FeedScreen';
 import LoginScreen from './Screens/LoginScreen';
 import ProfileScreen from './Screens/ProfileScreen';
+import WelcomeScreen from './Screens/WelcomeScreen';
 
 const App = () => {
 
   return (
 
-      <LoginScreen/>
+      <WelcomeScreen/>
+      //<LoginScreen/>
+      //<FeedScreen/>
       //<ProfileScreen/>
 
       /*<View style = {{backgroundColor: '#fafdf3', padding: 20}}>
