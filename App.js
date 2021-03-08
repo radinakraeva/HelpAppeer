@@ -12,10 +12,10 @@ const App = () => {
 
   return (
 
-      <WelcomeScreen/>
+      //<WelcomeScreen/>
       //<LoginScreen/>
       //<FeedScreen/>
-      //<ProfileScreen/>
+      <ProfileScreen/>
 
       /*<View style = {{backgroundColor: '#fafdf3', padding: 20}}>
               <FeedScreen/>
