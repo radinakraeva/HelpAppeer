@@ -45,7 +45,7 @@ const LoginScreen  = () => {
         });
     };
 
-    const message = () => {
+    const forgot = () => {
         alert('For Testing Username: MarkD , Password: LovesThisApp');
     };
 

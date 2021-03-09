@@ -6,7 +6,21 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './Screens/LoginScreen';
-import FeedScreen from './Screens/FeedScreen';
+import ProfileScreen from './Screens/ProfileScreen';
+import WelcomeScreen from './Screens/WelcomeScreen';
+
+const App = () => {
+
+  return (
+
+      //<WelcomeScreen/>
+      //<LoginScreen/>
+      //<FeedScreen/>
+      <ProfileScreen/>
+
+      /*<View style = {{backgroundColor: '#fafdf3', padding: 20}}>
+              <FeedScreen/>
+      </View>*/
 
 const Stack = createStackNavigator();
 
