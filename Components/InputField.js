@@ -6,12 +6,12 @@ import ColourPalette from '../Resources/ColourPalette';
 import CircleIcon from './CircleIcon';
 
 
-const InputField = ({icon, size=66, ...otherProps}) => {
+const InputField = ({icon, size=60, ...otherProps}) => {
 
     return(
         <View style={{...styles.container, height: size}}>
-            {icon && <CircleIcon iconName={icon} iconColor = {ColourPalette.darkBlue} size={35}/>}
-            <TextInput styles={styles.textInput} {...otherProps}/>
+            {icon && <CircleIcon iconName={icon} iconColor = {ColourPalette.darkBlue} size={20}/>}
+            <TextInput multiline={true} styles={styles.textInput} {...otherProps}/>
         </View>
 
     );
@@ -24,15 +24,17 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         flexDirection: "row",
         width: '100%',
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
         alignItems: "baseline",
-        paddingTop: 5,
-        overflow: 'scroll',
+        // paddingTop: 5,
+        // overflow: 'scroll',
     },
     textInput: {
         fontSize: 25,
         fontFamily: "Roboto",
         color: ColourPalette.darkBlue,
+        alignItems: 'center',
     },
 
 });

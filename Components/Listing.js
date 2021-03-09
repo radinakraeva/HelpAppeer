@@ -5,7 +5,6 @@ import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 import ColourPalette from '../Resources/ColourPalette';
-import App from '../App';
 
 export default function Listing({title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){
     return (
