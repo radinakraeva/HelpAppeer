@@ -6,12 +6,12 @@ import ColourPalette from '../Resources/ColourPalette';
 import CircleIcon from './CircleIcon';
 
 
-const InputField = ({icon, size=60, ...otherProps}) => {
+const InputField = ({icon, size=60, onChange, ...otherProps}) => {
 
     return(
         <View style={{...styles.container, height: size}}>
             {icon && <CircleIcon iconName={icon} iconColor = {ColourPalette.darkBlue} size={20}/>}
-            <TextInput multiline={true} styles={styles.textInput} {...otherProps}/>
+            <TextInput multiline={true} styles={styles.textInput} onChange={onChange} {...otherProps}/>
         </View>
 
     );

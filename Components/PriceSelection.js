@@ -6,7 +6,7 @@ export default function PriceSelection({text, color, onPress}) {
     return (
         <View>
             <TouchableOpacity onPress={onPress} style={{...styles.container, backgroundColor: color}}>
-                <Text style={{...styles.pound}}>{text}</Text>
+                <Text style={{...styles.pound, color: color === ColourPalette.darkBlue ? ColourPalette.yellow : ColourPalette.darkBlue}} >{text}</Text>
             </TouchableOpacity>
         </View>
 
@@ -16,7 +16,7 @@ export default function PriceSelection({text, color, onPress}) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: ColourPalette.grey,
+        backgroundColor: ColourPalette.darkBlue,
         marginHorizontal: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
     pound: {
         fontSize: 25,
         paddingHorizontal: 10,
-        color: ColourPalette.darkBlue,
+        // color: ColourPalette.grey,
     },
 });

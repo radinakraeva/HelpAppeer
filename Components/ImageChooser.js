@@ -4,9 +4,6 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Button from '../Components/Button';
 import CircleIcon from './CircleIcon';
 import ColourPalette from '../Resources/ColourPalette';
-// import * as ImagePicker from 'react-native-image-picker';
-
-
 
 export default function ImageChooser({title, icon, action}) {
 
@@ -15,7 +12,7 @@ export default function ImageChooser({title, icon, action}) {
         <SafeAreaView style={styles.container}>
 
             <TouchableOpacity onPress={ action } style={styles.button}>
-                <CircleIcon iconName={icon} size={35} style={styles.icon} iconColor={ColourPalette.darkBlue}/>
+                <CircleIcon iconName={icon} size={35} style={styles.icon} iconColor={ColourPalette.darkBlue} bgColor={ColourPalette.yellow}/>
                 <Text style={styles.text}>{title}</Text>
             </TouchableOpacity>
         </SafeAreaView>
@@ -27,7 +24,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 10,
         flexDirection: "row",
-        backgroundColor: ColourPalette.grey,
+        backgroundColor: ColourPalette.yellow,
         margin: 5,
         padding: 10,
         borderRadius:20,

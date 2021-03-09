@@ -16,10 +16,9 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 const NewListingScreen = (props) => {
 
-
     let categories = {
         food: {
-            icon: "apple-o",
+            icon: "shoppingcart",
             selected: false,
         },
         medicine: {
@@ -39,9 +38,13 @@ const NewListingScreen = (props) => {
         },
     };
 
+    const [name, updateName] = useState("");
+    const [desc, updateDesc] = useState("");
+    const [addInfo, updateAddInfo] = useState("");
+
     const [cats, updateCats] = useState({
         food: {
-            icon: "apple-o",
+            icon: "shoppingcart",
             selected: false,
         },
         medicine: {
@@ -82,6 +85,14 @@ const NewListingScreen = (props) => {
 
 
     const submitListing = () => {
+        //get all data submitted into database
+        console.log("Name: " + name);
+        console.log("Categories: " + categories);
+        console.log("Description: " + desc);
+        console.log("Price: " + price);
+        console.log("Photos:");
+        console.log("Location:");
+        console.log("Additional info: " + addInfo);
 
     };
 
@@ -263,7 +274,7 @@ const NewListingScreen = (props) => {
                         onPress={ () => chooseCategory("food") }
                         iconBgColor = { getBgColor("food")}
                         size={60} />
-                    <Text style={styles.catText}>groceries</Text>
+                    <Text style={ cats.food.selected === true ? styles.catTextSelected : styles.catText}>Groceries</Text>
                 </View>
                 <View style={styles.catIcons}>
                     <IconButton
@@ -271,7 +282,7 @@ const NewListingScreen = (props) => {
                         onPress={ () => chooseCategory("medicine") }
                         iconBgColor = { getBgColor("medicine")}
                         size={60} />
-                    <Text style={styles.catText}>medicine</Text>
+                    <Text style={ cats.medicine.selected === true ? styles.catTextSelected : styles.catText}>Medicine</Text>
 
                 </View>
                 <View style={styles.catIcons}>
@@ -280,7 +291,7 @@ const NewListingScreen = (props) => {
                         onPress={ () => chooseCategory("bills") }
                         iconBgColor = { getBgColor("bills")}
                         size={60} />
-                    <Text style={styles.catText}>bills</Text>
+                    <Text style={ cats.bills.selected === true ? styles.catTextSelected : styles.catText}>Bills</Text>
 
                 </View>
                 <View style={styles.catIcons}>
@@ -289,7 +300,7 @@ const NewListingScreen = (props) => {
                         onPress={ () => chooseCategory("general") }
                         iconBgColor = { getBgColor("general")}
                         size={60} />
-                    <Text style={styles.catText}>general</Text>
+                    <Text style={ cats.general.selected === true ? styles.catTextSelected : styles.catText}>General</Text>
 
                 </View>
             </View>
@@ -297,7 +308,7 @@ const NewListingScreen = (props) => {
     };
 
     const getBgColor = (cat) => {
-        return cats[cat].selected ? ColourPalette.yellow : ColourPalette.grey;
+        return cats[cat].selected ? ColourPalette.yellow : ColourPalette.darkBlue;
     };
 
     return (
@@ -305,24 +316,25 @@ const NewListingScreen = (props) => {
             <View style={styles.top}>
                 <Text style={styles.title}>Add a new listing</Text>
                 <View style={styles.backButton}>
-                <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.grey} size={35}/>
+                <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                 </View>
             </View>
             <Text style={styles.subtitle}> Name</Text>
-            <InputField placeholder="Name"/>
+            <InputField placeholder="Name" onChange={text => updateName(text)}/>
 
             <Text style={styles.subtitle}>Category</Text>
             {getCategories()}
 
             <Text style={styles.subtitle}>Description</Text>
-            <InputField size={150} placeholder="Description"/>
+            <InputField size={150} placeholder="Description" onChange={text => updateDesc(text)}/>
 
             <Text style={styles.subtitle}>Price</Text>
             <View style={styles.pounds}>
-                <PriceSelection text={'£'} color={price.chosen == 1 ? ColourPalette.yellow : ColourPalette.grey} onPress={() => updatePrice("1")}/>
-                <PriceSelection text={'££'} color={price.chosen == 2 ? ColourPalette.yellow : ColourPalette.grey} onPress={() => updatePrice("2")}/>
-                <PriceSelection text={'£££'} color={price.chosen == 3 ? ColourPalette.yellow : ColourPalette.grey} onPress={() => updatePrice("3")}/>
+                <PriceSelection text={'£'} color={price.chosen == 1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => updatePrice("1")}/>
+                <PriceSelection text={'££'} color={price.chosen == 2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => updatePrice("2")}/>
+                <PriceSelection text={'£££'} color={price.chosen == 3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => updatePrice("3")}/>
             </View>
+
 
 
             <Text style={styles.subtitle}>Pictures</Text>
@@ -345,14 +357,11 @@ const NewListingScreen = (props) => {
             <Text>Map here with your location</Text>
 
             <Text>Map here with your location</Text>
-            <InputField placeholder="Additional information (e.g. apt number)"/>
-
-
-
+            <InputField placeholder="Additional information (e.g. apt number)" onChange={text => updateAddInfo(text)}/>
 
 
             <View style={styles.bottomSection}>
-                <Button title="Create" onPress={submitListing}/>
+                <Button title="Create" onPress={submitListing} />
             </View>
 
         </Screen>
@@ -402,14 +411,14 @@ const styles = StyleSheet.create({
         color: ColourPalette.darkBlue,
         fontSize: 12,
     },
+    catTextSelected:{
+        color: ColourPalette.darkBlue,
+        fontSize: 12,
+        fontWeight: 'bold',
+    },
     pounds: {
         flexDirection: 'row',
-        // backgroundColor: ColourPalette.white,
-        // borderRadius: 25,
-        // paddingHorizontal: 15,
-        // paddingVertical: 5,
         justifyContent: 'center',
-        // width: '22.5%',
     },
 
     camera: {
