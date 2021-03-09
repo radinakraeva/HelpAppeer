@@ -49,6 +49,10 @@ const LoginScreen  = () => {
         alert('For Testing Username: MarkD , Password: LovesThisApp');
     };
 
+    const signCheck = () => {
+        alert('Do Not Worry MarkD You Are Already Signed Up');
+    };
+
     const loginCheck = () => {
         if(data.username === 'MarkD' && data.password === 'LovesThisApp') {
             navigation.navigate("feedScreen");
@@ -79,7 +83,7 @@ const LoginScreen  = () => {
                 </View>
 
                 <View>
-                    <TouchableOpacity onPress={message}>
+                    <TouchableOpacity onPress={forgot}>
                         <Text style={{fontSize: 15, paddingTop:5, color:'gray' }}>Forgotten Password?</Text>
                     </TouchableOpacity>
                 </View>
@@ -91,7 +95,7 @@ const LoginScreen  = () => {
                 </View>
 
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={signCheck}>
                         <Text style={{fontSize: 20, paddingTop:15, fontWeight:'bold', color: ColourPalette.yellow}}>New User? Sign Up</Text>
                     </TouchableOpacity>
                 </View>
