@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier,no-trailing-spaces */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {StyleSheet, View, Text, TextInput, TouchableWithoutFeedback, PermissionsAndroid, Alert} from 'react-native';
 
 import Screen from "../Components/Screen";
@@ -11,10 +11,24 @@ import ImageChooser from '../Components/ImageChooser';
 import ImagePreview from '../Components/ImagePreview';
 import PriceSelection from '../Components/PriceSelection';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-
+import * as Location from 'expo-location';
 
 
 const NewListingScreen = (props) => {
+
+    const [location, setLocation] = useState({});
+
+    const getLocation = async () => {
+
+        const {granted} = await Location.requestPermissionsAsync();
+        if (!granted) return;
+        const {coords: {latitude, longitude}} = await Location.getLastKnownPositionAsync();
+        setLocation({latitude,longitude});
+    };
+
+    useEffect(() => {
+        getLocation();
+        },[]);
 
     let categories = {
         food: {
@@ -82,6 +96,8 @@ const NewListingScreen = (props) => {
           hand: () => captureImage('photo')
       }
     };
+
+
 
 
     const submitListing = () => {
@@ -409,11 +425,11 @@ const styles = StyleSheet.create({
     },
     catText:{
         color: ColourPalette.darkBlue,
-        fontSize: 12,
+        fontSize: 13,
     },
     catTextSelected:{
         color: ColourPalette.darkBlue,
-        fontSize: 12,
+        fontSize: 13,
         fontWeight: 'bold',
     },
     pounds: {
