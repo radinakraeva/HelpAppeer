@@ -9,6 +9,6 @@ import NewListingScreen from "./Screens/NewListingScreen";
 
 export default function App() {
   return (
-       <FeedScreen/>
+       <WelcomeScreen/>
   );
 }
