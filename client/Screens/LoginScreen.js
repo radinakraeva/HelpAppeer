@@ -51,14 +51,18 @@ const LoginScreen  = ({ navigation }) => {
     };
 
     const loginCheck = () => {
-        usersApi.addUser(data).then(() => alert('Added new user'));
+        if (data.username === '' || data.password === '') {
+            alert('Sorry All Fields Need To Be Filled. Please Try Again');
+        } else {
+            usersApi.addUser(data).then(() => alert('Added new user'));
 
-         // navigation.navigate("FeedScreen");
-        // if(data.username === 'MarkD' && data.password === 'LovesThisApp') {
-        //     // navigation.navigate("feedScreen");
-        // } else {
-        //     alert('Sorry That Is Incorrect. Please Try Again');
-        // }
+            // navigation.navigate("FeedScreen");
+            // if(data.username === 'MarkD' && data.password === 'LovesThisApp') {
+            //     // navigation.navigate("feedScreen");
+            // } else {
+            //     alert('Sorry That Is Incorrect. Please Try Again');
+            // }
+        }
     };
 
 

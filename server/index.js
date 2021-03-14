@@ -28,20 +28,24 @@ connection.connect(function(error){
     }
 });
 
-app.post('/users', (req, res) => {
+app.post('/register', (req, res) => {
     console.log('received data');
 
     console.log(req.fields);
     console.log(JSON.stringify(req.fields));
 
+    const name = req.fields.name
     const username = req.fields.username
+    const email = req.fields.email
     const password = req.fields.password
+    console.log(name);
     console.log(username);
+    console.log(email);
     console.log(password);
 
     connection.query(
-        "INSERT INTO Users (Name, Password) VALUES (? ,?)",
-        [username, password],
+        "INSERT INTO Register (Name, Username, Email, Password) VALUES (? ,? ,? ,?)",
+        [name, username, email, password],
         (err, result) => {
             if (err){
                 throw err;

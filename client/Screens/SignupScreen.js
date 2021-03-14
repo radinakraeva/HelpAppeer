@@ -1,17 +1,17 @@
 import React from 'react';
-import {SafeAreaView,View,Image,TextInput,StyleSheet,Dimensions,Text,TouchableOpacity} from 'react-native';
+import {SafeAreaView,View,TextInput,StyleSheet,Text,TouchableOpacity} from 'react-native';
 
 // import 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColourPalette from "../Resources/ColourPalette";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import usersApi from "../api/usersApi";
 import Navigator from "../Navigation/Navigator";
-import LoginScreen from './LoginScreen';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 const SignupScreen  = ({ navigation }) => {
 
@@ -22,7 +22,6 @@ const SignupScreen  = ({ navigation }) => {
         password: '',
         passwordConfirm: '',
         secureTextEntry: true,
-        passwordSecure: false,
     });
 
     const nameChange = (input) => {
@@ -67,6 +66,19 @@ const SignupScreen  = ({ navigation }) => {
         });
     };
 
+    const SignUpCheck = () => {
+        if (data.name === '' || data.username === '' || data.email === '' || data.password === '' || data.passwordConfirm === '') {
+            alert('Sorry All Fields Need To Be Filled. Please Try Again');
+        } else if(data.password !== data.passwordConfirm) {
+             alert('Sorry Passwords Do Not Match. Please Try Again');
+        } else {
+            usersApi.addUser(data).then(() => alert('Added new user'));
+            // navigation.navigate("feedScreen");
+        }
+
+
+    };
+
 
     return (
         <SafeAreaView style={styles.backing}>
@@ -103,7 +115,7 @@ const SignupScreen  = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.button}>
-                <TouchableOpacity style={styles.alin} >
+                <TouchableOpacity style={styles.alin} onPress={SignUpCheck}>
                     <Text style={{fontSize: 30, paddingTop:15, fontWeight:'bold', color:'white'}}>Register</Text>
                 </TouchableOpacity>
             </View>
@@ -126,7 +138,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: 350,
-        height: 80,
+        height: 70,
         borderRadius: 20,
         paddingLeft: 10,
         marginTop: 10,
