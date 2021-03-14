@@ -1,19 +1,18 @@
 import React from 'react';
 import {SafeAreaView,View,Image,TextInput,StyleSheet,Dimensions,Text,TouchableOpacity} from 'react-native';
 
-// import 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColourPalette from "../Resources/ColourPalette";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {useNavigation} from '@react-navigation/native';
 import usersApi from "../api/usersApi";
 import Navigator from "../Navigation/Navigator";
 
-const LoginScreen  = ({ navigation }) => {
+const LoginScreen  = () => {
     // eslint-disable-next-line no-undef
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
 
     const [data, setData] = React.useState({
         password: '',
@@ -47,21 +46,17 @@ const LoginScreen  = ({ navigation }) => {
     };
 
     const signCheck = () => {
-        alert('Do Not Worry MarkD You Are Already Signed Up');
+        navigation.navigate("SignupScreen");
     };
 
     const loginCheck = () => {
         if (data.username === '' || data.password === '') {
             alert('Sorry All Fields Need To Be Filled. Please Try Again');
         } else {
-            usersApi.addUser(data).then(() => alert('Added new user'));
 
-            // navigation.navigate("FeedScreen");
-            // if(data.username === 'MarkD' && data.password === 'LovesThisApp') {
-            //     // navigation.navigate("feedScreen");
-            // } else {
-            //     alert('Sorry That Is Incorrect. Please Try Again');
-            // }
+            // TODO add check for login details existing
+
+            navigation.navigate("FeedScreen");
         }
     };
 

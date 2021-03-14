@@ -9,18 +9,18 @@ import WelcomeScreen from "./Screens/WelcomeScreen";
 import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
 
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import 'react-native-gesture-handler';
+import Navigator from './Navigation/Navigator';
 
 export default function App() {
   return (
       // <WelcomeScreen/>
       //<LoginScreen/>
-      <SignupScreen/>
+      //<SignupScreen/>
 
-/*  <NavigationContainer>
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
-  </NavigationContainer>*/
+  <Navigator/>
+
   );
 }
