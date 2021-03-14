@@ -1,19 +1,21 @@
 import React from 'react';
 import {SafeAreaView,View,TextInput,StyleSheet,Text,TouchableOpacity} from 'react-native';
 
-// import 'react-native-gesture-handler';
+import 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColourPalette from "../Resources/ColourPalette";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import usersApi from "../api/usersApi";
 import Navigator from "../Navigation/Navigator";
+import {useNavigation} from '@react-navigation/native';
 
 
-const SignupScreen  = ({ navigation }) => {
+const SignupScreen  = () => {
+
+    // eslint-disable-next-line no-undef
+    const navigation = useNavigation();
 
     const [data, setData] = React.useState({
         name: '',
@@ -73,7 +75,7 @@ const SignupScreen  = ({ navigation }) => {
              alert('Sorry Passwords Do Not Match. Please Try Again');
         } else {
             usersApi.addUser(data).then(() => alert('Added new user'));
-            // navigation.navigate("feedScreen");
+            navigation.navigate("FeedScreen");
         }
 
 
