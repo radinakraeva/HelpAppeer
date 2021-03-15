@@ -17,8 +17,10 @@ import AuthNavigator from './Navigation/AuthNavigator';
 export default function App() {
   return (
       // <WelcomeScreen/>
-      //<LoginScreen/>
-      //<SignupScreen/>
+      // <LoginScreen/>
+      // <SignupScreen/>
+      // <NewListingScreen/>
+
 
   <AuthNavigator/>
 

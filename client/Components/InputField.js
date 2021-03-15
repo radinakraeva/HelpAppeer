@@ -10,7 +10,7 @@ const InputField = ({ size=50, onChange, ...otherProps}) => {
 
     return(
         <View style={{...styles.container, height: size}}>
-            <TextInput multiline={true} styles={styles.textInput} onChange={onChange} {...otherProps}/>
+            <TextInput multiline={true} styles={styles.textInput} onChangeText={onChange} {...otherProps}/>
         </View>
 
     );

@@ -86,4 +86,26 @@ app.post('/verify', (req, res) => {
 })
 
 
+app.post('/createListing', (req, res) => {
+    console.log('received data');
+    console.log(req.fields);
+
+
+    const listing = req.fields.listing;
+    const time = req.fields.time;
+    const username = req.fields.user;
+
+    connection.query(
+        "INSERT INTO Listings (listing_id, user, time, listing) VALUES (NULL, ?, ?, ?)",
+        [username, time, listing],
+        (err, result) => {
+            if (err){
+                throw err;
+            }else{
+                res.send('Values Inserted');
+            }
+            return result;
+        });
+})
+
 // connection.end();
