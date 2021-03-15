@@ -16,7 +16,7 @@ import Navigator from './Navigation/Navigator';
 
 export default function App() {
   return (
-      // <WelcomeScreen/>
+      //<WelcomeScreen/>
       //<LoginScreen/>
       //<SignupScreen/>
       <NewListingScreen/>
