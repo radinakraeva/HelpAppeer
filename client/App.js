@@ -19,9 +19,9 @@ export default function App() {
       //<WelcomeScreen/>
       //<LoginScreen/>
       //<SignupScreen/>
-      <NewListingScreen/>
+      // <NewListingScreen/>
 
-  // <Navigator/>
+  <Navigator/>
 
   );
 }
