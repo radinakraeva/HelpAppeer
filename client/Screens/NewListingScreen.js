@@ -45,8 +45,6 @@ const NewListingScreen = (props) => {
 
     };
 
-    const glasgow = {latitude: 55.860916, longitude: -4.251433};
-
     const renderMap = () => {
         return (
             <View>
@@ -61,9 +59,13 @@ const NewListingScreen = (props) => {
                         longitudeDelta: 0.0421,
                     }}
                     provider={'google'}
-
+                >
+                <Marker
+                    coordinate={{ latitude :  location.lat1,
+                            longitude : location.lon1 }}
+                    pinColor={ColourPalette.darkBlue}
                 />
-                <Marker coordinate={{ latitude :  location.lat1 , longitude : location.lon1 }}/>
+            </MapView>
             </View>
         );
     };
