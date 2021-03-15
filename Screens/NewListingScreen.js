@@ -12,10 +12,14 @@ import ImagePreview from '../Components/ImagePreview';
 import PriceSelection from '../Components/PriceSelection';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as Location from 'expo-location';
+import  MapView, { Marker } from 'react-native-maps';
+
 
 
 const NewListingScreen = (props) => {
 
+
+    const [displayLoc, setDisplayLoc] = useState(false);
     const [location, setLocation] = useState({});
 
     const getLocation = async () => {
@@ -23,13 +27,40 @@ const NewListingScreen = (props) => {
         const {granted} = await Location.requestPermissionsAsync();
         if (!granted) return;
         const {coords: {latitude, longitude}} = await Location.getLastKnownPositionAsync();
-        setLocation({latitude,longitude});
+        setLocation({lat1: latitude, lon1: longitude});
     };
 
     useEffect(() => {
         getLocation();
-        },[]);
+    },[]);
 
+    const setUpLocation = () => {
+        if (!isEmpty(location)) {
+            setDisplayLoc(true);
+        } else {
+            getLocation();
+        }
+
+    };
+
+    const renderMap = () => {
+        return (
+            <View style={styles.mapView}>
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        latitude: location.lat1,
+                        longitude: location.lon1,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                    provider={'google'}
+
+                />
+                <Marker coordinate={{ latitude :  location.lat1 , longitude : location.lon1 }}/>
+                </View>
+        );
+    };
     let categories = {
         food: {
             icon: "shoppingcart",
@@ -362,17 +393,13 @@ const NewListingScreen = (props) => {
 
 
             <Text style={styles.subtitle}>Location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
 
-            <Text>Map here with your location</Text>
+            {displayLoc ?
+                renderMap() :
+                <View style={styles.locButtonView}>
+                    <ImageChooser title={"Use my location"} icon={'home'} action={() => setUpLocation()} />
+                </View>}
 
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-
-            <Text>Map here with your location</Text>
             <InputField placeholder="Additional information (e.g. apt number)" onChange={text => updateAddInfo(text)}/>
 
 
@@ -454,6 +481,16 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
 
+    },
+    locButtonView: {
+        flex: 1,
+        alignItems:'center',
+        paddingHorizontal: '17.5%',
+    },
+
+    map:{
+        height: 150,
+        width:'100%',
     },
 
     bottomSection:{
