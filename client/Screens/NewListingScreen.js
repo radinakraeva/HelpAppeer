@@ -12,6 +12,7 @@ import ImagePreview from '../Components/ImagePreview';
 import PriceSelection from '../Components/PriceSelection';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as Location from 'expo-location';
+import * as ImagePicker from 'expo-image-picker';
 
 import  MapView, { Marker } from 'react-native-maps';
 
@@ -168,86 +169,38 @@ const NewListingScreen = (props) => {
         setPrice({chosen: index});
     };
 
-    const requestCameraPermission = async () => {
-        if (Platform.OS === 'android') {
-            try {
-                const granted = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.CAMERA,
-                    {
-                        title: 'Camera Permission',
-                        message: 'App needs camera permission',
-                    },
-                );
-                // If CAMERA Permission is granted
-                return granted === PermissionsAndroid.RESULTS.GRANTED;
-            } catch (err) {
-                console.warn(err);
-                return false;
+
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted') {
+                    alert('Sorry, we need camera roll permissions to make this work!');
+                }
             }
-        } else return true;
-    };
+        })();
+    }, []);
 
-    const requestExternalWritePermission = async () => {
-        if (Platform.OS === 'android') {
-            try {
-                const granted = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                    {
-                        title: 'External Storage Write Permission',
-                        message: 'App needs write permission',
-                    },
-                );
-                // If WRITE_EXTERNAL_STORAGE Permission is granted
-                return granted === PermissionsAndroid.RESULTS.GRANTED;
-            } catch (err) {
-                console.warn(err);
-                alert('Write permission err', err);
-            }
-            return false;
-        } else return true;
-    }
-
-    const getFromLibrary = () => {
-        console.log("hello");
-
-        const options = {
-            mediaType: 'photo',
-            maxWidth: 300,
-            maxHeight: 550,
+    const getFromLibrary = async () => {
+        let options = {
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
             quality: 1,
         };
-        launchImageLibrary(options, (response) => {
+        let result = await ImagePicker.launchImageLibraryAsync(options);
 
-            if (response.didCancel) {
-                alert('User cancelled camera picker');
-                return;
-            } else if (response.error !== undefined) {
-                alert('Something went wrong :)')
-                return;
-            }
-            //
-            // console.log('base64 -> ', response.data);
-            // console.log('uri -> ', response.uri);
-            // console.log('width -> ', response.width);
-            // console.log('height -> ', response.height);
-            // console.log('fileSize -> ', response.fileSize);
-            // console.log('type -> ', response.type);
-            // console.log('fileName -> ', response.fileName);
-            //
-            // const source = {uri: response.uri}
-            // setPhoto1(source);
-            addFilePath(response.uri);
+        console.log(result);
 
-            // setPhoto1({uri: response.uri});
-
-        });
+        if (!result.cancelled) {
+            addFilePath(result.uri);
+        }
     };
+
+
 
     const captureImage = async () => {
         let options = {
-            mediaType: "photo",
-            maxWidth: 300,
-            maxHeight: 550,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             quality: 1,
             saveToPhotos: true,
             storageOptions: {
@@ -255,32 +208,15 @@ const NewListingScreen = (props) => {
             }
         };
 
+        let result = await ImagePicker.launchCameraAsync(options);
 
-        let isCameraPermitted = await requestCameraPermission();
-        let isStoragePermitted = await requestExternalWritePermission();
-        if (isCameraPermitted && isStoragePermitted) {
-            launchCamera(options, (response) => {
+        console.log(result);
 
-                if (response.didCancel) {
-                    alert('User cancelled camera picker');
-                    return;
-                } else if (response.error !== undefined) {
-                    alert('Something went wrong :)')
-                    return;
-                }
-                // console.log('base64  -> ', response.data);
-                // console.log('uri -> ', response.uri);
-                // console.log('width -> ', response.width);
-                // console.log('height -> ', response.height);
-                // console.log('fileSize -> ', response.fileSize);
-                // console.log('type -> ', response.type);
-                // console.log('fileName -> ', response.fileName);
-
-                // setPhoto1({uri: response.uri});
-                addFilePath(response.uri);
-            });
+        if (!result.cancelled) {
+            addFilePath(result.uri);
         }
     };
+
 
     const addFilePath = (u) => {
         if (isEmpty(photo1)) {
