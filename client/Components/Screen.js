@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     screen: {
         height: '100%',
         flex: 1,
-        paddingVertical: 20,
+        paddingVertical: 30,
         paddingHorizontal: 20,
     }
 });
