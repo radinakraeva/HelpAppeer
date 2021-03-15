@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import ColourPalette from '../Resources/ColourPalette';

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier,no-trailing-spaces */
 import React, { useState, useEffect } from 'react';
 import {StyleSheet, View, Text, TextInput, TouchableWithoutFeedback, PermissionsAndroid, Alert} from 'react-native';
 
@@ -11,10 +12,16 @@ import ImagePreview from '../Components/ImagePreview';
 import PriceSelection from '../Components/PriceSelection';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as Location from 'expo-location';
+import * as ImagePicker from 'expo-image-picker';
+
+import  MapView, { Marker } from 'react-native-maps';
+
 
 
 const NewListingScreen = (props) => {
 
+
+    const [displayLoc, setDisplayLoc] = useState(false);
     const [location, setLocation] = useState({});
 
     const getLocation = async () => {
@@ -22,12 +29,46 @@ const NewListingScreen = (props) => {
         const {granted} = await Location.requestPermissionsAsync();
         if (!granted) return;
         const {coords: {latitude, longitude}} = await Location.getLastKnownPositionAsync();
-        setLocation({latitude,longitude});
+        setLocation({lat1: latitude, lon1: longitude});
     };
 
     useEffect(() => {
         getLocation();
-        },[]);
+    },[]);
+
+    const setUpLocation = () => {
+        if (!isEmpty(location)) {
+            setDisplayLoc(true);
+        } else {
+            getLocation();
+        }
+
+    };
+
+    const renderMap = () => {
+        return (
+            <View>
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        // latitude: location.lat1,
+                        // longitude: location.lon1,
+                        latitude: location.lat1,
+                        longitude: location.lon1,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                    provider={'google'}
+                >
+                <Marker
+                    coordinate={{ latitude :  location.lat1,
+                            longitude : location.lon1 }}
+                    pinColor={ColourPalette.darkBlue}
+                />
+            </MapView>
+            </View>
+        );
+    };
 
     let categories = {
         food: {
@@ -84,16 +125,16 @@ const NewListingScreen = (props) => {
     const [price, setPrice] = useState({chosen: -1});
 
     let imgChooser = {
-      upload: {
-          description: "Gallery",
-          icon: "picture",
-          hand: () => getFromLibrary('photo')
-      },
-      capture: {
-          description: "Camera",
-          icon: "camerao",
-          hand: () => captureImage('photo')
-      }
+        upload: {
+            description: "Gallery",
+            icon: "picture",
+            hand: () => getFromLibrary()
+        },
+        capture: {
+            description: "Camera",
+            icon: "camerao",
+            hand: () => captureImage()
+        }
     };
 
 
@@ -130,84 +171,38 @@ const NewListingScreen = (props) => {
         setPrice({chosen: index});
     };
 
-    const requestCameraPermission = async () => {
-        if (Platform.OS === 'android') {
-            try {
-                const granted = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.CAMERA,
-                    {
-                        title: 'Camera Permission',
-                        message: 'App needs camera permission',
-                    },
-                );
-                // If CAMERA Permission is granted
-                return granted === PermissionsAndroid.RESULTS.GRANTED;
-            } catch (err) {
-                console.warn(err);
-                return false;
-            }
-        } else return true;
-    };
 
-    const requestExternalWritePermission = async message => {
-        if (Platform.OS === 'android') {
-            try {
-                const granted = await PermissionsAndroid.request(
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                    {
-                        title: 'External Storage Write Permission',
-                        message: 'App needs write permission',
-                    },
-                );
-                // If WRITE_EXTERNAL_STORAGE Permission is granted
-                return granted === PermissionsAndroid.RESULTS.GRANTED;
-            } catch (err) {
-                console.warn(err);
-                alert('Write permission err', err);
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+                if (status !== 'granted') {
+                    alert('Sorry, we need camera roll permissions to make this work!');
+                }
             }
-            return false;
-        } else return true;
-    }
+        })();
+    }, []);
 
-    const getFromLibrary = () => {
+    const getFromLibrary = async () => {
         let options = {
-            mediaType: 'photo',
-            maxWidth: 300,
-            maxHeight: 550,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
             quality: 1,
         };
-        launchImageLibrary(options, (response) => {
+        let result = await ImagePicker.launchImageLibraryAsync(options);
 
-            if (response.didCancel) {
-                alert('User cancelled camera picker');
-                return;
-            } else if (response.error !== undefined) {
-                alert('Something went wrong :)')
-                return;
-            }
-            //
-            // console.log('base64 -> ', response.data);
-            // console.log('uri -> ', response.uri);
-            // console.log('width -> ', response.width);
-            // console.log('height -> ', response.height);
-            // console.log('fileSize -> ', response.fileSize);
-            // console.log('type -> ', response.type);
-            // console.log('fileName -> ', response.fileName);
-            //
-            // const source = {uri: response.uri}
-            // setPhoto1(source);
-            addFilePath(response.uri);
+        console.log(result);
 
-            // setPhoto1({uri: response.uri});
-
-        });
+        if (!result.cancelled) {
+            addFilePath(result.uri);
+        }
     };
+
+
 
     const captureImage = async () => {
         let options = {
-            mediaType: "photo",
-            maxWidth: 300,
-            maxHeight: 550,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             quality: 1,
             saveToPhotos: true,
             storageOptions: {
@@ -215,32 +210,15 @@ const NewListingScreen = (props) => {
             }
         };
 
+        let result = await ImagePicker.launchCameraAsync(options);
 
-        let isCameraPermitted = await requestCameraPermission();
-        let isStoragePermitted = await requestExternalWritePermission();
-        if (isCameraPermitted && isStoragePermitted) {
-            launchCamera(options, (response) => {
+        console.log(result);
 
-                if (response.didCancel) {
-                    alert('User cancelled camera picker');
-                    return;
-                } else if (response.error !== undefined) {
-                    alert('Something went wrong :)')
-                    return;
-                }
-                // console.log('base64  -> ', response.data);
-                // console.log('uri -> ', response.uri);
-                // console.log('width -> ', response.width);
-                // console.log('height -> ', response.height);
-                // console.log('fileSize -> ', response.fileSize);
-                // console.log('type -> ', response.type);
-                // console.log('fileName -> ', response.fileName);
-
-                // setPhoto1({uri: response.uri});
-                addFilePath(response.uri);
-            });
+        if (!result.cancelled) {
+            addFilePath(result.uri);
         }
     };
+
 
     const addFilePath = (u) => {
         if (isEmpty(photo1)) {
@@ -331,11 +309,11 @@ const NewListingScreen = (props) => {
             <View style={styles.top}>
                 <Text style={styles.title}>Add a new listing</Text>
                 <View style={styles.backButton}>
-                <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                    <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                 </View>
             </View>
-            <Text style={styles.subtitle}> Name</Text>
-            <InputField placeholder="Name" onChange={text => updateName(text)}/>
+            <Text style={styles.subtitle}> Title</Text>
+            <InputField placeholder="Listing's title" onChange={text => updateName(text)}/>
 
             <Text style={styles.subtitle}>Category</Text>
             {getCategories()}
@@ -361,17 +339,15 @@ const NewListingScreen = (props) => {
 
 
             <Text style={styles.subtitle}>Location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
 
-            <Text>Map here with your location</Text>
+            <View style={styles.mapSection}>
+            {displayLoc ?
+                renderMap() :
+                <View style={styles.locButtonView}>
+                    <ImageChooser title={"Use my location"} icon={'home'} action={() => setUpLocation()} />
+                </View>}
+            </View>
 
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-
-            <Text>Map here with your location</Text>
             <InputField placeholder="Additional information (e.g. apt number)" onChange={text => updateAddInfo(text)}/>
 
 
@@ -437,7 +413,7 @@ const styles = StyleSheet.create({
     },
 
     camera: {
-      flex: 2, flexDirection: "row",
+        flex: 2, flexDirection: "row",
         backgroundColor: ColourPalette.white,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
@@ -453,6 +429,19 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
 
+    },
+    mapSection:{
+        marginBottom:15,
+    },
+    locButtonView: {
+        flex: 1,
+        alignItems:'center',
+        paddingHorizontal: '17.5%',
+    },
+
+    map:{
+        height: 150,
+        width:'100%',
     },
 
     bottomSection:{
