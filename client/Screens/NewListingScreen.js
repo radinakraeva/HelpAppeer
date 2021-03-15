@@ -312,8 +312,8 @@ const NewListingScreen = (props) => {
                     <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                 </View>
             </View>
-            <Text style={styles.subtitle}> Name</Text>
-            <InputField placeholder="Name" onChange={text => updateName(text)}/>
+            <Text style={styles.subtitle}> Title</Text>
+            <InputField placeholder="Listing's title" onChange={text => updateName(text)}/>
 
             <Text style={styles.subtitle}>Category</Text>
             {getCategories()}
@@ -340,14 +340,13 @@ const NewListingScreen = (props) => {
 
             <Text style={styles.subtitle}>Location</Text>
 
+            <View style={styles.mapSection}>
             {displayLoc ?
                 renderMap() :
                 <View style={styles.locButtonView}>
                     <ImageChooser title={"Use my location"} icon={'home'} action={() => setUpLocation()} />
                 </View>}
-
-            <Text>{location.lat1}</Text>
-            <Text>{location.lon1}</Text>
+            </View>
 
             <InputField placeholder="Additional information (e.g. apt number)" onChange={text => updateAddInfo(text)}/>
 
@@ -430,6 +429,9 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
 
+    },
+    mapSection:{
+        marginBottom:15,
     },
     locButtonView: {
         flex: 1,
