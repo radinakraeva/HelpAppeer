@@ -12,7 +12,7 @@ export default function ImageChooser({title, icon, action}) {
         <SafeAreaView style={styles.container}>
 
             <TouchableOpacity onPress={ action } style={styles.button}>
-                <CircleIcon iconName={icon} size={35} style={styles.icon} iconColor={ColourPalette.darkBlue} bgColor={ColourPalette.yellow}/>
+                <CircleIcon iconName={icon} size={35} style={styles.icon} iconColor={ColourPalette.darkBlue} bgColor={ColourPalette.grey}/>
                 <Text style={styles.text}>{title}</Text>
             </TouchableOpacity>
         </SafeAreaView>
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 10,
         flexDirection: "row",
-        backgroundColor: ColourPalette.yellow,
+        backgroundColor: ColourPalette.grey,
         margin: 5,
         padding: 10,
         borderRadius:20,

@@ -1,5 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Image} from 'react-native';
+import ColourPalette from '../Resources/ColourPalette';
+
 
 export default function ImagePreview({filePath }) {
     return (

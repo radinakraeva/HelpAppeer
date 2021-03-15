@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier,no-trailing-spaces */
 import React, { useState, useEffect } from 'react';
 import {StyleSheet, View, Text, TextInput, TouchableWithoutFeedback, PermissionsAndroid, Alert} from 'react-native';
 
@@ -12,9 +13,14 @@ import PriceSelection from '../Components/PriceSelection';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as Location from 'expo-location';
 
+import  MapView, { Marker } from 'react-native-maps';
+
+
 
 const NewListingScreen = (props) => {
 
+
+    const [displayLoc, setDisplayLoc] = useState(false);
     const [location, setLocation] = useState({});
 
     const getLocation = async () => {
@@ -22,12 +28,44 @@ const NewListingScreen = (props) => {
         const {granted} = await Location.requestPermissionsAsync();
         if (!granted) return;
         const {coords: {latitude, longitude}} = await Location.getLastKnownPositionAsync();
-        setLocation({latitude,longitude});
+        setLocation({lat1: latitude, lon1: longitude});
     };
 
     useEffect(() => {
         getLocation();
-        },[]);
+    },[]);
+
+    const setUpLocation = () => {
+        if (!isEmpty(location)) {
+            setDisplayLoc(true);
+        } else {
+            getLocation();
+        }
+
+    };
+
+    const glasgow = {latitude: 55.860916, longitude: -4.251433};
+
+    const renderMap = () => {
+        return (
+            <View>
+                <MapView
+                    style={styles.map}
+                    initialRegion={{
+                        // latitude: location.lat1,
+                        // longitude: location.lon1,
+                        latitude: location.lat1,
+                        longitude: location.lon1,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                    provider={'google'}
+
+                />
+                <Marker coordinate={{ latitude :  location.lat1 , longitude : location.lon1 }}/>
+            </View>
+        );
+    };
 
     let categories = {
         food: {
@@ -84,16 +122,16 @@ const NewListingScreen = (props) => {
     const [price, setPrice] = useState({chosen: -1});
 
     let imgChooser = {
-      upload: {
-          description: "Gallery",
-          icon: "picture",
-          hand: () => getFromLibrary('photo')
-      },
-      capture: {
-          description: "Camera",
-          icon: "camerao",
-          hand: () => captureImage('photo')
-      }
+        upload: {
+            description: "Gallery",
+            icon: "picture",
+            hand: () => getFromLibrary()
+        },
+        capture: {
+            description: "Camera",
+            icon: "camerao",
+            hand: () => captureImage()
+        }
     };
 
 
@@ -149,7 +187,7 @@ const NewListingScreen = (props) => {
         } else return true;
     };
 
-    const requestExternalWritePermission = async message => {
+    const requestExternalWritePermission = async () => {
         if (Platform.OS === 'android') {
             try {
                 const granted = await PermissionsAndroid.request(
@@ -170,7 +208,9 @@ const NewListingScreen = (props) => {
     }
 
     const getFromLibrary = () => {
-        let options = {
+        console.log("hello");
+
+        const options = {
             mediaType: 'photo',
             maxWidth: 300,
             maxHeight: 550,
@@ -331,7 +371,7 @@ const NewListingScreen = (props) => {
             <View style={styles.top}>
                 <Text style={styles.title}>Add a new listing</Text>
                 <View style={styles.backButton}>
-                <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                    <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                 </View>
             </View>
             <Text style={styles.subtitle}> Name</Text>
@@ -361,17 +401,16 @@ const NewListingScreen = (props) => {
 
 
             <Text style={styles.subtitle}>Location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
 
-            <Text>Map here with your location</Text>
+            {displayLoc ?
+                renderMap() :
+                <View style={styles.locButtonView}>
+                    <ImageChooser title={"Use my location"} icon={'home'} action={() => setUpLocation()} />
+                </View>}
 
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
-            <Text>Map here with your location</Text>
+            <Text>{location.lat1}</Text>
+            <Text>{location.lon1}</Text>
 
-            <Text>Map here with your location</Text>
             <InputField placeholder="Additional information (e.g. apt number)" onChange={text => updateAddInfo(text)}/>
 
 
@@ -437,7 +476,7 @@ const styles = StyleSheet.create({
     },
 
     camera: {
-      flex: 2, flexDirection: "row",
+        flex: 2, flexDirection: "row",
         backgroundColor: ColourPalette.white,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
@@ -453,6 +492,16 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
 
+    },
+    locButtonView: {
+        flex: 1,
+        alignItems:'center',
+        paddingHorizontal: '17.5%',
+    },
+
+    map:{
+        height: 150,
+        width:'100%',
     },
 
     bottomSection:{
