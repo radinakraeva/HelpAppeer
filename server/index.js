@@ -32,7 +32,6 @@ app.post('/register', (req, res) => {
     console.log('received data');
 
     console.log(req.fields);
-    console.log(JSON.stringify(req.fields));
 
     const name = req.fields.name
     const username = req.fields.username
@@ -55,5 +54,36 @@ app.post('/register', (req, res) => {
             return result;
         });
 })
+
+app.post('/verify', (req, res) => {
+    console.log('received request');
+
+    const username = req.fields.username
+    const password = req.fields.password
+
+    connection.query(
+        "SELECT Password FROM Register where name = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+            } else if (result) {
+                //check if result[0] is not falsy, if it's not, username is in the database
+                if(result[0]){
+                    const userPassword = result[0].Password;
+                    console.log(result);
+                    console.log(userPassword);
+                    if(userPassword == password){
+                        res.send('AUTHORIZED');
+                    }else{
+                        res.send('INCORRECT');
+                    }
+
+                }else{
+                    res.send('NO USER');
+                }
+            }
+        });
+})
+
 
 // connection.end();

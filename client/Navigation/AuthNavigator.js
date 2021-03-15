@@ -10,7 +10,7 @@ import FeedScreen from "../Screens/FeedScreen";
 
 const Stack = createStackNavigator();
 
-const Navigator = () => (
+const AuthNavigator = () => (
     <NavigationContainer>
         <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{ headerShown: false }}>
             <Stack.Screen name='WelcomeScreen' component={WelcomeScreen}/>
@@ -22,4 +22,4 @@ const Navigator = () => (
 
 )
 
-export default Navigator;
+export default AuthNavigator;

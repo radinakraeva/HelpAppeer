@@ -8,7 +8,7 @@ import ColourPalette from "../Resources/ColourPalette";
 
 import {useNavigation} from '@react-navigation/native';
 import usersApi from "../api/usersApi";
-import Navigator from "../Navigation/Navigator";
+// import AuthNavigator from "../Navigation/AuthNavigator";
 
 const LoginScreen  = () => {
     // eslint-disable-next-line no-undef
@@ -53,10 +53,21 @@ const LoginScreen  = () => {
         if (data.username === '' || data.password === '') {
             alert('Sorry All Fields Need To Be Filled. Please Try Again');
         } else {
-
             // TODO add check for login details existing
+            usersApi.verifyUser(data).then(r => {
+                // console.log(r.get('hey45'));
+                console.log(r.data);
+                if(r.data === 'NO USER'){
+                    alert('User with this username does not exist, please try again or register a new account');
+                }else if(r.data === 'AUTHORIZED'){
+                    navigation.navigate("FeedScreen");
+                }else if(r.data === 'INCORRECT'){
+                    alert('Password is incorrect, please try again');
+                }
+                console.log('got respo New');
+            });
 
-            navigation.navigate("FeedScreen");
+
         }
     };
 

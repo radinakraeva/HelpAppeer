@@ -12,7 +12,7 @@ import SignupScreen from './Screens/SignupScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import 'react-native-gesture-handler';
-import Navigator from './Navigation/Navigator';
+import AuthNavigator from './Navigation/AuthNavigator';
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
       //<LoginScreen/>
       //<SignupScreen/>
 
-  <Navigator/>
+  <AuthNavigator/>
 
   );
 }
