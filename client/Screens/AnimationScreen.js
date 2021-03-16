@@ -23,10 +23,10 @@ const AnimationScreen  = () => {
     }
 
     const fadeIn = () => {
-        Animated.timing(fadeAnim1, { toValue: 1, duration: 5000, useNativeDriver:true }).start();
-        Animated.timing(fadeAnim2, { toValue: 1, duration: 8000, useNativeDriver:true }).start();
-        Animated.timing(fadeAnim3, { toValue: 1, duration: 9000, useNativeDriver:true }).start();
-        setTimeout(navCheck,10000);
+        Animated.timing(fadeAnim1, { toValue: 1, duration: 4000, useNativeDriver:true }).start();
+        Animated.timing(fadeAnim2, { toValue: 1, duration: 6000, useNativeDriver:true }).start();
+        Animated.timing(fadeAnim3, { toValue: 1, duration: 8000, useNativeDriver:true }).start();
+        setTimeout(navCheck,9000);
     };
 
     return (

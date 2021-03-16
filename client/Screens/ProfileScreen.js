@@ -25,25 +25,29 @@ function ProfileScreen() {
                     </View>
                 </View>
             <View style={styles.cent}>
-                <Ionicons name='location-sharp' size={40} style={{color:ColourPalette.yellow}}/>
+                <Ionicons name='location-sharp' size={30} style={{color:ColourPalette.yellow}}/>
                 <Text style={styles.fields}>317 MobileApp Development Street</Text>
             </View>
             <View style={styles.cent}>
-                <MaterialIcons name='location-city' size={40} style={{color:ColourPalette.yellow}}/>
+                <MaterialIcons name='location-city' size={30} style={{color:ColourPalette.yellow}}/>
                 <Text style={styles.fields}>Glasgow</Text>
             </View>
             <View style={styles.cent}>
-                <MaterialCommunityIcons name='cellphone-basic' size={40} style={{color:ColourPalette.yellow}}/>
+                <MaterialCommunityIcons name='cellphone-basic' size={30} style={{color:ColourPalette.yellow}}/>
                 <Text style={styles.fields}>07317312317</Text>
             </View>
             <View style={styles.cent}>
-                <MaterialCommunityIcons name='email' size={40} style={{color:ColourPalette.yellow}}/>
+                <MaterialCommunityIcons name='email' size={30} style={{color:ColourPalette.yellow}}/>
                 <Text style={styles.fields}>MarkD@Gmail.com</Text>
             </View>
             <View style={styles.bord}>
                 <TouchableOpacity style={styles.alin} onPress={message}>
                     <Text style={{fontSize: 20, paddingTop:5,paddingBottom:3, color:'gray' }}>Edit profile</Text>
                 </TouchableOpacity>
+            </View>
+            <View style={{marginTop:1, borderBottomWidth: 3, borderColor:ColourPalette.yellow,alignItems: 'center',}}>
+                <Text style={{fontSize: 25, paddingTop: 7, paddingBottom: 7,color: ColourPalette.yellow,
+                    fontWeight: 'bold',}} >Previous Orders</Text>
             </View>
 
             <ProfileFeed/>
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
         paddingLeft: 13,
     },
     fields: {
-        fontSize: 20,
+        fontSize: 15,
         paddingTop: 7,
         paddingLeft: 7,
     },
