@@ -70,7 +70,7 @@ const LoginScreen  = () => {
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
             </View>
 
-            <View style={styles.input} >
+            <View style={styles.input}>
                 <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={data.secureTextEntry} onChangeText={(input)=> passwordChange(input)}/>
                 <TouchableOpacity onPress={update}>
                     {data.secureTextEntry ?
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
         borderColor: ColourPalette.yellow,
         backgroundColor: ColourPalette.yellow,
     },
+
 
 });
 

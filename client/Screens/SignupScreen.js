@@ -8,7 +8,6 @@ import ColourPalette from "../Resources/ColourPalette";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import usersApi from "../api/usersApi";
-import Navigator from "../Navigation/Navigator";
 import {useNavigation} from '@react-navigation/native';
 
 
@@ -75,7 +74,7 @@ const SignupScreen  = () => {
              alert('Sorry Passwords Do Not Match. Please Try Again');
         } else {
             usersApi.addUser(data).then(() => alert('Added new user'));
-            navigation.navigate("FeedScreen");
+            navigation.navigate("LoginScreen");
         }
 
 
