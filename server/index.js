@@ -32,7 +32,6 @@ app.post('/register', (req, res) => {
     console.log('received data');
 
     console.log(req.fields);
-    console.log(JSON.stringify(req.fields));
 
     const name = req.fields.name
     const username = req.fields.username
@@ -46,6 +45,59 @@ app.post('/register', (req, res) => {
     connection.query(
         "INSERT INTO Register (Name, Username, Email, Password) VALUES (? ,? ,? ,?)",
         [name, username, email, password],
+        (err, result) => {
+            if (err){
+                throw err;
+            }else{
+                res.send('Values Inserted');
+            }
+            return result;
+        });
+})
+
+app.post('/verify', (req, res) => {
+    console.log('received request');
+
+    const username = req.fields.username
+    const password = req.fields.password
+
+    connection.query(
+        "SELECT Password FROM Register where name = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+            } else if (result) {
+                //check if result[0] is not falsy, if it's not, username is in the database
+                if(result[0]){
+                    const userPassword = result[0].Password;
+                    console.log(result);
+                    console.log(userPassword);
+                    if(userPassword == password){
+                        res.send('AUTHORIZED');
+                    }else{
+                        res.send('INCORRECT');
+                    }
+
+                }else{
+                    res.send('NO USER');
+                }
+            }
+        });
+})
+
+
+app.post('/createListing', (req, res) => {
+    console.log('received data');
+    console.log(req.fields);
+
+
+    const listing = req.fields.listing;
+    const time = req.fields.time;
+    const username = req.fields.user;
+
+    connection.query(
+        "INSERT INTO Listings (listing_id, user, time, listing) VALUES (NULL, ?, ?, ?)",
+        [username, time, listing],
         (err, result) => {
             if (err){
                 throw err;

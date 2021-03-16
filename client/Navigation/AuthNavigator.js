@@ -11,7 +11,7 @@ import AnimationScreen from '../Screens/AnimationScreen';
 
 const Stack = createStackNavigator();
 
-const Navigator = () => (
+const AuthNavigator = () => (
     <NavigationContainer>
         <Stack.Navigator initialRouteName="AnimationScreen" screenOptions={{ headerShown: false }}>
             <Stack.Screen name='AnimationScreen' component={AnimationScreen}/>
@@ -23,4 +23,4 @@ const Navigator = () => (
 
 )
 
-export default Navigator;
+export default AuthNavigator;

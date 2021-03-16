@@ -10,26 +10,113 @@ import IconButton from '../Components/IconButton';
 import ImageChooser from '../Components/ImageChooser';
 import ImagePreview from '../Components/ImagePreview';
 import PriceSelection from '../Components/PriceSelection';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import * as Location from 'expo-location';
 import * as ImagePicker from 'expo-image-picker';
 
 import  MapView, { Marker } from 'react-native-maps';
-
+import usersApi from "../api/usersApi";
+import listingsApi from '../api/listingsApi';
 
 
 const NewListingScreen = (props) => {
 
+    // let listingInfo = {
+    //     title: '',
+    //     category: '',
+    //     description: '',
+    //     price: '',
+    //     photo1: {},
+    //     photo2: {},
+    //     photo3: {},
+    //     location: {},
+    //     addInfo: ''
+    // };
 
-    const [displayLoc, setDisplayLoc] = useState(false);
-    const [location, setLocation] = useState({});
+    const [data, setData] = React.useState({
+        title: '',
+        category: '',
+        description: '',
+        price: -1,
+        photo1: {},
+        photo2: {},
+        photo3: {},
+        location: {},
+        addInfo: ''
+    });
+
+    const titleChange = (input) => {
+        setData({
+            ...data,
+            title: input,
+        });
+    };
+
+    const categoryChange = (input) => {
+        setData({
+            ...data,
+            category: input,
+        });
+    };
+
+    const descChange = (input) => {
+        setData({
+            ...data,
+            description: input,
+        });
+    };
+
+    const priceChange = (input) => {
+        setData({
+            ...data,
+            price: input,
+        });
+    };
+
+    const addInfoChange = (input) => {
+        setData({
+            ...data,
+            addInfo: input,
+        });
+    };
+
+    const photo1Change = (input) => {
+        setData({
+            ...data,
+            photo1: input,
+        });
+    };
+
+    const photo2Change = (input) => {
+        setData({
+            ...data,
+            photo2: input,
+        });
+    };
+
+    const photo3Change = (input) => {
+        setData({
+            ...data,
+            photo3: input,
+        });
+    };
+
+    const locationChange = (input) => {
+        setData({
+            ...data,
+            location: input,
+        });
+    };
+
+    const [displayLoc, setDisplayLoc] = React.useState(false);
+
+    const [location, setLocation] = React.useState({});
 
     const getLocation = async () => {
 
         const {granted} = await Location.requestPermissionsAsync();
         if (!granted) return;
         const {coords: {latitude, longitude}} = await Location.getLastKnownPositionAsync();
-        setLocation({lat1: latitude, lon1: longitude});
+        locationChange({lat1: latitude, lon1: longitude});
     };
 
     useEffect(() => {
@@ -37,7 +124,7 @@ const NewListingScreen = (props) => {
     },[]);
 
     const setUpLocation = () => {
-        if (!isEmpty(location)) {
+        if (!isEmpty(data.location)) {
             setDisplayLoc(true);
         } else {
             getLocation();
@@ -53,16 +140,16 @@ const NewListingScreen = (props) => {
                     initialRegion={{
                         // latitude: location.lat1,
                         // longitude: location.lon1,
-                        latitude: location.lat1,
-                        longitude: location.lon1,
+                        latitude: data.location.lat1,
+                        longitude: data.location.lon1,
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421,
                     }}
                     provider={'google'}
                 >
                 <Marker
-                    coordinate={{ latitude :  location.lat1,
-                            longitude : location.lon1 }}
+                    coordinate={{ latitude :  data.location.lat1,
+                            longitude : data.location.lon1 }}
                     pinColor={ColourPalette.darkBlue}
                 />
             </MapView>
@@ -92,11 +179,21 @@ const NewListingScreen = (props) => {
         },
     };
 
-    const [name, updateName] = useState("");
-    const [desc, updateDesc] = useState("");
-    const [addInfo, updateAddInfo] = useState("");
+    let imgChooser = {
+        upload: {
+            description: "Gallery",
+            icon: "picture",
+            hand: () => getFromLibrary()
+        },
+        capture: {
+            description: "Camera",
+            icon: "camerao",
+            hand: () => captureImage()
+        }
+    };
 
-    const [cats, updateCats] = useState({
+
+    const [cats, updateCats] = React.useState({
         food: {
             icon: "shoppingcart",
             selected: false,
@@ -118,37 +215,21 @@ const NewListingScreen = (props) => {
         },
     });
 
-    const [photo1, setPhoto1] = useState({});
-    const [photo2, setPhoto2] = useState({});
-    const [photo3, setPhoto3] = useState({});
-
-    const [price, setPrice] = useState({chosen: -1});
-
-    let imgChooser = {
-        upload: {
-            description: "Gallery",
-            icon: "picture",
-            hand: () => getFromLibrary()
-        },
-        capture: {
-            description: "Camera",
-            icon: "camerao",
-            hand: () => captureImage()
-        }
-    };
-
-
-
 
     const submitListing = () => {
-        //get all data submitted into database
-        console.log("Name: " + name);
-        console.log("Categories: " + categories);
-        console.log("Description: " + desc);
-        console.log("Price: " + price);
-        console.log("Photos:");
-        console.log("Location:");
-        console.log("Additional info: " + addInfo);
+
+
+        let date = new Date();
+
+        let submission = {
+            user: "username???",
+            time: date,
+            listing: JSON.stringify(data)
+        };
+
+        console.log(JSON.stringify(submission));
+        listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
+
 
     };
 
@@ -167,9 +248,24 @@ const NewListingScreen = (props) => {
 
     };
 
-    const updatePrice = (index) => {
-        setPrice({chosen: index});
-    };
+    // const updatePrice = (index) => {
+    //     setPrice({chosen: index});
+    //     listingInfo.price = index;
+    // };
+
+    // const updateTextField = (name, text) => {
+    //     if (name === "title") {
+    //         updateName(text);
+    //         listingInfo.title = text;
+    //     } else if (name === "desc") {
+    //         updateDesc(text);
+    //         listingInfo.description = text;
+    //     } else if (name === "addInfo") {
+    //         updateAddInfo(text);
+    //         listingInfo.addInfo = text;
+    //     }
+    // };
+
 
 
     useEffect(() => {
@@ -198,8 +294,6 @@ const NewListingScreen = (props) => {
         }
     };
 
-
-
     const captureImage = async () => {
         let options = {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -221,12 +315,12 @@ const NewListingScreen = (props) => {
 
 
     const addFilePath = (u) => {
-        if (isEmpty(photo1)) {
-            setPhoto1({uri: u});
-        } else if (isEmpty(photo2)) {
-            setPhoto2({uri: u});
-        } else if (isEmpty(photo3)) {
-            setPhoto3({uri: u});
+        if (isEmpty(data.photo1)) {
+            photo1Change({uri: u});
+        } else if (isEmpty(data.photo2)) {
+            photo2Change({uri: u});
+        } else if (isEmpty(data.photo3)) {
+            photo3Change({uri: u});
         } else {
             alert("You can only upload up to 3 pictures");
         }
@@ -235,9 +329,9 @@ const NewListingScreen = (props) => {
     const getPhotos = () => {
         return (
             <View style={styles.uploadedImages}>
-                {!isEmpty(photo1) ? <ImagePreview filePath={photo1}/> : null}
-                {!isEmpty(photo2) ? <ImagePreview filePath={photo2}/> : null}
-                {!isEmpty(photo3) ? <ImagePreview filePath={photo3}/> : null}
+                {!isEmpty(data.photo1) ? <ImagePreview filePath={data.photo1}/> : null}
+                {!isEmpty(data.photo2) ? <ImagePreview filePath={data.photo2}/> : null}
+                {!isEmpty(data.photo3) ? <ImagePreview filePath={data.photo3}/> : null}
             </View>
 
         );
@@ -251,10 +345,10 @@ const NewListingScreen = (props) => {
     const chooseCategory = (cat) => {
         for (let c in categories) {
             categories[c].selected = false;
-        }
+        };
         categories[cat].selected = true;
+        categoryChange(cat);
         updateCats(categories);
-        console.log(cats);
     };
 
     const getCategories = () => {
@@ -313,19 +407,19 @@ const NewListingScreen = (props) => {
                 </View>
             </View>
             <Text style={styles.subtitle}> Title</Text>
-            <InputField placeholder="Listing's title" onChange={text => updateName(text)}/>
+            <InputField placeholder="Listing's title" onChangeText={text => titleChange(text)}/>
 
             <Text style={styles.subtitle}>Category</Text>
             {getCategories()}
 
             <Text style={styles.subtitle}>Description</Text>
-            <InputField size={150} placeholder="Description" onChange={text => updateDesc(text)}/>
+            <InputField size={150} placeholder="Description" onChangeText={text => descChange(text)}/>
 
             <Text style={styles.subtitle}>Price</Text>
             <View style={styles.pounds}>
-                <PriceSelection text={'£'} color={price.chosen == 1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => updatePrice("1")}/>
-                <PriceSelection text={'££'} color={price.chosen == 2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => updatePrice("2")}/>
-                <PriceSelection text={'£££'} color={price.chosen == 3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => updatePrice("3")}/>
+                <PriceSelection text={'£'} color={data.price == 1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("1")}/>
+                <PriceSelection text={'££'} color={data.price == 2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("2")}/>
+                <PriceSelection text={'£££'} color={data.price == 3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("3")}/>
             </View>
 
 
@@ -348,7 +442,7 @@ const NewListingScreen = (props) => {
                 </View>}
             </View>
 
-            <InputField placeholder="Additional information (e.g. apt number)" onChange={text => updateAddInfo(text)}/>
+            <InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>
 
 
             <View style={styles.bottomSection}>
