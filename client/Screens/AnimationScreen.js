@@ -4,10 +4,9 @@ import ColourPalette from '../Resources/ColourPalette';
 
 import {useNavigation} from '@react-navigation/native';
 import 'react-native-gesture-handler';
-import SignupScreen from './SignupScreen';
+
 
 const AnimationScreen  = () => {
-/*export default function AnimationScreen() {*/
 
     const navigation = useNavigation();
 
