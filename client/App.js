@@ -1,30 +1,31 @@
 import React from 'react';
-import { StyleSheet} from 'react-native';
+import 'react-native-gesture-handler';
+import AuthNavigator from './Navigation/AuthNavigator';
+import {LogBox} from 'react-native';
 
 import LoginScreen from "./Screens/LoginScreen";
 import FeedScreen from "./Screens/FeedScreen";
 import ChatListScreen from "./Screens/ChatListScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
-import WelcomeScreen from "./Screens/WelcomeScreen";
 import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
-
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import 'react-native-gesture-handler';
-import AuthNavigator from './Navigation/AuthNavigator';
-import FullListing from './Screens/FullListing';
+import Feed from "./Components/Feed";
 
 export default function App() {
+
+ /* LogBox.ignoreLogs([
+    'Require cycle:'
+  ]);*/
+
   return (
       // <WelcomeScreen/>
       // <LoginScreen/>
-      // <SignupScreen/>
+      //<SignupScreen/>
       // <NewListingScreen/>
-      <FullListing/>
+      // <ProfileScreen/>
+<FeedScreen/>
 
-
-  // <AuthNavigator/>
+ // <AuthNavigator/>
 
   );
 }

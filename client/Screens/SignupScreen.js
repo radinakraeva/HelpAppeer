@@ -75,9 +75,15 @@ const SignupScreen  = () => {
              alert('Sorry Passwords Do Not Match. Please Try Again');
         } else {
             usersApi.addUser(data).then(() => alert('Added new user'));
-            // navigation.navigate("FeedScreen");
+            navigation.navigate("FeedScreen");
         }
+
+
     };
+
+    const back = () => {
+        navigation.navigate("LoginScreen");
+    }
 
 
     return (
@@ -117,6 +123,11 @@ const SignupScreen  = () => {
             <View style={styles.button}>
                 <TouchableOpacity style={styles.alin} onPress={SignUpCheck}>
                     <Text style={{fontSize: 30, paddingTop:15, fontWeight:'bold', color:'white'}}>Register</Text>
+                </TouchableOpacity>
+            </View>
+            <View>
+                <TouchableOpacity onPress={back}>
+                    <Text style={{fontSize: 25, paddingTop:5, color:'gray' }}>Back</Text>
                 </TouchableOpacity>
             </View>
 

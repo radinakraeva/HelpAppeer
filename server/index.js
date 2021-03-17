@@ -37,10 +37,10 @@ app.post('/register', (req, res) => {
     const username = req.fields.username
     const email = req.fields.email
     const password = req.fields.password
-    console.log(name);
-    console.log(username);
-    console.log(email);
-    console.log(password);
+    // console.log(name);
+    // console.log(username);
+    // console.log(email);
+    // console.log(password);
 
     connection.query(
         "INSERT INTO Register (Name, Username, Email, Password) VALUES (? ,? ,? ,?)",
@@ -70,8 +70,6 @@ app.post('/verify', (req, res) => {
                 //check if result[0] is not falsy, if it's not, username is in the database
                 if(result[0]){
                     const userPassword = result[0].Password;
-                    console.log(result);
-                    console.log(userPassword);
                     if(userPassword == password){
                         res.send('AUTHORIZED');
                     }else{
@@ -108,31 +106,40 @@ app.post('/createListing', (req, res) => {
         });
 })
 
-
-app.post('/getAListing',(req, res) => {
-    console.log("Getting the listing data");
-
-    const listingID = req.fields.listingID;
+//make an array with all the listing and send it to the frontend
+app.post('/getListings', (req, res) => {
+    console.log('get Listings request');
+    // console.log(req.fields);
 
     connection.query(
-        "SELECT * FROM Listings WHERE listing_id = (?)", [listingID],
+        "SELECT * FROM Listings",
         function (error, result) {
             if (error) {
                 console.log(error);
-                res.send(null);
             } else if (result) {
-                if(result[0]){
-                    console.log(result);
-                    res.send(result);
-                }
-
+                // console.log(renderToListingsList(result));
+                res.send(renderToListingsList(result));
             }
-        }
-    );
-
-
-
-
+        });
 })
+
+function renderToListingsList(listings){
+    const listingsArray = []
+    for (let i = 0; i < listings.length; i++){
+        const listingData = JSON.parse(listings[i].listing)
+        // console.log(listingData);
+        const listing = {
+            listing_id: listings[i].listing_id,
+            title: listingData.title,
+            category: listingData.category,
+            // image: require('../Resources/Images/food.png'),
+            timeStamp: listings[i].time,
+            priceCategory: '£'.repeat(listingData.price),
+            location: listingData.location
+        }
+        listingsArray.push(listing)
+    }
+    return listingsArray
+}
 
 // connection.end();

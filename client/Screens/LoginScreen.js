@@ -53,9 +53,7 @@ const LoginScreen  = () => {
         if (data.username === '' || data.password === '') {
             alert('Sorry All Fields Need To Be Filled. Please Try Again');
         } else {
-            // TODO add check for login details existing
             usersApi.verifyUser(data).then(r => {
-                // console.log(r.get('hey45'));
                 console.log(r.data);
                 if(r.data === 'NO USER'){
                     alert('User with this username does not exist, please try again or register a new account');
@@ -81,7 +79,7 @@ const LoginScreen  = () => {
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
             </View>
 
-            <View style={styles.input} >
+            <View style={styles.input}>
                 <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={data.secureTextEntry} onChangeText={(input)=> passwordChange(input)}/>
                 <TouchableOpacity onPress={update}>
                     {data.secureTextEntry ?
@@ -166,6 +164,7 @@ const styles = StyleSheet.create({
         borderColor: ColourPalette.yellow,
         backgroundColor: ColourPalette.yellow,
     },
+
 
 });
 
