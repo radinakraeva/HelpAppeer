@@ -8,18 +8,13 @@ import { getDistanceBetween } from 'geolocation-distance-between';
 export default function Feed(){
 
     const [listings, setListings] = useState([]);
-    const [date, setDate] = React.useState({
-        date: {},
-    });
     const [location, setLocation] = React.useState({
         location: {},
     });
 
-
     useEffect(() => {
         loadListings();
         getLocation();
-        getDate()
     }, []);
 
     const loadListings = async() => {
@@ -34,20 +29,9 @@ export default function Feed(){
         locationChange({lat1: latitude, lon1: longitude});
     };
 
-    const getDate = async () => {
-        let date = new Date();
-        dateChange(date);
-    };
-
     const locationChange = (input) => {
         setLocation({
             location: input,
-        });
-    };
-
-    const dateChange = (input) => {
-        setDate({
-            date: input,
         });
     };
 
@@ -60,21 +44,26 @@ export default function Feed(){
         return distanceBetween.toFixed(1);
     }
 
-
     console.log(location);
-    console.log(date.date);
 
     function timeDifference(date1, date2){
         let diffMs = (date2 - Date.parse(date1));
-        return Math.floor((diffMs % 86400000) / 3600000);;
+        return Math.round(((diffMs % 86400000) % 3600000) / 60000);
+    }
+
+    function getImage(category){
+        if(category == 'food') return require('../Resources/Images/food.png')
+        if(category == 'medicine') return require('../Resources/Images/medicine.png')
+        if(category == 'bills') return require('../Resources/Images/bills.png')
+        if(category == 'general') return require('../Resources/Images/general.png')
     }
 
     const listingRender = ({ item }) => (
         <Listing
             title={item.title}
             category={item.category}
-            image = {require('../Resources/Images/Food.png')}
-            profilePicture={require('../Resources/Images/Medicine.jpg')}
+            image = {getImage(item.category)}
+            profilePicture={require('../Resources/Images/Alina.jpg')}
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}

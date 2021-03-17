@@ -132,7 +132,7 @@ function renderToListingsList(listings){
             listing_id: listings[i].listing_id,
             title: listingData.title,
             category: listingData.category,
-            // image: require('../Resources/Images/Food.png'),
+            // image: require('../Resources/Images/food.png'),
             timeStamp: listings[i].time,
             priceCategory: '£'.repeat(listingData.price),
             location: listingData.location

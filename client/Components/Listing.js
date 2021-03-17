@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 import ColourPalette from '../Resources/ColourPalette';
 
 export default function Listing({title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){
+
     return (
         <View style = {styles.listing}>
             <View style = {styles.upperSection}>
