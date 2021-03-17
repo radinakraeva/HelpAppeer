@@ -9,6 +9,7 @@ import ChatListScreen from "./Screens/ChatListScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
+import Feed from "./Components/Feed";
 
 export default function App() {
 
@@ -21,8 +22,8 @@ export default function App() {
       // <LoginScreen/>
       //<SignupScreen/>
       // <NewListingScreen/>
-      <ProfileScreen/>
-
+      // <ProfileScreen/>
+<FeedScreen/>
 
  // <AuthNavigator/>
 

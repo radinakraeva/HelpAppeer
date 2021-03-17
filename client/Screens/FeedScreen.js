@@ -6,8 +6,10 @@ import Feed from '../Components/Feed';
 import ColourPalette from '../Resources/ColourPalette';
 import CircleIcon from '../Components/CircleIcon';
 import Button from '../Components/Button';
+import listingsApi from "../api/listingsApi";
 
 export default function FeedScreen(){
+
     return (
         <SafeAreaView style = {styles.feedScreen}>
             <View style = {styles.topSection}>
