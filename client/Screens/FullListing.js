@@ -11,6 +11,7 @@ import Button from '../Components/Button';
 import MapView, {Circle} from 'react-native-maps';
 import ImagePreview from '../Components/ImagePreview';
 import * as Location from 'expo-location';
+import {getDistanceBetween} from 'geolocation-distance-between';
 
 
 const FullListing = ({listID, ...props}) => {
@@ -44,30 +45,30 @@ const FullListing = ({listID, ...props}) => {
 
     };
 
-    const calculateDistance1 = () => {
-        const lat = (listingData.listing.location.lat1 - userLocation.lat2);
-        const lon = (listingData.listing.location.lon1 - userLocation.lon2);
-        const distance = Math.pow(lat*lat + lon)
+    function distance(lat1, lng1, lat2, lng2) { // miles optional
+        let coordinateOne = {latitude: lat1, longitude: lng1};
+        let coordinateTwo = {latitude: lat2, longitude: lng2};
 
-    };
+        let distanceBetween = getDistanceBetween(coordinateOne, coordinateTwo);
 
-
-    //https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
-    const calculateDistance = () => {
-        const lat1 = listingData.listing.location.lat1;
-        const lon1 = listingData.listing.location.lon1;
-        const lat2 = userLocation.lat2;
-        const lon2 = userLocation.lon2;
-
-        const p = 0.017453292519943295;    // Math.PI / 180
-        const c = Math.cos;
-        const a = 0.5 - c((lat2 - lat1) * p)/2 +
-            c(lat1 * p) * c(lat2 * p) *
-            (1 - c((lon2 - lon1) * p))/2;
-
-        return 12742* 100 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+        return distanceBetween.toFixed(1);
     }
 
+    const getDistance = () => {
+        return distance(listingData.listing.location.lat1,
+            listingData.listing.location.lon1,
+            userLocation.lat2,
+            userLocation.lon2)
+    };
+
+    function timeDifference(date1, date2){
+        let diffMs = (date2 - Date.parse(date1));
+        return Math.round(((diffMs % 86400000) % 3600000) / 60000);
+    }
+
+    const getTime = () => {
+        return timeDifference(listingData.time, Date.now())
+    };
 
     //TODO: rewrite this to just take u back
     const goBack = () => {
@@ -123,42 +124,36 @@ const FullListing = ({listID, ...props}) => {
         let cover;
         if (!isEmpty(listingData.listing.photo1)) {
             cover = listingData.listing.photo1;
-            return (
-                <View>
-                    <Image source={cover} style={styles.image}/>
-                </View>); }
+        } else {
+            switch (listingData.listing.category) {
+                case "food":
+                    cover = require('../Resources/Images/food.png');
+                    break;
+                case "medicine":
+                    cover = require('../Resources/Images/medicine.png');
+                    break;
+                case "bills":
+                    cover = require('../Resources/Images/bills.png');
+                    break;
+                default:
+                    cover = require('../Resources/Images/general.png');
+                    break;
+            }
+        }
+        return (
+            <View>
+                <Image source={cover} style={styles.image}/>
+            </View>
+        );
+
     };
-        // } else {
-        //     switch (listingData.listing.category) {
-        //         case "food":
-        //             cover = require('../Resources/Images/food.png');
-        //             break;
-        //         case "medicine":
-        //             cover = require('../Resources/Images/medicine.jpg');
-        //             break;
-        //         case "bills":
-        //             cover = require('../Resources/Images/bills.png');
-        //             break;
-        //         case "general":
-        //             cover = require('../Resources/Images/general.png');
-        //             break;
-        //     }
-        //     return (
-        //         <View>
-        //             <Image source={cover}/>
-        //         </View>
-    //          );
-    //     }
-    //
-    //
-    // };
 
     const isEmpty = (obj) => {
         return Object.keys(obj).length === 0;
     };
 
     const getList = () => {
-        listingsApi.getListing({listingID: '5'}).then( r => {
+        listingsApi.getListing({listingID: '4'}).then( r => {
 
             console.log("hello");
             // console.log(r.data);
@@ -199,10 +194,10 @@ const FullListing = ({listID, ...props}) => {
                 </View>
                <View style={styles.middlePart}>
                     {/*TODO: all of these!*/}
-                   <Text>{getPostingDate()}</Text>
-                   <Text>{calculateDistance()}</Text>
-                    <Text style={styles.text}>distance would be nice as well, probs?</Text>
-                    <Text style={styles.text}>and profile!!</Text>
+                   <Text>{getDistance()} km away (not sure if works)</Text>
+                   <Text>{getTime()} mins ago</Text>
+
+                    <Text style={styles.text}> profile!!</Text>
 
                     <Text style={styles.subtitle}>Category</Text>
                     {/*TODO: show category*/}
@@ -326,6 +321,7 @@ const styles = StyleSheet.create({
     },
     middlePart: {
         padding: 20,
+        paddingTop: 10,
     },
     bottomSection:{
         marginTop: 20,
