@@ -153,7 +153,7 @@ const FullListing = ({listID, ...props}) => {
     };
 
     const getList = () => {
-        listingsApi.getListing({listingID: '4'}).then( r => {
+        listingsApi.getListing({listingID: '5'}).then( r => {
 
             console.log("hello");
             // console.log(r.data);
