@@ -161,6 +161,7 @@ const FullListing = ({listID, ...props}) => {
         listingsApi.getListing({listingID: '1'}).then( r => {
 
             console.log("hello");
+            console.log(r.data);
 
             if (r.data != null) {
                 const data = r.data[0];
