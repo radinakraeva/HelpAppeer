@@ -158,10 +158,10 @@ const FullListing = ({listID, ...props}) => {
     };
 
     const getList = () => {
-        listingsApi.getListing({listingID: '1'}).then( r => {
+        listingsApi.getListing({listingID: '5'}).then( r => {
 
             console.log("hello");
-            console.log(r.data);
+            // console.log(r.data);
 
             if (r.data != null) {
                 const data = r.data[0];
@@ -263,16 +263,17 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         // marginBottom: 20,
         color: ColourPalette.yellow,
-        backgroundColor: "rgba(0,41,207,0.4)",
+        backgroundColor: ColourPalette.darkBlue,
         // borderBottomLeftRadius: 20,
         // borderBottomRightRadius: 20,
+        //"rgba(0,41,207,1)",
 
         // textShadowColor: ColourPalette.grey,
         // textShadowRadius: 15,
         flex:15,
 
         paddingHorizontal:35,
-        paddingBottom: 5,
+        paddingVertical: 15,
     },
     subtitle: {
         marginTop: 10,
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
     },
     coverPhoto: {
         width: '100%',
-        height: 250,
+        height: 300,
         zIndex: -1,
         marginBottom: 5,
     },

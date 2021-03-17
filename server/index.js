@@ -86,7 +86,7 @@ app.post('/verify', (req, res) => {
 
 app.post('/createListing', (req, res) => {
     console.log('received data');
-    console.log(req.fields);
+    // console.log(req.fields);
 
 
     const listing = req.fields.listing;
@@ -119,7 +119,7 @@ app.post('/getAListing',(req, res) => {
                 res.send(null);
             } else if (result) {
                 if(result[0]){
-                    console.log(result);
+                    // console.log(result);
                     res.send(result);
                 }
 

@@ -268,13 +268,15 @@ const NewListingScreen = (props) => {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
             quality: 1,
+            base64: true,
         };
         let result = await ImagePicker.launchImageLibraryAsync(options);
 
-        console.log(result);
+        // console.log(result);
 
         if (!result.cancelled) {
-            addFilePath(result.uri);
+            const b64 = 'data:image/png;base64,'+result.base64;
+            addFilePath(b64);
         }
     };
 
@@ -285,15 +287,17 @@ const NewListingScreen = (props) => {
             saveToPhotos: true,
             storageOptions: {
                 privateDirectory: true,
-            }
+            },
+            base64: true,
         };
 
         let result = await ImagePicker.launchCameraAsync(options);
 
-        console.log(result);
+        // console.log(result);
 
         if (!result.cancelled) {
-            addFilePath(result.uri);
+            const b64 = 'data:image/png;base64,'+result.base64;
+            addFilePath(b64);
         }
     };
 
