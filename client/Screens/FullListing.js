@@ -126,31 +126,32 @@ const FullListing = ({listID, ...props}) => {
             return (
                 <View>
                     <Image source={cover} style={styles.image}/>
-                </View>);
-        } else {
-            switch (listingData.listing.category) {
-                case "food":
-                    cover = require('../Resources/Images/Food.png');
-                    break;
-                case "medicine":
-                    cover = require('../Resources/Images/Medicine.jpg');
-                    break;
-                case "bills":
-                    cover = require('../Resources/Images/Food.png');
-                    break;
-                case "general":
-                    cover = require('../Resources/Images/Food.png');
-                    break;
-            }
-            return (
-                <View>
-                    <Image source={cover}/>
-                </View>
-            );
-        }
-
-
+                </View>); }
     };
+        // } else {
+        //     switch (listingData.listing.category) {
+        //         case "food":
+        //             cover = require('../Resources/Images/food.png');
+        //             break;
+        //         case "medicine":
+        //             cover = require('../Resources/Images/medicine.jpg');
+        //             break;
+        //         case "bills":
+        //             cover = require('../Resources/Images/bills.png');
+        //             break;
+        //         case "general":
+        //             cover = require('../Resources/Images/general.png');
+        //             break;
+        //     }
+        //     return (
+        //         <View>
+        //             <Image source={cover}/>
+        //         </View>
+    //          );
+    //     }
+    //
+    //
+    // };
 
     const isEmpty = (obj) => {
         return Object.keys(obj).length === 0;
