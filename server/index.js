@@ -108,4 +108,31 @@ app.post('/createListing', (req, res) => {
         });
 })
 
+
+app.post('/getAListing',(req, res) => {
+    console.log("Getting the listing data");
+
+    const listingID = req.fields.listingID;
+
+    connection.query(
+        "SELECT * FROM Listings WHERE listing_id = (?)", [listingID],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+
+
+
+
+})
+
 // connection.end();
