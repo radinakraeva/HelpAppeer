@@ -15,13 +15,10 @@ import * as ImagePicker from 'expo-image-picker';
 import MapView, { Marker } from 'react-native-maps';
 
 import listingsApi from '../api/listingsApi';
-import {useNavigation} from "@react-navigation/native";
 
-import LottieView from "lottie-react-native";
 
 const NewListingScreen = (props) => {
 
-    const navigation = useNavigation();
 
     const [data, setData] = React.useState({
         title: '',
@@ -205,6 +202,16 @@ const NewListingScreen = (props) => {
 
     const submitListing = () => {
 
+        //check if any required info is missing
+        if (data.title === '' || data.category === '' || data.price === -1 || isEmpty(data.location) || data.description === '') {
+            alert('Sorry all required fields need to be filled. ');
+
+        } else { //if not, submit
+
+            databaseSubmission();
+            navigation.navigate("PostedAnimationScreen");
+        }
+
         // const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
         // Alert.alert("Submit", msg,
         //     [{  text: 'Edit',
@@ -218,8 +225,7 @@ const NewListingScreen = (props) => {
         //     }],
         //     { cancelable : true}
         // );
-        databaseSubmission();
-        navigation.navigate("PostedAnimationScreen");
+
     };
 
     const databaseSubmission = () => {
@@ -445,9 +451,6 @@ const NewListingScreen = (props) => {
 
 
 const styles = StyleSheet.create({
-    animation:{
-        width: 150
-    },
     title: {
         fontSize: 35,
         fontFamily: "Roboto",
