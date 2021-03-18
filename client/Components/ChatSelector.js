@@ -44,7 +44,7 @@ export default function ChatSelector({listingName, mostRecentMessage, timeSinceM
                     </View>
                 </View>
                 <View>
-                    <Text style = {textStyles.timeMRM}>{timeSinceMRM + "m" + ((unread === true) ? '•' : '')}</Text>
+                    <Text style = {textStyles.timeMRM}>{timeSinceMRM + ((unread === true) ? '•' : '')}</Text>
                 </View>
             </View>
         </View>
@@ -59,6 +59,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 5,
         paddingBottom: 5,
+        paddingRight: 10,
+        margin: 5,
+        backgroundColor: ColourPalette.grey,
+        borderRadius:10,
     },
     rightSideView:{
         flex: 1,

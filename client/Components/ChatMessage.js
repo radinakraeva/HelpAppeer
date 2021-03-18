@@ -11,7 +11,8 @@ export default function ChatMessage({message, timeSent, userSent}){
                 borderRadius: 10,
                 maxWidth: '60%',
                 margin: 5,
-                padding: 4,
+                paddingVertical: 4,
+                paddingHorizontal: 10,
                 display: 'flex',
                 alignSelf: 'flex-end',
                 justifyContent: 'flex-end',
@@ -38,7 +39,8 @@ export default function ChatMessage({message, timeSent, userSent}){
                 borderRadius: 10,
                 maxWidth: '60%',
                 margin: 5,
-                padding: 4,
+                paddingVertical: 4,
+                paddingHorizontal: 10,
                 display: 'flex',
                 alignSelf: 'flex-start',
                 justifyContent: 'flex-start',
@@ -58,7 +60,6 @@ export default function ChatMessage({message, timeSent, userSent}){
             }
         })
     }
-
     return (
         <View style = {styles.messageBox}>
             <Text style = {styles.text}>{message}</Text>

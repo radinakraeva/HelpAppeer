@@ -146,6 +146,65 @@ app.post('/getListings', (req, res) => {
         });
 })
 
+app.post('/getOpenConvos',(req, res) =>{
+    console.log('And I ran, I ran so far away....');
+    connection.query(
+        "SELECT * FROM `msgTable` WHERE `reci_user` = (?) OR `send_user` = (?)", [req.fields.username, req.fields.username],
+        function (error, result){
+            if (error) {
+                console.log(error);
+            }
+            else if (result){
+                let uniqueConvos = {};
+                let openConvos = []
+                for(let row of result){
+                    uniqueConvos[row.listing_id] = row;
+                }
+                for(let row in uniqueConvos){
+                    openConvos.push(uniqueConvos[row]);
+                }
+                res.send(openConvos);
+            }
+        }
+    )
+})
+
+app.post('/getMessages',(req, res) =>{
+    console.log('I just ran, I ran all night and day....');
+    connection.query(
+        "SELECT * FROM `msgTable` WHERE `listing_id` = (?)", [req.fields.listing_id],
+        function (error, result){
+            if (error) {
+                console.log(error);
+            }
+            else if (result){
+                let messages = []
+                for(let row in result){
+                    messages.push(result[row]);
+                }
+                res.send(messages);
+            }
+        }
+    )
+})
+
+app.post('/sendMessage',(req, res) => {
+    console.log('...couldnt get away...');
+    connection.query(
+        "INSERT INTO `msgTable` (`msg_id`, `listing_id`, `send_user`, `reci_user`, `msg_contents`, `time_sent`) VALUES (NULL, (?), (?), (?), (?), (?)) ",
+        [req.fields.listing_id, req.fields.send_user, req.fields.reci_user, req.fields.msg_contents, req.fields.time_sent],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+            } else if (result) {
+                console.log(result);
+                res.send(result);
+            }
+        }
+    )
+}
+)
+
 function renderToListingsList(listings){
     const listingsArray = []
     for (let i = 0; i < listings.length; i++){
@@ -164,5 +223,7 @@ function renderToListingsList(listings){
     }
     return listingsArray
 }
+
+
 
 // connection.end();

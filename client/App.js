@@ -25,8 +25,8 @@ export default function App() {
       //<NewListingScreen/>
       //<ProfileScreen/>
       //<FeedScreen/>
-      <AuthNavigator/>
-      //<ChatScreen listingName={"Aldi Please"}/>
-      //<ChatListScreen/>
+      //<AuthNavigator/>
+      <ChatScreen listing_id={"1"} username = {"user"} receiver={"bob"}/>
+      //<ChatListScreen username = {"bob"}/>
   );
 }
