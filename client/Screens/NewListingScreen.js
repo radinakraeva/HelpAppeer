@@ -15,10 +15,13 @@ import * as ImagePicker from 'expo-image-picker';
 import MapView, { Marker } from 'react-native-maps';
 
 import listingsApi from '../api/listingsApi';
+import {useNavigation} from "@react-navigation/native";
 
 
 const NewListingScreen = (props) => {
 
+
+    const navigation = useNavigation()
 
     const [data, setData] = React.useState({
         title: '',

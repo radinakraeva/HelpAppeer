@@ -8,7 +8,6 @@ import CircleIcon from '../Components/CircleIcon';
 import Button from '../Components/Button';
 import listingsApi from "../api/listingsApi";
 import {useNavigation} from '@react-navigation/native';
-import AnimatedLottieView from "lottie-react-native";
 
 export default function FeedScreen(){
 

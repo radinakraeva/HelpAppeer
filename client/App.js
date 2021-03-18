@@ -30,7 +30,7 @@ export default function App() {
 
 // <FullListing/>
 //  <AuthNavigator/>
-
+// <FeedScreen/>
 <ListingsNavigator/>
 // <Image source = {require('Resources/Images/Alina.jpg')}/>
   );
