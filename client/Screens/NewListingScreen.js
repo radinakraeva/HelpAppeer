@@ -402,16 +402,16 @@ const NewListingScreen = (props) => {
                     <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                 </View>
             </View>
-            <Text style={styles.subtitle}> Title</Text>
+            <Text style={styles.subtitle}> Title <Text style={styles.star}>*</Text></Text>
             <InputField placeholder="Listing's title" onChangeText={text => titleChange(text)}/>
 
-            <Text style={styles.subtitle}>Category</Text>
+            <Text style={styles.subtitle}>Category <Text style={styles.star}>*</Text></Text>
             {getCategories()}
 
-            <Text style={styles.subtitle}>Description</Text>
+            <Text style={styles.subtitle}>Description <Text style={styles.star}>*</Text></Text>
             <InputField size={150} placeholder="Description" onChangeText={text => descChange(text)}/>
 
-            <Text style={styles.subtitle}>Price</Text>
+            <Text style={styles.subtitle}>Price <Text style={styles.star}>*</Text></Text>
             <View style={styles.pounds}>
                 <PriceSelection text={'£'} color={data.price == 1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("1")}/>
                 <PriceSelection text={'££'} color={data.price == 2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("2")}/>
@@ -428,7 +428,7 @@ const NewListingScreen = (props) => {
             {getPhotos()}
 
 
-            <Text style={styles.subtitle}>Location</Text>
+            <Text style={styles.subtitle}>Location <Text style={styles.star}>*</Text></Text>
 
             <View style={styles.mapSection}>
             {displayLoc ?
@@ -469,6 +469,10 @@ const styles = StyleSheet.create({
         fontWeight: "normal",
         color: ColourPalette.darkBlue,
 
+    },
+    star: {
+        color: ColourPalette.darkBlue,
+        fontSize: 15,
     },
 
     top:{
