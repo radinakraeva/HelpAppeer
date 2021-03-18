@@ -6,6 +6,8 @@ import LoginScreen from '../Screens/LoginScreen';
 import SignupScreen from '../Screens/SignupScreen';
 import FeedScreen from "../Screens/FeedScreen";
 import AnimationScreen from '../Screens/AnimationScreen';
+import ChatScreen from '../Screens/ChatScreen';
+import ChatListScreen from '../Screens/ChatListScreen';
 
 
 
@@ -18,6 +20,8 @@ const AuthNavigator = () => (
             <Stack.Screen name='LoginScreen' component={LoginScreen}/>
             <Stack.Screen name='SignupScreen' component={SignupScreen}/>
             <Stack.Screen name='FeedScreen' component={FeedScreen}/>
+            <Stack.Screen name='ChatListScreen' component={ChatListScreen}/>
+            <Stack.Screen name='ChatScreen' component={ChatScreen}/>
         </Stack.Navigator>
     </NavigationContainer>
 

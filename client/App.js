@@ -10,6 +10,7 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
 import Feed from "./Components/Feed";
+import ChatScreen from './Screens/ChatScreen';
 
 export default function App() {
 
@@ -18,14 +19,14 @@ export default function App() {
   ]);*/
 
   return (
-      // <WelcomeScreen/>
-      // <LoginScreen/>
+      //<WelcomeScreen/>
+      //<LoginScreen/>
       //<SignupScreen/>
-      // <NewListingScreen/>
-      // <ProfileScreen/>
-<FeedScreen/>
-
- // <AuthNavigator/>
-
+      //<NewListingScreen/>
+      //<ProfileScreen/>
+      //<FeedScreen/>
+      //<AuthNavigator/>
+      <ChatScreen listing_id={"1"} username = {"user"} receiver={"bob"}/>
+      //<ChatListScreen username = {"bob"}/>
   );
 }

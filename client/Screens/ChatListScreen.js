@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import ChatList from '../Components/ChatList';
-
+import msgAPI from '../api/msgAPI';
 import ColourPalette from '../Resources/ColourPalette';
 
-export default function ChatListScreen(){
+export default function ChatListScreen({username}){
+
+    const [openConvos, setOpenConvos] = useState([]);
+
+    useEffect( () => {
+        loadOpenConvos();
+    }, [])
+
+    const loadOpenConvos = async () => {
+        const x = await msgAPI.getOpenConvos(username);
+        setOpenConvos(x.data);
+    }
+
     return (
         <SafeAreaView style = {styles.chatListScreen}>
             <View style = {styles.topSection}>
@@ -12,8 +24,7 @@ export default function ChatListScreen(){
                     <Text style = {styles.titleText}>Your Current Pending Listings</Text>
                 </View>
             </View>
-
-            <ChatList/>
+            <ChatList openConvos={openConvos}/>
         </SafeAreaView>
     );
 }
