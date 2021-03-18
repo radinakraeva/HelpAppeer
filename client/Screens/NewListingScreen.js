@@ -204,7 +204,7 @@ const NewListingScreen = (props) => {
 
         //check if any required info is missing
         if (data.title === '' || data.category === '' || data.price === -1 || isEmpty(data.location) || data.description === '') {
-            alert('Sorry All Fields Need To Be Filled. Please Try Again');
+            alert('Sorry all required fields need to be filled. ');
 
         } else { //if not, submit
 
