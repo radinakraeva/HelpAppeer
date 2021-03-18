@@ -202,20 +202,28 @@ const NewListingScreen = (props) => {
 
     const submitListing = () => {
 
-        const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
-        Alert.alert("Submit", msg,
-            [{  text: 'Edit',
-                onPress: () => console.log('returning to editing'),
-                style: 'cancel',
-            }, {
-                text: 'Post',
-                onPress: () => {
-                    console.log('creating a new listing!');
-                    databaseSubmission();
-                },
-            }],
-            { cancelable : true}
-        );
+        //check if any required info is missing
+        if (data.title === '' || data.category === '' || data.price === -1 || isEmpty(data.location) || data.description === '') {
+            alert('Sorry All Fields Need To Be Filled. Please Try Again');
+
+        } else { //if not, submit
+
+            const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
+            Alert.alert("Submit", msg,
+                [{
+                    text: 'Edit',
+                    onPress: () => console.log('returning to editing'),
+                    style: 'cancel',
+                }, {
+                    text: 'Post',
+                    onPress: () => {
+                        console.log('creating a new listing!');
+                        databaseSubmission();
+                    },
+                }],
+                {cancelable: true}
+            );
+        }
 
     };
 
