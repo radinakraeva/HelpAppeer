@@ -44,8 +44,6 @@ export default function Feed(){
         return distanceBetween.toFixed(1);
     }
 
-    console.log(location);
-
     function timeDifference(date1, date2){
         let diffMs = (date2 - Date.parse(date1));
         return Math.round(((diffMs % 86400000) % 3600000) / 60000);
@@ -71,7 +69,7 @@ export default function Feed(){
     );
 
     return (
-            <FlatList style = {{flex: 1}}
+            <FlatList style = {{flex: 1}} showsHorizontalScrollIndicator={false}
                 data = {listings}
                 keyExtractor = {item => item.listing_id.toString()}
                 renderItem={listingRender}

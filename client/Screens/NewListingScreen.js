@@ -15,10 +15,13 @@ import * as ImagePicker from 'expo-image-picker';
 import MapView, { Marker } from 'react-native-maps';
 
 import listingsApi from '../api/listingsApi';
+import {useNavigation} from "@react-navigation/native";
 
+import LottieView from "lottie-react-native";
 
 const NewListingScreen = (props) => {
 
+    const navigation = useNavigation();
 
     const [data, setData] = React.useState({
         title: '',
@@ -202,21 +205,21 @@ const NewListingScreen = (props) => {
 
     const submitListing = () => {
 
-        const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
-        Alert.alert("Submit", msg,
-            [{  text: 'Edit',
-                onPress: () => console.log('returning to editing'),
-                style: 'cancel',
-            }, {
-                text: 'Post',
-                onPress: () => {
-                    console.log('creating a new listing!');
-                    databaseSubmission();
-                },
-            }],
-            { cancelable : true}
-        );
-
+        // const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
+        // Alert.alert("Submit", msg,
+        //     [{  text: 'Edit',
+        //         onPress: () => console.log('returning to editing'),
+        //         style: 'cancel',
+        //     }, {
+        //         text: 'Post',
+        //         onPress: () => {
+        //             databaseSubmission();
+        //         },
+        //     }],
+        //     { cancelable : true}
+        // );
+        databaseSubmission();
+        navigation.navigate("PostedAnimationScreen");
     };
 
     const databaseSubmission = () => {
@@ -230,7 +233,8 @@ const NewListingScreen = (props) => {
         };
 
         console.log(JSON.stringify(submission));
-        listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
+        // listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
+        listingsApi.addListing(submission);
 
 
     };
@@ -441,6 +445,9 @@ const NewListingScreen = (props) => {
 
 
 const styles = StyleSheet.create({
+    animation:{
+        width: 150
+    },
     title: {
         fontSize: 35,
         fontFamily: "Roboto",
