@@ -21,10 +21,11 @@ export default function App() {
       // <LoginScreen/>
       //<SignupScreen/>
       // <NewListingScreen/>
-      <ProfileScreen/>
+      //<ProfileScreen/>
 
 
- // <AuthNavigator/>
+
+  <AuthNavigator/>
 
   );
 }
