@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import FeedScreen from "../Screens/FeedScreen";
 import NewListingScreen from "../Screens/NewListingScreen";
 import PostedAnimationScreen from "../Screens/PostedAnimationScreen";
+import FullListing from "../Screens/FullListing";
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ const ListingsNavigator = () => (
             <Stack.Screen name='NewListingScreen' component={NewListingScreen}/>
             <Stack.Screen name='PostedAnimationScreen' component={PostedAnimationScreen}/>
             <Stack.Screen name='FeedScreen2' component={FeedScreen}/>
+            <Stack.Screen name='FullListing' component={FullListing} initialParams={{ listID: 20 }}/>
         </Stack.Navigator>
     </NavigationContainer>
 

@@ -1,14 +1,22 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, Touchable} from 'react-native';
 import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 import ColourPalette from '../Resources/ColourPalette';
+import {useNavigation} from "@react-navigation/native";
+import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 
-export default function Listing({title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){
+
+function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){
+
+    const navigation = useNavigation();
+    function seeListing(){
+        navigation.navigate('FullListing', {listID: listing_id})
+    }
 
     return (
-        <View style = {styles.listing}>
+        <View style = {styles.listing} onStartShouldSetResponder={() => seeListing()}>
             <View style = {styles.upperSection}>
                 <Image style = {styles.image} source={image} />
                 <CircleImage size = {45} image ={profilePicture}/>
@@ -76,3 +84,5 @@ const styles = StyleSheet.create({
         color: ColourPalette.darkBlue
     },
 })
+
+export default Listing;

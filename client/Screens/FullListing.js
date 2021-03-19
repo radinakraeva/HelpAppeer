@@ -14,7 +14,7 @@ import * as Location from 'expo-location';
 import {getDistanceBetween} from 'geolocation-distance-between';
 
 
-const FullListing = ({listID, ...props}) => {
+const FullListing = (props) => {
 
     const [listingData, setListingData] = useState({
         user: '',
@@ -153,9 +153,7 @@ const FullListing = ({listID, ...props}) => {
     };
 
     const getList = () => {
-        listingsApi.getListing({listingID: '5'}).then( r => {
-
-            console.log("hello");
+        listingsApi.getListing({listingID: props.route.params.listID}).then( r => {
             // console.log(r.data);
 
             if (r.data != null) {

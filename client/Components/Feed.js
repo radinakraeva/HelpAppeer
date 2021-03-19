@@ -58,6 +58,7 @@ export default function Feed(){
 
     const listingRender = ({ item }) => (
         <Listing
+            listing_id = {item.listing_id}
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
