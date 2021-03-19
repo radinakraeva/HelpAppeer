@@ -101,10 +101,10 @@ export default function ChatScreen({listing_id, username, receiver}){
         messagesList.current.scrollToEnd();
 
         //send notif to receiver
-        const rec = msgAPI.getReceiver(receiver);
-        if (rec != '') {
-            sendPushNotification(rec).then(()=>console.log("notif sent!"), ()=>console.log("notif failed"));
-        }
+        // const rec = msgAPI.getReceiver(receiver);
+        // if (rec != '') {
+        //     sendPushNotification(rec).then(()=>console.log("notif sent!"), ()=>console.log("notif failed"));
+        // }
 
         setTimeout(loadMessages, 300);
     }
