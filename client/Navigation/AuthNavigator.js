@@ -16,7 +16,7 @@ import PostedAnimationScreen from "../Screens/PostedAnimationScreen";
 
 const Stack = createStackNavigator();
 
-const AuthNavigator = () => (
+const AuthNavigator  = () => (
     <NavigationContainer>
         <Stack.Navigator initialRouteName="SignupScreen" screenOptions={{ headerShown: false }}>
             <Stack.Screen name='AnimationScreen' component={AnimationScreen}/>
