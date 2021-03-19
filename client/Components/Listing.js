@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text, Touchable} from 'react-native';
+import {View, StyleSheet, Image, Text, Touchable, TouchableWithoutFeedback} from 'react-native';
 import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
@@ -16,7 +16,8 @@ function Listing({listing_id, title, category, image, profilePicture, timeSinceP
     }
 
     return (
-        <View style = {styles.listing} onStartShouldSetResponder={() => seeListing()}>
+        <TouchableWithoutFeedback onPress = {() =>seeListing()}>
+        <View style = {styles.listing}>
             <View style = {styles.upperSection}>
                 <Image style = {styles.image} source={image} />
                 <CircleImage size = {45} image ={profilePicture}/>
@@ -35,6 +36,7 @@ function Listing({listing_id, title, category, image, profilePicture, timeSinceP
                 </View>
             </View>
         </View>
+        </TouchableWithoutFeedback>
     );
 }
 

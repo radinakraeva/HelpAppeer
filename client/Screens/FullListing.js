@@ -12,9 +12,12 @@ import MapView, {Circle} from 'react-native-maps';
 import ImagePreview from '../Components/ImagePreview';
 import * as Location from 'expo-location';
 import {getDistanceBetween} from 'geolocation-distance-between';
+import {useNavigation} from "@react-navigation/native";
 
 
 const FullListing = (props) => {
+
+    const navigation = useNavigation();
 
     const [listingData, setListingData] = useState({
         user: '',
@@ -72,18 +75,7 @@ const FullListing = (props) => {
 
     //TODO: rewrite this to just take u back
     const goBack = () => {
-        const msg = "Are you sure you want to go back?\nAll your progress will be lost.";
-        Alert.alert("Exit", msg,
-            [{
-                text: 'Cancel',
-                onPress: () => console.log('shantay, you stay'),
-                style: 'cancel',
-            }, {
-                text: 'OK',
-                onPress: () => console.log('sashay, away'),
-            }],
-            {cancelable: true}
-        );
+        navigation.navigate('FeedScreen')
     };
 
     //TODO: fill this function
