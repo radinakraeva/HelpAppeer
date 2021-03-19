@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier,no-trailing-spaces */
-import React, { useState, useEffect } from 'react';
-import {StyleSheet, View, Text, TextInput, TouchableWithoutFeedback, PermissionsAndroid, Alert} from 'react-native';
+import React, { useEffect } from 'react';
+import {StyleSheet, View, Text, Alert} from 'react-native';
 
 import Screen from "../Components/Screen";
 import InputField from '../Components/InputField';
@@ -12,25 +12,16 @@ import ImagePreview from '../Components/ImagePreview';
 import PriceSelection from '../Components/PriceSelection';
 import * as Location from 'expo-location';
 import * as ImagePicker from 'expo-image-picker';
+import MapView, { Marker } from 'react-native-maps';
 
-import  MapView, { Marker } from 'react-native-maps';
-import usersApi from "../api/usersApi";
 import listingsApi from '../api/listingsApi';
+import {useNavigation} from "@react-navigation/native";
 
 
 const NewListingScreen = (props) => {
 
-    // let listingInfo = {
-    //     title: '',
-    //     category: '',
-    //     description: '',
-    //     price: '',
-    //     photo1: {},
-    //     photo2: {},
-    //     photo3: {},
-    //     location: {},
-    //     addInfo: ''
-    // };
+
+    const navigation = useNavigation()
 
     const [data, setData] = React.useState({
         title: '',
@@ -109,8 +100,6 @@ const NewListingScreen = (props) => {
 
     const [displayLoc, setDisplayLoc] = React.useState(false);
 
-    const [location, setLocation] = React.useState({});
-
     const getLocation = async () => {
 
         const {granted} = await Location.requestPermissionsAsync();
@@ -138,8 +127,6 @@ const NewListingScreen = (props) => {
                 <MapView
                     style={styles.map}
                     initialRegion={{
-                        // latitude: location.lat1,
-                        // longitude: location.lon1,
                         latitude: data.location.lat1,
                         longitude: data.location.lon1,
                         latitudeDelta: 0.0922,
@@ -218,6 +205,33 @@ const NewListingScreen = (props) => {
 
     const submitListing = () => {
 
+        //check if any required info is missing
+        if (data.title === '' || data.category === '' || data.price === -1 || isEmpty(data.location) || data.description === '') {
+            alert('Sorry all required fields need to be filled. ');
+
+        } else { //if not, submit
+
+            databaseSubmission();
+            navigation.navigate("PostedAnimationScreen");
+        }
+
+        // const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
+        // Alert.alert("Submit", msg,
+        //     [{  text: 'Edit',
+        //         onPress: () => console.log('returning to editing'),
+        //         style: 'cancel',
+        //     }, {
+        //         text: 'Post',
+        //         onPress: () => {
+        //             databaseSubmission();
+        //         },
+        //     }],
+        //     { cancelable : true}
+        // );
+
+    };
+
+    const databaseSubmission = () => {
 
         let date = new Date();
 
@@ -228,7 +242,8 @@ const NewListingScreen = (props) => {
         };
 
         console.log(JSON.stringify(submission));
-        listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
+        // listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
+        listingsApi.addListing(submission);
 
 
     };
@@ -247,24 +262,6 @@ const NewListingScreen = (props) => {
         );
 
     };
-
-    // const updatePrice = (index) => {
-    //     setPrice({chosen: index});
-    //     listingInfo.price = index;
-    // };
-
-    // const updateTextField = (name, text) => {
-    //     if (name === "title") {
-    //         updateName(text);
-    //         listingInfo.title = text;
-    //     } else if (name === "desc") {
-    //         updateDesc(text);
-    //         listingInfo.description = text;
-    //     } else if (name === "addInfo") {
-    //         updateAddInfo(text);
-    //         listingInfo.addInfo = text;
-    //     }
-    // };
 
 
 
@@ -345,7 +342,7 @@ const NewListingScreen = (props) => {
     const chooseCategory = (cat) => {
         for (let c in categories) {
             categories[c].selected = false;
-        };
+        }
         categories[cat].selected = true;
         categoryChange(cat);
         updateCats(categories);

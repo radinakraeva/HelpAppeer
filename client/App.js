@@ -9,6 +9,10 @@ import ChatListScreen from "./Screens/ChatListScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
+import Feed from "./Components/Feed";
+import FullListing from "./Screens/FullListing";
+import ListingsNavigator from "./Navigation/ListingsNavigator";
+import {Image} from "react-native-web";
 
 export default function App() {
 
@@ -23,9 +27,10 @@ export default function App() {
       // <NewListingScreen/>
       //<ProfileScreen/>
 
-
-
-  <AuthNavigator/>
-
+// <FullListing listID={73}/>
+//  <AuthNavigator/>
+// <FeedScreen/>
+<ListingsNavigator/>
+// <Image source = {require('Resources/Images/Alina.jpg')}/>
   );
 }

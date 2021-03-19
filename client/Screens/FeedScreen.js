@@ -6,8 +6,17 @@ import Feed from '../Components/Feed';
 import ColourPalette from '../Resources/ColourPalette';
 import CircleIcon from '../Components/CircleIcon';
 import Button from '../Components/Button';
+import listingsApi from "../api/listingsApi";
+import {useNavigation} from '@react-navigation/native';
 
 export default function FeedScreen(){
+
+    const navigation = useNavigation();
+
+    const newListing = () => {
+        navigation.navigate("NewListingScreen");
+    };
+
     return (
         <SafeAreaView style = {styles.feedScreen}>
             <View style = {styles.topSection}>
@@ -22,9 +31,8 @@ export default function FeedScreen(){
             </View>
 
             <Feed style = {styles.feed}/>
-
             <View style = {styles.bottomSection}>
-                <Button title = "Add" />
+                <Button title = "Add" onPress={newListing} />
             </View>
         </SafeAreaView>
     );
@@ -33,6 +41,8 @@ export default function FeedScreen(){
 const styles = StyleSheet.create({
     feed: {},
     feedScreen: {
+        padding: 12,
+        paddingTop: 15,
         height: '100%',
     },
     topSection: {
