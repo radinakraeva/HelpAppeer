@@ -48,11 +48,11 @@ app.post('/register', (req, res) => {
     console.log(address);
     console.log(city);
     console.log(mobile);
-    console.log(picture);
+    // console.log(picture);
 
     connection.query(
-        "INSERT INTO Register (Name, Username, Email, Password, Address, City, Mobile, Picture) VALUES (? ,? ,? ,? ,? ,? ,? ,?)",
-        [name, username, email, password, address, city, mobile, picture],
+        "INSERT INTO Register (Name, Username, Email, Password, Address, City, Mobile, Token, Picture) VALUES (? ,? ,? ,? ,? ,? ,?, ? ,?)",
+        [name, username, email, password, address, city, mobile, '', picture],
         (err, result) => {
             if (err){
                 throw err;
