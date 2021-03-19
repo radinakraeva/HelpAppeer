@@ -237,7 +237,7 @@ app.post('/sendMessage',(req, res) => {
 
 function renderToListingsList(listings){
     const listingsArray = []
-    for (let i = 0; i < listings.length; i++){
+    for (let i = listings.length - 1; i >= 0; i--){
         const listingData = JSON.parse(listings[i].listing)
         // console.log(listingData);
         const listing = {

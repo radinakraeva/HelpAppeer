@@ -1,7 +1,5 @@
 import client from './client'
 
-const endpoint = '/listings';
-
 const getListing = (listingID) => {
     return client.post("/getAListing", listingID);
 };

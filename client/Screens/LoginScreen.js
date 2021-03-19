@@ -46,7 +46,7 @@ const LoginScreen  = () => {
     };
 
     const signCheck = () => {
-        navigation.navigate("FeedScreen1");
+        navigation.navigate("SignupScreen");
     };
 
     const loginCheck = () => {

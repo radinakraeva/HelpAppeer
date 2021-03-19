@@ -12,6 +12,8 @@ export default function Feed(){
         location: {},
     });
 
+    const[refreshing, setRefreshing] = useState(false);
+
     useEffect(() => {
         loadListings();
         getLocation();
@@ -70,10 +72,12 @@ export default function Feed(){
     );
 
     return (
-            <FlatList style = {{flex: 1}} showsHorizontalScrollIndicator={false}
+            <FlatList style = {{flex: 1}} showsVerticalScrollIndicator={false}
                 data = {listings}
                 keyExtractor = {item => item.listing_id.toString()}
                 renderItem={listingRender}
+                refreshing = {refreshing}
+                onRefresh={() => loadListings()}
             />
     );
 }
