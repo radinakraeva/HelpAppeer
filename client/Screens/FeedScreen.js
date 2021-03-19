@@ -18,7 +18,7 @@ export default function FeedScreen(){
     };
 
     return (
-        <SafeAreaView style = {styles.feedScreen}>
+        <SafeAreaView style = {styles.feedScreen} >
             <View style = {styles.topSection}>
                 <View style = {styles.topLeftSection}>
 
@@ -30,7 +30,7 @@ export default function FeedScreen(){
                 </View>
             </View>
 
-            <Feed style = {styles.feed}/>
+            <Feed style = {styles.feed} />
             <View style = {styles.bottomSection}>
                 <Button title = "Add" onPress={newListing} />
             </View>

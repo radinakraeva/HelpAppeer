@@ -10,7 +10,9 @@ import NewListingScreen from '../Screens/NewListingScreen';
 import ChatScreen from '../Screens/ChatScreen';
 import ChatListScreen from '../Screens/ChatListScreen';
 
-
+import ListingsNavigator from "./ListingsNavigator";
+import FullListing from "../Screens/FullListing";
+import PostedAnimationScreen from "../Screens/PostedAnimationScreen";
 
 const Stack = createStackNavigator();
 
@@ -23,6 +25,9 @@ const AuthNavigator = () => (
             <Stack.Screen name='FeedScreen' component={FeedScreen}/>
             <Stack.Screen name='NewListingScreen' component={NewListingScreen}/>
             <Stack.Screen name='ChatListScreen' component={ChatListScreen}/>
+            <Stack.Screen name='FeedScreen2' component={FeedScreen}/>
+            <Stack.Screen name='FullListing' component={FullListing} initialParams={{ listID: 20 }}/>
+            <Stack.Screen name='PostedAnimationScreen' component={PostedAnimationScreen}/>
             <Stack.Screen name='ChatScreen' component={ChatScreen}/>
         </Stack.Navigator>
     </NavigationContainer>
