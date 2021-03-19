@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
-import {SafeAreaView,View,TextInput,StyleSheet,Text,TouchableOpacity} from 'react-native';
-
+import React from 'react';
+import {SafeAreaView, View, TextInput, StyleSheet, Text, TouchableOpacity, ScrollView} from 'react-native';
 
 import 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
@@ -9,11 +8,13 @@ import ColourPalette from "../Resources/ColourPalette";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import usersApi from "../api/usersApi";
-// import AuthNavigator from "../Navigation/AuthNavigator";
 import {useNavigation} from '@react-navigation/native';
-
-import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ImageChooser from '../Components/ImageChooser';
+import ImagePreview from '../Components/ImagePreview';
+import * as ImagePicker from 'expo-image-picker';
+import listingsApi from '../api/listingsApi';
 
 const SignupScreen  = () => {
 
@@ -21,50 +22,17 @@ const SignupScreen  = () => {
     const navigation = useNavigation();
 
     const [data, setData] = React.useState({
-        name: '',
+        name:  '',
         username: '',
+        address: '',
+        city: '',
+        mobile: '',
         email: '',
         password: '',
         passwordConfirm: '',
+        pic: {},
         secureTextEntry: true,
-        expoPushToken: ''
     });
-
-    useEffect(() => {
-        registerForPushNotificationsAsync().then(token => tokenChange(token));},
-        [])
-
-
-    const registerForPushNotificationsAsync = async () => {
-        let token;
-        if (Constants.isDevice) {
-            const { status: existingStatus } = await Notifications.getPermissionsAsync();
-            let finalStatus = existingStatus;
-            if (existingStatus !== 'granted') {
-                const { status } = await Notifications.requestPermissionsAsync();
-                finalStatus = status;
-            }
-            if (finalStatus !== 'granted') {
-                alert('Failed to get push token for push notification!');
-                return;
-            }
-            token = (await Notifications.getExpoPushTokenAsync()).data;
-            console.log(token);
-        } else {
-            alert('Must use physical device for Push Notifications');
-        }
-
-        if (Platform.OS === 'android') {
-            await Notifications.setNotificationChannelAsync('default', {
-                name: 'default',
-                importance: Notifications.AndroidImportance.MAX,
-                vibrationPattern: [0, 250, 250, 250],
-                lightColor: '#FF231F7C',
-            });
-        }
-
-        return token;
-    };
 
     const nameChange = (input) => {
         setData({
@@ -77,6 +45,27 @@ const SignupScreen  = () => {
         setData({
             ...data,
             username: input,
+        });
+    };
+
+    const addressChange = (input) => {
+        setData({
+            ...data,
+            address: input,
+        });
+    };
+
+    const cityChange = (input) => {
+        setData({
+            ...data,
+            city: input,
+        });
+    };
+
+    const mobileChange = (input) => {
+        setData({
+            ...data,
+            mobile: input,
         });
     };
 
@@ -101,11 +90,11 @@ const SignupScreen  = () => {
         });
     };
 
-    const tokenChange = (input) => {
+    const pictureChange = (input) => {
         setData({
             ...data,
-            expoPushToken: input,
-        })
+            pic: input,
+        });
     };
 
     const update = () => {
@@ -116,37 +105,118 @@ const SignupScreen  = () => {
     };
 
     const SignUpCheck = () => {
-        if (data.name === '' || data.username === '' || data.email === '' || data.password === '' || data.passwordConfirm === '') {
-            alert('Sorry All Fields Need To Be Filled. Please Try Again');
-        } else if(data.password !== data.passwordConfirm) {
-             alert('Sorry Passwords Do Not Match. Please Try Again');
+        if (data.name === '' || data.username === '' || data.email === '' || data.address === '' || data.city === '' ||
+            data.mobile === '' || data.password === '' || data.passwordConfirm === '') {
+            alert('Sorry All Fields Need To Be Filled. You Do Not Need To Assign A Profile Picture. Please Try Again');
+        } else if (data.password !== data.passwordConfirm) {
+            alert('Sorry Passwords Do Not Match. Please Try Again');
         } else {
-            usersApi.addUser(data).then(() => alert('Added new user'));
-            navigation.navigate("FeedScreen");
+            let submission = {
+                name: data.name,
+                username: data.username,
+                address: data.address,
+                city: data.city,
+                mobile: data.mobile,
+                email: data.email,
+                password: data.password,
+                picture: JSON.stringify(data),
+            }
+            console.log(submission);
+            usersApi.verify(submission).then(r => {
+                console.log("here " + r.data);
+                if (r.data === 'NO USER') {
+                    usersApi.addUser(submission).then(() => alert('Added new user'));
+                    navigation.navigate("FeedScreen");
+                } else {
+                    alert('User with this username already exists, please try another username');
+                }
+            });
         }
-
-
-    };
+    }
 
     const back = () => {
         navigation.navigate("LoginScreen");
+    }
+
+    let imgChooser = {
+        upload: {
+            description: "Profile Picture - Gallery",
+            icon: "picture",
+            hand: () => getFromLibrary()
+        },
+    };
+
+    const getPhotos = () => {
+        return (
+            <View style={styles.uploadedImages}>
+                {!isEmpty(data.pic) ? <ImagePreview filePath={data.pic}/> : null}
+            </View>
+
+        );
+    };
+
+    const isEmpty = (obj) => {
+        return Object.keys(obj).length === 0;
+    };
+
+    const getFromLibrary = async () => {
+        let options = {
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: false,
+            quality: 1,
+        };
+        let result = await ImagePicker.launchImageLibraryAsync(options);
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            addFilePath(result.uri);
+        }
+    };
+
+    const addFilePath = (u) => {
+        if (isEmpty(data.pic)) {
+            pictureChange({uri: u});
+        } else {
+            alert("You Can Only Have 1 Profile Picture");
+        }
     };
 
 
     return (
+        <ScrollView showsVerticalScrollIndicator={false}>
         <SafeAreaView style={styles.backing}>
+
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Your Name" onChangeText={(input)=> nameChange(input)}/>
                 <FontAwesome5 style={styles.icon} name="user" size={30}/>
             </View>
+
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Username" onChangeText={(input)=> usernameChange(input)}/>
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
             </View>
+
+            <View style={styles.input} >
+                <TextInput style={styles.textInput} placeholder="Address" onChangeText={(input)=> addressChange(input)}/>
+                <Ionicons name='location-sharp' size={30} style={styles.icon}/>
+            </View>
+
+            <View style={styles.input} >
+                <TextInput style={styles.textInput} placeholder="City" onChangeText={(input)=> cityChange(input)}/>
+                <MaterialIcons name='location-city' size={30} style={styles.icon}/>
+            </View>
+
+            <View style={styles.input} >
+                <TextInput style={styles.textInput} placeholder="Mobile" onChangeText={(input)=> mobileChange(input)}/>
+                <MaterialCommunityIcons name='cellphone-basic' size={30} style={styles.icon}/>
+            </View>
+
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Email" onChangeText={(input)=> emailChange(input)}/>
                 <MaterialCommunityIcons style={styles.icon} name="email" size={30}/>
             </View>
+
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={data.secureTextEntry} onChangeText={(input)=> passwordChange(input)}/>
                 <TouchableOpacity onPress={update}>
@@ -157,6 +227,7 @@ const SignupScreen  = () => {
                     }
                 </TouchableOpacity>
             </View>
+
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Confirm Password" secureTextEntry={data.secureTextEntry} onChangeText={(input)=> passwordConfirmChange(input)}/>
                 <TouchableOpacity onPress={update}>
@@ -167,19 +238,26 @@ const SignupScreen  = () => {
                     }
                 </TouchableOpacity>
             </View>
+
+                <View style={styles.camera}>
+                    <ImageChooser title={imgChooser.upload.description} icon={imgChooser.upload.icon} action={imgChooser.upload.hand} />
+                </View>
+            {getPhotos()}
+
             <View style={styles.button}>
                 <TouchableOpacity style={styles.alin} onPress={SignUpCheck}>
                     <Text style={{fontSize: 30, paddingTop:15, fontWeight:'bold', color:'white'}}>Register</Text>
                 </TouchableOpacity>
             </View>
+
             <View>
                 <TouchableOpacity onPress={back}>
-                    <Text style={{fontSize: 25, paddingTop:5, color:'gray' }}>Back</Text>
+                    <Text style={{fontSize: 25, paddingTop:5, paddingBottom:35, color:'gray' }}>Back</Text>
                 </TouchableOpacity>
             </View>
 
-
         </SafeAreaView>
+        </ScrollView>
 
     );
 
@@ -187,6 +265,7 @@ const SignupScreen  = () => {
 
 const styles = StyleSheet.create({
     backing: {
+        paddingTop:40,
         backgroundColor: 'white',
         flex: 1,
         justifyContent: 'center',
@@ -231,7 +310,26 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    uploadedImages: {
+        flexDirection: "row",
+        backgroundColor: ColourPalette.white,
+        borderBottomRightRadius: 20,
+        borderBottomLeftRadius: 20,
+        padding: 10,
+        justifyContent: 'center',
+
+    },
+    camera: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 2, flexDirection: "row",
+        backgroundColor: ColourPalette.white,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        paddingTop: 12,
+        paddingLeft: 28,
+        paddingRight: 28,
+    },
 
 });
-
-export default SignupScreen;
+    export default SignupScreen;

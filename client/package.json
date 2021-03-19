@@ -35,7 +35,8 @@
   "devDependencies": {
     "@babel/core": "~7.9.0",
     "@react-navigation/native": "^5.9.3",
-    "react-native-image-picker": "^3.2.1"
+    "react-native-image-picker": "^3.2.1",
+    "react-navigation": "^4.4.4"
   },
   "private": true
 }

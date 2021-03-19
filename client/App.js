@@ -25,10 +25,9 @@ export default function App() {
       // <LoginScreen/>
       //<SignupScreen/>
       // <NewListingScreen/>
-      // <ProfileScreen/>
-// <FeedScreen/>
+      //<ProfileScreen/>
 
-// <FullListing/>
+// <FullListing listID={73}/>
 //  <AuthNavigator/>
 // <FeedScreen/>
 <ListingsNavigator/>

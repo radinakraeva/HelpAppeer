@@ -12,9 +12,12 @@ import MapView, {Circle} from 'react-native-maps';
 import ImagePreview from '../Components/ImagePreview';
 import * as Location from 'expo-location';
 import {getDistanceBetween} from 'geolocation-distance-between';
+import {useNavigation} from "@react-navigation/native";
 
 
-const FullListing = ({listID, ...props}) => {
+const FullListing = (props) => {
+
+    const navigation = useNavigation();
 
     const [listingData, setListingData] = useState({
         user: '',
@@ -63,27 +66,23 @@ const FullListing = ({listID, ...props}) => {
 
     function timeDifference(date1, date2){
         let diffMs = (date2 - Date.parse(date1));
-        return Math.round(((diffMs % 86400000) % 3600000) / 60000);
+        return Math.round(Math.floor(diffMs / 60000));
+
     }
 
     const getTime = () => {
-        return timeDifference(listingData.time, Date.now())
+        let diff = timeDifference(listingData.time, Date.now());
+        if(diff > 60){
+            let hours = Math.round(diff / 60);
+            if(hours == 1) return '1 hour ago'
+            return Math.round(diff / 60) + ' hours ago'
+        }
+        return diff + ' min ago'
     };
 
     //TODO: rewrite this to just take u back
     const goBack = () => {
-        const msg = "Are you sure you want to go back?\nAll your progress will be lost.";
-        Alert.alert("Exit", msg,
-            [{
-                text: 'Cancel',
-                onPress: () => console.log('shantay, you stay'),
-                style: 'cancel',
-            }, {
-                text: 'OK',
-                onPress: () => console.log('sashay, away'),
-            }],
-            {cancelable: true}
-        );
+        navigation.navigate('FeedScreen')
     };
 
     //TODO: fill this function
@@ -153,9 +152,7 @@ const FullListing = ({listID, ...props}) => {
     };
 
     const getList = () => {
-        listingsApi.getListing({listingID: '5'}).then( r => {
-
-            console.log("hello");
+        listingsApi.getListing({listingID: props.route.params.listID}).then( r => {
             // console.log(r.data);
 
             if (r.data != null) {
@@ -195,7 +192,7 @@ const FullListing = ({listID, ...props}) => {
                <View style={styles.middlePart}>
                     {/*TODO: all of these!*/}
                    <Text>{getDistance()} km away (not sure if works)</Text>
-                   <Text>{getTime()} mins ago</Text>
+                   <Text>{getTime()}</Text>
 
                     <Text style={styles.text}> profile!!</Text>
 

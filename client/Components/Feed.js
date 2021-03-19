@@ -46,7 +46,7 @@ export default function Feed(){
 
     function timeDifference(date1, date2){
         let diffMs = (date2 - Date.parse(date1));
-        return Math.round(((diffMs % 86400000) % 3600000) / 60000);
+        return Math.round(Math.floor(diffMs / 60000));
     }
 
     function getImage(category){
@@ -58,6 +58,7 @@ export default function Feed(){
 
     const listingRender = ({ item }) => (
         <Listing
+            listing_id = {item.listing_id}
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
