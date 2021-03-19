@@ -22,7 +22,7 @@ const SignupScreen  = () => {
     const navigation = useNavigation();
 
     const [data, setData] = React.useState({
-        name: '',
+        name:  '',
         username: '',
         address: '',
         city: '',
