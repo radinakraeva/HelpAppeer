@@ -28,7 +28,7 @@ export default function App() {
       //<ProfileScreen/>
 
 // <FullListing listID={73}/>
- <AuthNavigator/>
+  <AuthNavigator/>
 // <FeedScreen/>
 // <ListingsNavigator/>
 // <Image source = {require('Resources/Images/Alina.jpg')}/>

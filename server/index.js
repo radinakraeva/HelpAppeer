@@ -41,6 +41,7 @@ app.post('/register', (req, res) => {
     const city = req.fields.city
     const mobile = req.fields.mobile
     const picture = req.fields.picture
+    const token = req.fields.token
     console.log(name);
     console.log(username);
     console.log(email);
@@ -49,10 +50,11 @@ app.post('/register', (req, res) => {
     console.log(city);
     console.log(mobile);
     console.log(picture);
+    console.log(token);
 
     connection.query(
-        "INSERT INTO Register (Name, Username, Email, Password, Address, City, Mobile, Picture) VALUES (? ,? ,? ,? ,? ,? ,? ,?)",
-        [name, username, email, password, address, city, mobile, picture],
+        "INSERT INTO Register (Name, Username, Email, Password, Address, City, Mobile, Token, Picture) VALUES (? ,? ,? ,? ,? ,? ,? ,? ,?)",
+        [name, username, email, password, address, city, mobile, token, picture],
         (err, result) => {
             if (err){
                 throw err;
@@ -92,9 +94,9 @@ app.post('/verify', (req, res) => {
 })
 
 app.post('/verifying', (req, res) => {
-    console.log('received request');
 
     const username = req.fields.username
+    console.log('received request');
 
     connection.query(
         "SELECT Username FROM Register where username = (?)", [username],

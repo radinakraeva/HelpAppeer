@@ -7,6 +7,7 @@ const verifyUser = (userInfo) => {
 }
 
 const verify = (userInfo) => {
+    console.log("This Place");
     return client.post("/verifying", userInfo);
 }
 

@@ -31,6 +31,7 @@ const SignupScreen  = () => {
         password: '',
         passwordConfirm: '',
         pic: {},
+        token: '',
         secureTextEntry: true,
     });
 
@@ -120,9 +121,10 @@ const SignupScreen  = () => {
                 email: data.email,
                 password: data.password,
                 picture: JSON.stringify(data),
+                token: data.token,
             }
             console.log(submission);
-            usersApi.verify(submission).then(r => {
+            usersApi.verify(data).then(r => {
                 console.log("here " + r.data);
                 if (r.data === 'NO USER') {
                     usersApi.addUser(submission).then(() => alert('Added new user'));
