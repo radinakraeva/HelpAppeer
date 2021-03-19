@@ -37,14 +37,15 @@ app.post('/register', (req, res) => {
     const username = req.fields.username
     const email = req.fields.email
     const password = req.fields.password
+    const token = req.fields.expoPushToken
     // console.log(name);
     // console.log(username);
     // console.log(email);
     // console.log(password);
 
     connection.query(
-        "INSERT INTO Register (Name, Username, Email, Password) VALUES (? ,? ,? ,?)",
-        [name, username, email, password],
+        "INSERT INTO Register (Name, Username, Email, Password, Token) VALUES (? ,? ,? ,? ,? )",
+        [name, username, email, password, token],
         (err, result) => {
             if (err){
                 throw err;
@@ -204,6 +205,32 @@ app.post('/sendMessage',(req, res) => {
     )
 }
 )
+
+app.post('/getReceiverToken', (req, res) => {
+    console.log('received request');
+
+    const username = req.fields.username
+
+    connection.query(
+        "SELECT Token FROM Register where name = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+            } else if (result) {
+                //check if result[0] is not falsy, if it's not, username is in the database
+                if(result[0]){
+                    if (result[0].Token != '') {
+                        res.send(result[0]);
+                    } else {
+                        res.send('');
+                    }
+
+                }else{
+                    res.send('');
+                }
+            }
+        });
+})
 
 function renderToListingsList(listings){
     const listingsArray = []
