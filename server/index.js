@@ -37,14 +37,22 @@ app.post('/register', (req, res) => {
     const username = req.fields.username
     const email = req.fields.email
     const password = req.fields.password
-    // console.log(name);
-    // console.log(username);
-    // console.log(email);
-    // console.log(password);
+    const address = req.fields.address
+    const city = req.fields.city
+    const mobile = req.fields.mobile
+    const picture = req.fields.picture
+    console.log(name);
+    console.log(username);
+    console.log(email);
+    console.log(password);
+    console.log(address);
+    console.log(city);
+    console.log(mobile);
+    console.log(picture);
 
     connection.query(
-        "INSERT INTO Register (Name, Username, Email, Password) VALUES (? ,? ,? ,?)",
-        [name, username, email, password],
+        "INSERT INTO Register (Name, Username, Email, Password, Address, City, Mobile, Picture) VALUES (? ,? ,? ,? ,? ,? ,? ,?)",
+        [name, username, email, password, address, city, mobile, picture],
         (err, result) => {
             if (err){
                 throw err;
@@ -83,10 +91,32 @@ app.post('/verify', (req, res) => {
         });
 })
 
+app.post('/verifying', (req, res) => {
+    console.log('received request');
+
+    const username = req.fields.username
+
+    connection.query(
+        "SELECT Username FROM Register where username = (?)", [username],
+        function (error, result) {
+            console.log("This Point")
+            if (error) {
+                console.log(error);
+            } else if (result) {
+                //check if result[0] is not falsy, if it's not, username is in the database
+                if(result[0]){
+                    console.log(result);
+                    res.send('USER');
+                }else{
+                    res.send('NO USER');
+                }
+            }
+        });
+})
 
 app.post('/createListing', (req, res) => {
     console.log('received data');
-    // console.log(req.fields);
+    console.log(req.fields);
 
 
     const listing = req.fields.listing;
