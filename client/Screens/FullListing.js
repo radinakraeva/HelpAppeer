@@ -80,7 +80,6 @@ const FullListing = (props) => {
         return diff + ' min ago'
     };
 
-    //TODO: rewrite this to just take u back
     const goBack = () => {
         navigation.navigate('FeedScreen')
     };

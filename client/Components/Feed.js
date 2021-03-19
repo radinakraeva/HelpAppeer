@@ -24,6 +24,7 @@ export default function Feed(){
         setListings(r.data);
     }
 
+
     const getLocation = async () => {
         const {granted} = await Location.requestPermissionsAsync();
         if (!granted) return;

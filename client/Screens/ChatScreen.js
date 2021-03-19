@@ -72,13 +72,40 @@ export default function ChatScreen({listing_id, username, receiver}){
         setMessages(m.data);
     }
 
+    const sendPushNotification = async (expoPushToken) => {
+        const message = {
+            to: expoPushToken,
+            sound: 'default',
+            title: 'Update on your listing!',
+            body: 'Tap to view the message',
+            data: { someData: 'goes here' },
+        };
+
+        await fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Accept-encoding': 'gzip, deflate',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(message),
+        });
+    };
+
     const enter = () =>{
         console.log("Sending Message");
         let currentDate = new Date();
         let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
-        msgAPI.sendMessage(listing_id,username,receiver,newMessage, formattedDate)
+        msgAPI.sendMessage(listing_id,username,receiver,newMessage, formattedDate);
         updateNewMessage("");
         messagesList.current.scrollToEnd();
+
+        //send notif to receiver
+        // const rec = msgAPI.getReceiver(receiver);
+        // if (rec != '') {
+        //     sendPushNotification(rec).then(()=>console.log("notif sent!"), ()=>console.log("notif failed"));
+        // }
+
         setTimeout(loadMessages, 300);
     }
 

@@ -41,7 +41,6 @@ app.post('/register', (req, res) => {
     const city = req.fields.city
     const mobile = req.fields.mobile
     const picture = req.fields.picture
-    const token = req.fields.token
     console.log(name);
     console.log(username);
     console.log(email);
@@ -94,6 +93,7 @@ app.post('/verify', (req, res) => {
 })
 
 app.post('/verifying', (req, res) => {
+    console.log('received request');
 
     const username = req.fields.username
     console.log('received request');
