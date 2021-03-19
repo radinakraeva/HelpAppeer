@@ -15,6 +15,16 @@ function Listing({listing_id, title, category, image, profilePicture, timeSinceP
         navigation.navigate('FullListing', {listID: listing_id})
     }
 
+    let timeMeasurment = 'min';
+
+    if(timeSincePosting > 60){
+        timeSincePosting = Math.round(timeSincePosting / 60);
+
+        if(timeSincePosting == 1)timeMeasurment = 'hour';
+        else timeMeasurment = 'hours';
+    }
+
+
     return (
         <TouchableWithoutFeedback onPress = {() =>seeListing()}>
         <View style = {styles.listing}>
@@ -31,7 +41,7 @@ function Listing({listing_id, title, category, image, profilePicture, timeSinceP
                     </View>
                 </View>
                 <View style = {styles.lowerRightSection}>
-                    <Text style = {{color: ColourPalette.darkBlue}}>{timeSincePosting} min ago</Text>
+                    <Text style = {{color: ColourPalette.darkBlue}}>{timeSincePosting} {timeMeasurment} ago</Text>
                     <Text style = {{color: ColourPalette.darkBlue, opacity: .6}}><Icon name="location" size={19} color={ColourPalette.darkBlue} />{distance}km away</Text>
                 </View>
             </View>

@@ -66,11 +66,18 @@ const FullListing = (props) => {
 
     function timeDifference(date1, date2){
         let diffMs = (date2 - Date.parse(date1));
-        return Math.round(((diffMs % 86400000) % 3600000) / 60000);
+        return Math.round(Math.floor(diffMs / 60000));
+
     }
 
     const getTime = () => {
-        return timeDifference(listingData.time, Date.now())
+        let diff = timeDifference(listingData.time, Date.now());
+        if(diff > 60){
+            let hours = Math.round(diff / 60);
+            if(hours == 1) return '1 hour ago'
+            return Math.round(diff / 60) + ' hours ago'
+        }
+        return diff + ' min ago'
     };
 
     //TODO: rewrite this to just take u back
@@ -185,7 +192,7 @@ const FullListing = (props) => {
                <View style={styles.middlePart}>
                     {/*TODO: all of these!*/}
                    <Text>{getDistance()} km away (not sure if works)</Text>
-                   <Text>{getTime()} mins ago</Text>
+                   <Text>{getTime()}</Text>
 
                     <Text style={styles.text}> profile!!</Text>
 
