@@ -13,6 +13,9 @@ import ImagePreview from '../Components/ImagePreview';
 import * as Location from 'expo-location';
 import {getDistanceBetween} from 'geolocation-distance-between';
 import {useNavigation} from "@react-navigation/native";
+import Icon from 'react-native-vector-icons/EvilIcons';
+import CircleIcon from '../Components/CircleIcon';
+import CircleImage from '../Components/CircleImage';
 
 
 const FullListing = (props) => {
@@ -102,22 +105,6 @@ const FullListing = (props) => {
         );
     };
 
-    const getPostingDate = () => {
-        const date =
-            listingData.time.getDate() + "/" +
-            listingData.time.getMonth() + "/" +
-            listingData.time.getFullYear() + " " +
-            formatTime(listingData.time.getHours()) + ":" +
-            formatTime(listingData.time.getMinutes());
-        return date;
-    };
-
-    const formatTime = (value) => {
-        if (value < 10) {
-            return "0"+value;
-        } else return value;
-    };
-
     const getCoverPhoto = () => {
         let cover;
         if (!isEmpty(listingData.listing.photo1)) {
@@ -190,10 +177,17 @@ const FullListing = (props) => {
                 </View>
                <View style={styles.middlePart}>
                     {/*TODO: all of these!*/}
-                   <Text>{getDistance()} km away (not sure if works)</Text>
-                   <Text>{getTime()}</Text>
 
-                    <Text style={styles.text}> profile!!</Text>
+                    <View style={styles.info}>
+                        <CircleImage image={require('../Resources/Images/Alina.jpg')}/>
+                        <Text style = {styles.distAndTimeText}>££</Text>
+                        <View style={styles.infoRight}>
+                            <Text style = {styles.distAndTimeText}>     {getTime()}</Text>
+
+                            <Text style = {styles.distAndTimeText}><Icon name="location" size={19} color={ColourPalette.darkBlue} />{getDistance()}km away</Text>
+
+                        </View>
+                        </View>
 
                     <Text style={styles.subtitle}>Category</Text>
                     {/*TODO: show category*/}
@@ -301,6 +295,27 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 250,
 
+    },
+
+    info:{
+        flexDirection: 'row',
+        // justifyContent: 'center',
+        marginBottom: 5,
+        flex: 3,
+        width: '100%',
+        justifyContent: 'space-between',
+
+    },
+    infoRight:{
+        flexDirection: 'column',
+        textAlign: 'right',
+        flex: 1,
+    },
+    distAndTimeText:{
+        color: ColourPalette.darkBlue,
+        // paddingHorizontal: 50,
+        fontSize: 17,
+        opacity: 0.7
     },
 
     map:{

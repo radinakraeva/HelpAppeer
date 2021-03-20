@@ -5,12 +5,13 @@ import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
 import { getDistanceBetween } from 'geolocation-distance-between';
 
-export default function Feed(){
+export default function Feed({sort, filter, ...props}){
 
     const [listings, setListings] = useState([]);
     const [location, setLocation] = React.useState({
         location: {},
     });
+
 
     const[refreshing, setRefreshing] = useState(false);
 

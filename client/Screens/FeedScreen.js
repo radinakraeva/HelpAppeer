@@ -21,6 +21,10 @@ export default function FeedScreen(){
         navigation.navigate("NewListingScreen");
     };
 
+    const goToChat = () => {
+        navigation.navigate("ChatListScreen");
+    };
+
     const showFilterMenu = () => {
             return (
                 <View style={styles.filterMenu}>
@@ -66,20 +70,28 @@ export default function FeedScreen(){
                     <Text style = {styles.text}>Find a listing in</Text>
                     <Text style = {styles.locationText}>Glasgow</Text>
                 </View>
-                <View style = {styles.topRightSection}>
-                    <IconButton iconName='filter' iconBgColor = {ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()}/>
-                </View>
+
             </View>
 
-            <Feed style = {styles.feed} />
+            <Feed style = {styles.feed} sort={filterMenu.sorting} filter={[filterMenu.prices1,filterMenu.prices2,filterMenu.prices3]}/>
             {filterMenu.visible ? showFilterMenu() : null}
 
             <View style = {styles.bottomSection}>
+                <View style={{marginHorizontal: 70}}>
+                    <IconButton iconName='filter' iconBgColor = {filterMenu.visible ? ColourPalette.yellow : ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()} />
+                </View>
                 <Button title = "Add" onPress={newListing} />
+                <View style={{marginHorizontal: 70}}>
+                    <IconButton iconName='message1' iconBgColor = {ColourPalette.darkBlue} size ={45} onPress={()=>goToChat()}/>
+                </View>
             </View>
         </SafeAreaView>
 
     );
+
+    // <View style = {styles.topRightSection}>
+    //     <IconButton iconName='filter' iconBgColor = {ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()}/>
+    // </View>
 }
 
 const styles = StyleSheet.create({
@@ -117,6 +129,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         alignItems: 'center',
         height: '8%',
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     filterMenu: {
         backgroundColor: ColourPalette.darkBlue,
