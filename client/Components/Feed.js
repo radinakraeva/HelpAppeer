@@ -23,6 +23,8 @@ export default function Feed({sort, filter, ...props}){
     const loadListings = async() => {
         const r = await listingsApi.getListings();
         setListings(r.data);
+
+
     }
 
 

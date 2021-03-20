@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View,Text} from 'react-native'
 import ColourPalette from '../Resources/ColourPalette';
 
-export default function PriceSelection({text, color, onPress}) {
+export default function PriceSelection({text, color, onPress, el=0}) {
     return (
         <View>
-            <TouchableOpacity onPress={onPress} style={{...styles.container, backgroundColor: color}}>
+            <TouchableOpacity onPress={onPress} style={{...styles.container, elevation: el,  backgroundColor: color}}>
                 <Text style={{...styles.pound, color: color === ColourPalette.darkBlue ? ColourPalette.yellow : ColourPalette.darkBlue}} >{text}</Text>
             </TouchableOpacity>
         </View>

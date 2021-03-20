@@ -256,7 +256,8 @@ const NewListingScreen = (props) => {
                 style: 'cancel',
             }, {
                 text: 'OK',
-                onPress: () => console.log('sashay, away'),
+                onPress: () =>{ console.log('sashay, away')
+                    navigation.navigate("FeedScreen"); },
             }],
             { cancelable : true}
         );
@@ -421,9 +422,9 @@ const NewListingScreen = (props) => {
 
             <Text style={styles.subtitle}>Price</Text>
             <View style={styles.pounds}>
-                <PriceSelection text={'£'} color={data.price == 1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("1")}/>
-                <PriceSelection text={'££'} color={data.price == 2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("2")}/>
-                <PriceSelection text={'£££'} color={data.price == 3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => priceChange("3")}/>
+                <PriceSelection text={'£'} color={data.price == 1 ? ColourPalette.yellow : ColourPalette.darkBlue} el={5} onPress={() => priceChange("1")}/>
+                <PriceSelection text={'££'} color={data.price == 2 ? ColourPalette.yellow : ColourPalette.darkBlue} el={5} onPress={() => priceChange("2")}/>
+                <PriceSelection text={'£££'} color={data.price == 3 ? ColourPalette.yellow : ColourPalette.darkBlue} el={5} onPress={() => priceChange("3")}/>
             </View>
 
 
