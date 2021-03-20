@@ -31,7 +31,7 @@ const SignupScreen  = () => {
         password: '',
         passwordConfirm: '',
         pic: {},
-        token: '',
+        token: 't',
         secureTextEntry: true,
     });
 

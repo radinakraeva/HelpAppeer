@@ -13,6 +13,7 @@ import ChatListScreen from '../Screens/ChatListScreen';
 import ListingsNavigator from "./ListingsNavigator";
 import FullListing from "../Screens/FullListing";
 import PostedAnimationScreen from "../Screens/PostedAnimationScreen";
+import ProfileScreen from '../Screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const AuthNavigator  = () => (
             <Stack.Screen name='FullListing' component={FullListing} initialParams={{ listID: 20 }}/>
             <Stack.Screen name='PostedAnimationScreen' component={PostedAnimationScreen}/>
             <Stack.Screen name='ChatScreen' component={ChatScreen}/>
+            <Stack.Screen name='ProfileScreen' component={ProfileScreen} initialParams={{ user: 'a' }}/>
         </Stack.Navigator>
     </NavigationContainer>
 

@@ -69,17 +69,16 @@ app.post('/register', (req, res) => {
 app.post('/registers',(req, res) => {
     console.log("Getting the user data");
 
-    const username = req.fields.username;
+    const username = req.fields.userN;
 
     connection.query(
-        "SELECT * FROM Listings WHERE username = (?)", [username],
+        "SELECT * FROM Register WHERE username = (?)", [username],
         function (error, result) {
             if (error) {
                 console.log(error);
                 res.send(null);
             } else if (result) {
                 if(result[0]){
-                    // console.log(result);
                     res.send(result);
                 }
 

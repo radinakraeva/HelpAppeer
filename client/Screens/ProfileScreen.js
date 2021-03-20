@@ -1,5 +1,5 @@
-import React from 'react';
-import {SafeAreaView, View, TextInput, StyleSheet, Dimensions, TouchableOpacity, Text, resizeMode} from 'react-native';
+import React, {useEffect} from 'react';
+import {SafeAreaView, View, TextInput, StyleSheet, TouchableOpacity, Text,} from 'react-native';
 
 import CircleImage from '../Components/CircleImage';
 import ColourPalette from '../Resources/ColourPalette';
@@ -9,12 +9,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ProfileFeed from '../Components/ProfileFeed';
-import {useEffect} from 'react/cjs/react.production.min';
-
-import listingsApi from '../api/listingsApi';
 import usersApi from '../api/usersApi';
 
-function ProfileScreen({username}) {
+const ProfileScreen = (props) => {
 
     const [userData, setUserData] = React.useState({
         name:  '',
@@ -23,7 +20,6 @@ function ProfileScreen({username}) {
         city: '',
         mobile: '',
         email: '',
-        password: '',
         picture: {
             pic: {},
         },
@@ -32,7 +28,7 @@ function ProfileScreen({username}) {
     useEffect(() => getData(), []);
 
     const getData = () => {
-        usersApi.getUser({username}).then( r => {
+        usersApi.getUser({userN: props.route.params.user}).then( r => {
 
             if (r.data != null) {
                 const data = r.data[0];
@@ -43,7 +39,6 @@ function ProfileScreen({username}) {
                 const city = data.city;
                 const mobile = data.mobile;
                 const email = data.email;
-                const password = data.password;
 
                 setUserData({
                     name:  name,
@@ -52,8 +47,7 @@ function ProfileScreen({username}) {
                     city: city,
                     mobile: mobile,
                     email: email,
-                    password: password,
-                    pic: picture,
+                    picture: picture,
                 });
 
             }
@@ -70,25 +64,25 @@ function ProfileScreen({username}) {
                     <CircleImage  resizeMode={'cover'} size={110} image={require('../Resources/Images/Mark.png')} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
                     <View>
-                        <Text style={styles.writing}>Mark Dunlop</Text>
-                        <Text style={styles.user}>@MarkD</Text>
+                        <Text style={styles.writing}>{userData.picture.name}</Text>
+                        <Text style={styles.user}>{userData.picture.username}</Text>
                     </View>
                 </View>
             <View style={styles.cent}>
                 <Ionicons name='location-sharp' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>317 MobileApp Development Street</Text>
+                <Text style={styles.fields}>{userData.picture.address}</Text>
             </View>
             <View style={styles.cent}>
                 <MaterialIcons name='location-city' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>Glasgow</Text>
+                <Text style={styles.fields}>{userData.city}</Text>
             </View>
             <View style={styles.cent}>
                 <MaterialCommunityIcons name='cellphone-basic' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>07317312317</Text>
+                <Text style={styles.fields}>{userData.mobile}</Text>
             </View>
             <View style={styles.cent}>
                 <MaterialCommunityIcons name='email' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>MarkD@Gmail.com</Text>
+                <Text style={styles.fields}>{userData.email}</Text>
             </View>
             <View style={styles.bord}>
                 <TouchableOpacity style={styles.alin} onPress={message}>
