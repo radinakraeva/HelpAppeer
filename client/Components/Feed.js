@@ -20,9 +20,36 @@ export default function Feed({sort, filter, ...props}){
         getLocation();
     }, []);
 
+    useEffect(() => {
+        filterListings();
+
+    },[filter]);
+
+    const filterListings = async () => {
+        const r = await listingsApi.getListings();
+        let lists = r.data;
+        console.log(lists);
+
+        let filteredListings = [];
+        console.log(filter);
+        if (filter.includes(false)) {
+            for (let index = 0; index < lists.length; index++) {
+                if (filter[lists[index].priceCategory.length -1]) {
+                    filteredListings.push(lists[index])
+                }
+            }
+            console.log(filteredListings);
+            setListings(filteredListings);
+        }
+
+
+    };
+
     const loadListings = async() => {
         const r = await listingsApi.getListings();
         setListings(r.data);
+
+
 
 
     }

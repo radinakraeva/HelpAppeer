@@ -89,9 +89,7 @@ export default function FeedScreen(){
 
     );
 
-    // <View style = {styles.topRightSection}>
-    //     <IconButton iconName='filter' iconBgColor = {ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()}/>
-    // </View>
+
 }
 
 const styles = StyleSheet.create({
@@ -114,10 +112,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: 'center',
     },
-    topRightSection:{
-        marginTop: 13,
-        alignItems: 'flex-end',
-    },
+
     locationText:{
         fontSize: 24,
         color: ColourPalette.yellow,
