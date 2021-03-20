@@ -15,6 +15,10 @@ const addUser = (userInfo) => {
     return client.post("/register", userInfo);
 }
 
-export default { addUser, verifyUser, verify
+const getUser = (userInfo) => {
+    return client.post("/registers", userInfo);
+}
+
+export default { addUser, verifyUser, verify, getUser
 };
 
