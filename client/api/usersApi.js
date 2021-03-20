@@ -15,8 +15,8 @@ const addUser = (userInfo) => {
     return client.post("/register", userInfo);
 }
 
-const getUser = (userInfo) => {
-    return client.post("/registers", userInfo);
+const getUser = (userN) => {
+    return client.post("/registers", userN);
 }
 
 export default { addUser, verifyUser, verify, getUser
