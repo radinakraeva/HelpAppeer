@@ -40,6 +40,7 @@ app.post('/register', (req, res) => {
     const address = req.fields.address
     const city = req.fields.city
     const mobile = req.fields.mobile
+    const token = req.fields.token
     const picture = req.fields.picture
     console.log(name);
     console.log(username);
@@ -48,12 +49,13 @@ app.post('/register', (req, res) => {
     console.log(address);
     console.log(city);
     console.log(mobile);
-    console.log(picture);
     console.log(token);
+    console.log(picture);
+
 
     connection.query(
-        "INSERT INTO Register (Name, Username, Email, Password, Address, City, Mobile, Token, Picture) VALUES (? ,? ,? ,? ,? ,? ,? ,? ,?)",
-        [name, username, email, password, address, city, mobile, token, picture],
+        "INSERT INTO Register (Name, Username, Email, Password, Address, City, Mobile, Picture, Token) VALUES (? ,? ,? ,? ,? ,? ,? ,? ,?)",
+        [name, username, email, password, address, city, mobile, picture, token],
         (err, result) => {
             if (err){
                 throw err;
