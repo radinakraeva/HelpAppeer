@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
 import Feed from '../Components/Feed';
 
@@ -7,52 +7,100 @@ import ColourPalette from '../Resources/ColourPalette';
 import CircleIcon from '../Components/CircleIcon';
 import Button from '../Components/Button';
 import listingsApi from "../api/listingsApi";
+import {useNavigation} from '@react-navigation/native';
+import IconButton from '../Components/IconButton';
+import PriceSelection from '../Components/PriceSelection';
 
 export default function FeedScreen(){
 
+    const [filterMenu, toggleFilterMenu] = useState({visible: false, sorting: 'time', prices1: true, prices2: true, prices3: true});
+
+    const navigation = useNavigation();
+
+    const newListing = () => {
+        navigation.navigate("NewListingScreen");
+    };
+
+    const showFilterMenu = () => {
+            return (
+                <View style={styles.filterMenu}>
+                    <Text style={styles.filterMenuTitle}>Sort by</Text>
+                    <View style={styles.sortBy}>
+                        <PriceSelection text={'time'} color={filterMenu.sorting === 'time' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'time'})}/>
+                        <PriceSelection text={'distance'} color={filterMenu.sorting === 'distance' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'distance'})}/>
+                    </View>
+                    <Text style={styles.filterMenuTitle}>Filter</Text>
+                    <View style={styles.sortBy}>
+                        <PriceSelection text={'£'} color={filterMenu.prices1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices1()}/>
+                        <PriceSelection text={'££'} color={filterMenu.prices2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() =>changePrices2()}/>
+                        <PriceSelection text={'£££'} color={filterMenu.prices3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices3()}/>
+                    </View>
+
+                </View>
+            );
+    };
+
+
+    const changeMenu = () => {
+        filterMenu.visible ? toggleFilterMenu({...filterMenu, visible: false}) : toggleFilterMenu({...filterMenu, visible: true});
+
+    };
+
+    const changePrices1 = () => {
+        filterMenu.prices1 ? toggleFilterMenu({...filterMenu, prices1: false}) : toggleFilterMenu({...filterMenu, prices1: true});
+    };
+
+    const changePrices2 = () => {
+        filterMenu.prices2 ? toggleFilterMenu({...filterMenu, prices2: false}) : toggleFilterMenu({...filterMenu, prices2: true});
+    };
+
+    const changePrices3 = () => {
+        filterMenu.prices3 ? toggleFilterMenu({...filterMenu, prices3: false}) : toggleFilterMenu({...filterMenu, prices3: true});
+    };
+
     return (
-        <SafeAreaView style = {styles.feedScreen}>
+        <SafeAreaView style = {styles.feedScreen} >
             <View style = {styles.topSection}>
                 <View style = {styles.topLeftSection}>
-                    <CircleIcon iconName='menuunfold' iconColor = {ColourPalette.darkBlue} size ={43} />
-                </View>
-                <View style = {styles.topRightSection}>
+
                     <Text style = {styles.text}>Find a listing in</Text>
                     <Text style = {styles.locationText}>Glasgow</Text>
                 </View>
+                <View style = {styles.topRightSection}>
+                    <IconButton iconName='filter' iconBgColor = {ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()}/>
+                </View>
             </View>
 
-            <Feed style = {styles.feed}/>
+            <Feed style = {styles.feed} />
+            {filterMenu.visible ? showFilterMenu() : null}
 
-            <View style = {styles.topSection}>
-            <View style = {styles.bottomLeftSection}>
-                <CircleIcon iconName='filter' iconColor = {ColourPalette.darkBlue} ackground = {ColourPalette.darkBlue} size ={43} />
-            </View>
-            <View style = {styles.bottomCenterSection}>
-                <Button title = "Add" />
-            </View>
-            <View style = {styles.bottomRightSection}>
-                <CircleIcon iconName='message1' iconColor = {ColourPalette.darkBlue} background = {ColourPalette.darkBlue} size ={43} />
-            </View>
+            <View style = {styles.bottomSection}>
+                <Button title = "Add" onPress={newListing} />
             </View>
         </SafeAreaView>
+
     );
 }
 
 const styles = StyleSheet.create({
-    feed: {},
+    feed: {
+        position: 'absolute',
+        zIndex: 0,
+    },
     feedScreen: {
+        padding: 12,
+        paddingTop: 15,
         height: '100%',
+        width: '100%',
+
     },
     topSection: {
-        height: '10%',
+        height: '15%',
         flexDirection: 'row',
     },
     topLeftSection:{
-        flex:0.95,
-        marginTop: 13,
-        marginLeft: 10,
-        alignItems: 'flex-start',
+        flex:1,
+        justifyContent: 'center',
     },
     topRightSection:{
         marginTop: 13,
@@ -65,23 +113,28 @@ const styles = StyleSheet.create({
     text:{
         fontSize: 15,
     },
-    bottomSection: {
-        height: '20%',
-        flexDirection: 'row',
-    },
-    bottomLeftSection:{
-        flex: 0.14,
-        marginTop: 20,
-        marginLeft: 10,
-        alignItems: 'flex-start',
-    },
-    bottomCenterSection:{
-        flex:0.84,
-        marginTop: 5,
+    bottomSection:{
+        paddingTop: 10,
         alignItems: 'center',
+        height: '8%',
     },
-    bottomRightSection:{
-        marginTop: 20,
-        alignItems: 'flex-start',
+    filterMenu: {
+        backgroundColor: ColourPalette.darkBlue,
+        height: '40%',
+        zIndex:1,
+        borderRadius: 20,
+        marginTop: 10,
+    },
+    filterMenuTitle: {
+        fontSize: 25,
+        color: ColourPalette.white,
+        marginLeft: 20,
+        marginTop: 15,
+        fontWeight: 'normal'
+    },
+    sortBy: {
+        paddingVertical: 15,
+        flexDirection: 'row',
+        justifyContent: 'center',
     }
 })

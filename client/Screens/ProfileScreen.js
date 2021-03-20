@@ -7,8 +7,58 @@ import ColourPalette from '../Resources/ColourPalette';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import ProfileFeed from '../Components/ProfileFeed';
-function ProfileScreen() {
+import {useEffect} from 'react/cjs/react.production.min';
+
+import listingsApi from '../api/listingsApi';
+import usersApi from '../api/usersApi';
+
+function ProfileScreen({username}) {
+
+    const [userData, setUserData] = React.useState({
+        name:  '',
+        username: '',
+        address: '',
+        city: '',
+        mobile: '',
+        email: '',
+        password: '',
+        picture: {
+            pic: {},
+        },
+    });
+
+    useEffect(() => getData(), []);
+
+    const getData = () => {
+        usersApi.getUser({username}).then( r => {
+
+            if (r.data != null) {
+                const data = r.data[0];
+                const picture = JSON.parse(data.picture);
+                const name = data.name;
+                const username = data.username;
+                const address = data.address;
+                const city = data.city;
+                const mobile = data.mobile;
+                const email = data.email;
+                const password = data.password;
+
+                setUserData({
+                    name:  name,
+                    username: username,
+                    address: address,
+                    city: city,
+                    mobile: mobile,
+                    email: email,
+                    password: password,
+                    pic: picture,
+                });
+
+            }
+        });
+    }
 
     const message = () => {
         alert('Sorry This Profile Is Fixed For Testing');

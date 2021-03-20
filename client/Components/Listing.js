@@ -1,13 +1,32 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text, Touchable, TouchableWithoutFeedback} from 'react-native';
 import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 import ColourPalette from '../Resources/ColourPalette';
+import {useNavigation} from "@react-navigation/native";
+import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 
-export default function Listing({title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){
+
+function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){
+
+    const navigation = useNavigation();
+    function seeListing(){
+        navigation.navigate('FullListing', {listID: listing_id})
+    }
+
+    let timeMeasurment = 'min';
+
+    if(timeSincePosting > 60){
+        timeSincePosting = Math.round(timeSincePosting / 60);
+
+        if(timeSincePosting == 1)timeMeasurment = 'hour';
+        else timeMeasurment = 'hours';
+    }
+
 
     return (
+        <TouchableWithoutFeedback onPress = {() =>seeListing()}>
         <View style = {styles.listing}>
             <View style = {styles.upperSection}>
                 <Image style = {styles.image} source={image} />
@@ -22,11 +41,12 @@ export default function Listing({title, category, image, profilePicture, timeSin
                     </View>
                 </View>
                 <View style = {styles.lowerRightSection}>
-                    <Text style = {{color: ColourPalette.darkBlue}}>{timeSincePosting} min ago</Text>
+                    <Text style = {{color: ColourPalette.darkBlue}}>{timeSincePosting} {timeMeasurment} ago</Text>
                     <Text style = {{color: ColourPalette.darkBlue, opacity: .6}}><Icon name="location" size={19} color={ColourPalette.darkBlue} />{distance}km away</Text>
                 </View>
             </View>
         </View>
+        </TouchableWithoutFeedback>
     );
 }
 
@@ -76,3 +96,5 @@ const styles = StyleSheet.create({
         color: ColourPalette.darkBlue
     },
 })
+
+export default Listing;

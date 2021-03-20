@@ -10,7 +10,9 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
 import Feed from "./Components/Feed";
-import ChatScreen from './Screens/ChatScreen';
+import FullListing from "./Screens/FullListing";
+import ListingsNavigator from "./Navigation/ListingsNavigator";
+import {Image} from "react-native-web";
 
 export default function App() {
 
@@ -19,14 +21,16 @@ export default function App() {
   ]);*/
 
   return (
-      //<WelcomeScreen/>
-      //<LoginScreen/>
+      // <WelcomeScreen/>
+      // <LoginScreen/>
       //<SignupScreen/>
-      //<NewListingScreen/>
+      // <NewListingScreen/>
       //<ProfileScreen/>
-      //<FeedScreen/>
-      //<AuthNavigator/>
-      <ChatScreen listing_id={"1"} username = {"user"} receiver={"bob"}/>
-      //<ChatListScreen username = {"bob"}/>
+
+// <FullListing listID={73}/>
+  <AuthNavigator/>
+// <FeedScreen/>
+// <ListingsNavigator/>
+// <Image source = {require('Resources/Images/Alina.jpg')}/>
   );
 }
