@@ -94,7 +94,7 @@ app.post('/verify', (req, res) => {
     const password = req.fields.password
 
     connection.query(
-        "SELECT Password FROM Register where name = (?)", [username],
+        "SELECT Password FROM Register where username = (?)", [username],
         function (error, result) {
             if (error) {
                 console.log(error);
