@@ -20,9 +20,11 @@ const ProfileScreen = (props) => {
         city: '',
         mobile: '',
         email: '',
-        picture: {
-            pic: {},
-        },
+        password: '',
+        passwordConfirm: '',
+        pic: {},
+        token: 't',
+        secureTextEntry: true,
     });
 
     useEffect(() => getData(), []);
@@ -32,23 +34,26 @@ const ProfileScreen = (props) => {
 
             if (r.data != null) {
                 const data = r.data[0];
-                const picture = JSON.parse(data.picture);
-                const name = data.name;
-                const username = data.username;
-                const address = data.address;
-                const city = data.city;
-                const mobile = data.mobile;
-                const email = data.email;
+                const n = data["Name"];
+                const c = data["City"];
+                const a = data["Address"];
+                const m = data["Mobile"];
+                const e = data["Email"];
+                const u = props.route.params.user;
 
-                setUserData({
-                    name:  name,
-                    username: username,
-                    address: address,
-                    city: city,
-                    mobile: mobile,
-                    email: email,
-                    picture: picture,
+
+               setUserData({
+                   name:  n,
+                   username: u,
+                   address: a,
+                   city: c,
+                   mobile: m,
+                   email: e,
+                   pic: {},
                 });
+
+                console.log("u is " + u);
+                console.log("userData.email is " + userData.email);
 
             }
         });
@@ -64,13 +69,13 @@ const ProfileScreen = (props) => {
                     <CircleImage  resizeMode={'cover'} size={110} image={require('../Resources/Images/Mark.png')} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
                     <View>
-                        <Text style={styles.writing}>{userData.picture.name}</Text>
-                        <Text style={styles.user}>{userData.picture.username}</Text>
+                        <Text style={styles.writing}>{userData.name}</Text>
+                        <Text style={styles.user}>{userData.username}</Text>
                     </View>
                 </View>
             <View style={styles.cent}>
                 <Ionicons name='location-sharp' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>{userData.picture.address}</Text>
+                <Text style={styles.fields}>{userData.address}</Text>
             </View>
             <View style={styles.cent}>
                 <MaterialIcons name='location-city' size={30} style={{color:ColourPalette.yellow}}/>
@@ -91,7 +96,7 @@ const ProfileScreen = (props) => {
             </View>
             <View style={{marginTop:1, borderBottomWidth: 3, borderColor:ColourPalette.yellow,alignItems: 'center',}}>
                 <Text style={{fontSize: 25, paddingTop: 7, paddingBottom: 7,color: ColourPalette.yellow,
-                    fontWeight: 'bold',}} >Previous Orders</Text>
+                    fontWeight: 'bold',}} >Your Current Orders</Text>
             </View>
 
             <ProfileFeed/>
