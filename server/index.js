@@ -183,6 +183,27 @@ app.post('/getAListing',(req, res) => {
     );
 })
 
+app.post('/getSpecificListing',(req, res) => {
+    console.log("Getting the specific listing data");
+
+    const username = req.fields.userName;
+
+    connection.query(
+        "SELECT * FROM Listings WHERE username = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    // console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+})
 
 //make an array with all the listing and send it to the frontend
 app.post('/getListings', (req, res) => {

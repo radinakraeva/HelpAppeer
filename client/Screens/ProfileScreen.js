@@ -40,8 +40,9 @@ const ProfileScreen = (props) => {
                 const m = data["Mobile"];
                 const e = data["Email"];
                 const u = props.route.params.user;
-                /*const p = data["Picture"];*/
-                const p = JSON.parse(data["Picture"]);
+                /*const p = data["Picture"].pic.uri;*/
+                /*const p = JSON.parse(data["Picture"]);
+                const test = data.picture;*/
 
 
                setUserData({
@@ -54,8 +55,8 @@ const ProfileScreen = (props) => {
                    pic: p,
                 });
 
-                console.log("p is " + p);
-                console.log("userData.pic is " + userData.pic);
+                /*console.log("p is " + p);
+                console.log("userData.pic is " + userData.pic);*/
 
             }
         });

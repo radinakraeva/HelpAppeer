@@ -49,9 +49,6 @@ export default function Feed({sort, filter, ...props}){
         const r = await listingsApi.getListings();
         setListings(r.data);
 
-
-
-
     }
 
 
