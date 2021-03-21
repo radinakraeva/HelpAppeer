@@ -165,7 +165,7 @@ const SignupScreen  = () => {
         let options = {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
-            quality: 1,
+            quality: 0.5,
             base64: true,
 
         };
