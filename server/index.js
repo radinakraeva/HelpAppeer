@@ -183,6 +183,28 @@ app.post('/getAListing',(req, res) => {
     );
 })
 
+app.post('/getAListingUser',(req, res) => {
+    console.log("Getting the listing username");
+
+    const listingID = req.fields.listID;
+
+    connection.query(
+        "SELECT User FROM Listings WHERE listing_id = (?)", [listingID],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+})
+
 app.post('/getSpecificListing',(req, res) => {
     console.log("Getting the specific listing data");
 
@@ -216,18 +238,6 @@ app.post('/removeListing',(req, res) => {
 
     connection.query(
         "DELETE FROM Listings WHERE listing_id = (?)", [listingID],
-   /*     function (error, result) {
-            if (error) {
-                console.log(error);
-                res.send(null);
-            } else if (result) {
-                if(result[0]){
-                    // console.log(result);
-                    res.send(result);
-                }
-
-            }
-        }*/
     );
 })
 

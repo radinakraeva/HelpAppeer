@@ -12,16 +12,20 @@ import ProfileFeed from './ProfileFeed';
 function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory}){
 
     const navigation = useNavigation();
-    const[refreshing, setRefreshing] = useState(false);
+
 
     function seeListing(){
         navigation.navigate('FullListing', {listID: listing_id})
     }
 
     function removePost() {
-        listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
-
+        const user = listingsApi.getUser({listID: listing_id}).then(t => {
+            console.log(user);
+            listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
+                navigation.navigate('ProfileScreen', {user: user})
             });
+        })
+
     }
 
     return (
