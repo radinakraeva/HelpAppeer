@@ -102,7 +102,7 @@ const ProfileScreen = (props) => {
             </View>
             <View style={{marginTop:1, borderBottomWidth: 3, borderColor:ColourPalette.yellow,alignItems: 'center',}}>
                 <Text style={{fontSize: 25, paddingTop: 7, paddingBottom: 7,color: ColourPalette.yellow,
-                    fontWeight: 'bold',}} >Your Current Orders</Text>
+                    fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
 
             <ProfileFeed style = {styles.feed} user={userN}/>
