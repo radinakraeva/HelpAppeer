@@ -16,9 +16,9 @@ import {Image} from "react-native-web";
 
 export default function App() {
 
- /* LogBox.ignoreLogs([
+  LogBox.ignoreLogs([
     'Require cycle:'
-  ]);*/
+  ]);
 
   return (
       // <WelcomeScreen/>

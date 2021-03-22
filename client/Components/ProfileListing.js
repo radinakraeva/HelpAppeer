@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import {View, StyleSheet, Image, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
@@ -6,26 +6,36 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 import ColourPalette from '../Resources/ColourPalette';
 import {useNavigation} from "@react-navigation/native";
 import {NavigationInjectedProps, withNavigation} from 'react-navigation';
+import listingsApi from '../api/listingsApi';
+import ProfileFeed from './ProfileFeed';
 
-
-
-/*function ProfileListing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){*/
 function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory}){
 
     const navigation = useNavigation();
+
 
     function seeListing(){
         navigation.navigate('FullListing', {listID: listing_id})
     }
 
+    function removePost() {
+        const user = listingsApi.getUser({listID: listing_id}).then(t => {
+            console.log(user);
+            listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
+                navigation.navigate('ProfileScreen', {user: user})
+            });
+        })
+
+    }
+
     return (
         <View style = {styles.listing}>
-            {/*<TouchableWithoutFeedback onPress = {() =>seeListing()}>*/}
+            <TouchableWithoutFeedback onPress = {() =>seeListing()}>
             <View style = {styles.upperSection}>
                 <Image style = {styles.image} source={image}/>
                 <CircleImage size = {45} image ={profilePicture}/>
             </View>
-            {/*</TouchableWithoutFeedback>*/}
+            </TouchableWithoutFeedback>
             <View style = {styles.lowerSection}>
                 <View style = {styles.lowerLeftSection}>
                     <Text style = {styles.headerText}>{title}</Text>
@@ -36,7 +46,7 @@ function ProfileListing({listing_id, title, category, image, profilePicture, pri
                 </View>
                 <View style = {styles.lowerRightSection}>
                     <View style={styles.button}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={removePost}>
                         <Text style={{fontSize: 20, justifyContent: 'center',
                             alignItems: 'center',paddingLeft: 27, paddingTop: 3,fontWeight:'bold', color:'white' }}>Delete</Text>
                     </TouchableOpacity>
