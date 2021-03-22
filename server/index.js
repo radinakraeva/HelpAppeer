@@ -187,7 +187,6 @@ app.post('/getSpecificListing',(req, res) => {
     console.log("Getting the specific listing data");
 
     const username = req.fields.userN;
-    {console.log("index y" + req.fields.userN)}
 
     connection.query(
         "SELECT * FROM Listings WHERE user = (?)", [username],
@@ -199,6 +198,25 @@ app.post('/getSpecificListing',(req, res) => {
                 if(result[0]){
                     console.log(result);
                     res.send(renderToListingsList(result));
+                }
+
+            }
+        }
+    );
+})
+
+app.post('/getProfilePhoto', (req, res) => {
+    const username = req.fields.username;
+    connection.query(
+        "SELECT Picture FROM Register WHERE Username = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    // console.log(result);
+                    res.send(result);
                 }
 
             }

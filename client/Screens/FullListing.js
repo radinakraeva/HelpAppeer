@@ -14,6 +14,8 @@ import * as Location from 'expo-location';
 import {getDistanceBetween} from 'geolocation-distance-between';
 import {useNavigation} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/EvilIcons';
+import Icon2 from 'react-native-vector-icons/AntDesign';
+
 import CircleIcon from '../Components/CircleIcon';
 import CircleImage from '../Components/CircleImage';
 
@@ -105,8 +107,32 @@ const FullListing = (props) => {
         );
     };
 
+    const getPrice = () => {
+        if (listingData.listing.price == 1) {
+            return <Text style={styles.poundsStart}>£<Text style={styles.poundsEnd}>££</Text></Text>
+        } else if (listingData.listing.price == 2) {
+            return <Text style={styles.poundsStart}>££<Text style={styles.poundsEnd}>£</Text></Text>
+        } else {
+            return <Text style={styles.poundsStart}>£££</Text>
+
+        }
+    };
+
+    const getCat = () => {
+        if (listingData.listing.category === "food") {
+            return <Text style={styles.catText}><Icon2 name='shoppingcart' size={20} color={ColourPalette.darkBlue}/>  groceries</Text>
+        } else if (listingData.listing.category === "medicine") {
+            return <Text style={styles.catText}><Icon2 name='medicinebox' size={20} color={ColourPalette.darkBlue}/>  medicine</Text>
+        } else if (listingData.listing.category === "bills") {
+            return <Text style={styles.catText}><Icon2 name='bulb1' size={20} color={ColourPalette.darkBlue}/>  bills</Text>
+        } else {
+            return <Text style={styles.catText}><Icon2 name='gift' size={20} color={ColourPalette.darkBlue}/>  general</Text>
+        }
+    };
+
     const getCoverPhoto = () => {
         let cover;
+
         if (!isEmpty(listingData.listing.photo1)) {
             cover = listingData.listing.photo1;
         } else {
@@ -176,31 +202,38 @@ const FullListing = (props) => {
                     </View>
                 </View>
                <View style={styles.middlePart}>
-                    {/*TODO: all of these!*/}
 
-                    <View style={styles.info}>
-                        <CircleImage image={require('../Resources/Images/Alina.jpg')}/>
-                        <Text style = {styles.distAndTimeText}>££</Text>
-                        <View style={styles.infoRight}>
-                            <Text style = {styles.distAndTimeText}>     {getTime()}</Text>
+                   <View style={styles.topOfMiddle}>
+                    <View style={styles.userInf}>
+                        <CircleImage image={require('../Resources/Images/Alina.jpg')} size={50}/>
+                        <Text style={styles.userInfTime}>{getTime()}</Text>
+                    </View>
+                       <View style={styles.descInf}>
+                           <Text >
+                               <Text style={styles.descLabel}>asking for:  </Text>
+                               <Text style={styles.desc}>{listingData.listing.description}</Text>
 
-                            <Text style = {styles.distAndTimeText}><Icon name="location" size={19} color={ColourPalette.darkBlue} />{getDistance()}km away</Text>
+                           </Text>
+                           {/*<Text></Text>*/}
+                           {/*<Text style={styles.desc}>{listingData.listing.addInfo}</Text>*/}
 
-                        </View>
-                        </View>
+                       </View>
+                   </View>
 
-                    <Text style={styles.subtitle}>Category</Text>
-                    {/*TODO: show category*/}
+                   <View style={styles.priceAndCat}>
+                       <Text style={styles.categoriesText}>{getCat()}</Text>
+                       <Text style={styles.priceText}>{getPrice()}</Text>
 
-                    <Text style={styles.subtitle}>Price</Text>
-                    {/*TODO: show price; perhaps in the same line as cat?*/}
+                   </View>
 
-                    <Text style={styles.subtitle}>Description</Text>
-                    <Text style={styles.text}>{listingData.listing.description}</Text>
-                    <Text style={styles.text}>{listingData.listing.addInfo}</Text>
 
-                    <Text style={styles.subtitle}>Location</Text>
-                    <View >
+
+
+                   <View style={styles.mapTopView}>
+                        <Text style={styles.subtitle}>Location</Text>
+                       <Text style = {styles.mapDistance}><Icon name="location" size={16} color={ColourPalette.darkBlue} />{getDistance()}km away</Text>
+                   </View>
+                       <View>
                         <MapView
                             style={styles.map}
                             region={{
@@ -317,6 +350,19 @@ const styles = StyleSheet.create({
         fontSize: 17,
         opacity: 0.7
     },
+    poundsStart: {
+        color: ColourPalette.yellow,
+        fontWeight: 'bold',
+        fontSize: 22.5,
+        letterSpacing: 2,
+
+    }, poundsEnd: {
+        color: "rgba(0, 51, 102,0.75)",
+        fontWeight: 'normal',
+        fontSize: 22.5,
+
+        letterSpacing: 2,
+    },
 
     map:{
         height: 150,
@@ -325,8 +371,8 @@ const styles = StyleSheet.create({
     uploadedImages: {
         flex: 1,
         flexDirection: "row",
-        backgroundColor: ColourPalette.white,
-        borderRadius: 20,
+        // backgroundColor: ColourPalette.white,
+        // borderRadius: 20,
         justifyContent: 'center',
 
     },
@@ -341,6 +387,92 @@ const styles = StyleSheet.create({
         marginBottom: 40,
 
     },
+
+    topOfMiddle: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    userInf: {
+        width: '25%',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+    },
+    userInfTime: {
+        color: ColourPalette.darkBlue,
+        opacity: 0.8,
+        marginLeft: 5,
+        fontStyle: 'italic'
+    },
+    descInf:{
+        width: '75%',
+        paddingLeft: 10,
+        paddingTop: 10,
+    },
+
+    desc: {
+        fontSize: 17,
+        color: ColourPalette.darkBlue,
+
+    },
+    descLabel: {
+        color: "rgba(0, 51, 102,0.75)",
+        fontStyle: 'italic',
+        fontSize: 17,
+
+    },
+
+    mapTopView: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    mapDistance: {
+        flex: 1,
+        color: ColourPalette.darkBlue,
+        marginTop: 12,
+        marginBottom: 10,
+        fontSize: 15,
+        position: 'absolute',
+        right: 0,
+    },
+    priceAndCat:{
+        flex: 1,
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 20,
+
+    },
+    categoriesText: {
+        fontSize:20,
+        // color: ColourPalette,
+        fontStyle: 'italic',
+        position: 'absolute',
+        left: '15%',
+        // paddingVertical: 10,
+        // paddingHorizontal: 15,
+        // borderRadius: 20,
+        // backgroundColor: ColourPalette.white,
+
+
+    },
+    catText: {
+        color: ColourPalette.darkBlue,
+
+
+    },
+    priceText: {
+        // fontSize:20,
+        position: 'absolute',
+        right: '15%',
+        fontStyle: 'italic',
+        // paddingVertical: 10,
+        // paddingHorizontal: 15,
+        // // borderRadius: 20,
+        // // backgroundColor: ColourPalette.white,
+
+
+    },
+
 
 
 

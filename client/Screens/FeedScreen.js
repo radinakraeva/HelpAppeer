@@ -11,18 +11,21 @@ import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
 
-export default function FeedScreen(){
+export default function FeedScreen(props){
+
+    console.log('USERNAME' + props.route.params.username);
 
     const [filterMenu, toggleFilterMenu] = useState({visible: false, sorting: 'time', prices1: true, prices2: true, prices3: true});
 
     const navigation = useNavigation();
 
     const newListing = () => {
-        navigation.navigate("NewListingScreen");
+        navigation.navigate("NewListingScreen", {username: props.route.params.username});
     };
 
     const goToChat = () => {
-        navigation.navigate("ChatListScreen");
+        //doesn't currently work in the chat screen, need to change the way it receives props
+        navigation.navigate("ChatListScreen", {username: props.route.params.username});
     };
 
     const showFilterMenu = () => {
