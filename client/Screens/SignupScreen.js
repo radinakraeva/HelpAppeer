@@ -120,7 +120,7 @@ const SignupScreen  = () => {
                 email: data.email,
                 password: data.password,
                 token: data.token,
-                picture: JSON.stringify(data),
+                picture: JSON.stringify(data.pic),
             }
             // console.log(submission);
             usersApi.verify(data).then(r => {

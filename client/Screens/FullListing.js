@@ -42,6 +42,7 @@ const FullListing = (props) => {
     });
     const [userLocation, setUserLocation] = useState({lat2: 0, lon2: 0});
 
+
     useEffect(() => getList(), []);
     useEffect(()=> {getYourLocation()},[]);
 
@@ -227,8 +228,6 @@ const FullListing = (props) => {
                        <Text style={styles.priceText}>{getPrice()}</Text>
 
                    </View>
-
-
 
 
                    <View style={styles.mapTopView}>

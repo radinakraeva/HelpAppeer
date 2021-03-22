@@ -65,6 +65,14 @@ export default function Feed({sort, filter, ...props}){
 
     const loadListings = async() => {
         const r = await listingsApi.getListings();
+
+        // for (let listing in lists) {
+        //     // let user = listing.username;
+        //     let user = listing.creator;
+        //
+        //
+        // }
+
         setListings(r.data);
         setAllListings(r.data);
 
@@ -105,17 +113,21 @@ export default function Feed({sort, filter, ...props}){
         if(category == 'general') return require('../Resources/Images/general.png')
     }
 
-    getProfileImage("username???")
+    // getProfileImage("username???")
 
-    function getProfileImage(username){
-        usersApi.getProfileImage({username: username}).then(r => {
-            if(r.data != null){
-                const data = r.data[0]
-                const photo = JSON.parse(data.Picture)
-                console.log(photo.pic);
-                return photo.pic
-            }
-        })
+    const getProfileImage = (username) =>{
+
+        // usersApi.getProfileImage({username: username}).then(r => {
+        //     if(r.data != null){
+        //         const data = r.data[0]
+        //         console.log("here")
+        //         // console.log(r.data)
+        //         const photo = JSON.parse(data.Picture)
+        //         // console.log(photo);
+        //
+        //         return photo
+        //     }
+        // })
     }
 
     const listingRender = ({ item }) => (
@@ -124,8 +136,8 @@ export default function Feed({sort, filter, ...props}){
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            profilePicture={require('../Resources/Images/Michael.jpg')}
-            //profilePicture={getProfileImage("username???")}
+            // profilePicture={require('../Resources/Images/Michael.jpg')}
+            profilePicture={item.profilePic == null ? require('../Resources/Images/Alina.jpg') : item.profilePic}
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}

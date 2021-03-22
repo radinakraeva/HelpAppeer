@@ -249,6 +249,9 @@ app.post('/removeListing',(req, res) => {
 
 app.post('/getProfilePhoto', (req, res) => {
     const username = req.fields.username;
+    console.log(username)
+
+    console.log("getting profile photo")
     connection.query(
         "SELECT Picture FROM Register WHERE Username = (?)", [username],
         function (error, result) {
@@ -257,6 +260,7 @@ app.post('/getProfilePhoto', (req, res) => {
                 res.send(null);
             } else if (result) {
                 if(result[0]){
+                    console.log("database result")
                     // console.log(result);
                     res.send(result);
                 }
@@ -272,7 +276,7 @@ app.post('/getListings', (req, res) => {
     // console.log(req.fields);
 
     connection.query(
-        "SELECT * FROM Listings",
+        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username",
         function (error, result) {
             if (error) {
                 console.log(error);
@@ -367,8 +371,11 @@ app.post('/sendMessage',(req, res) => {
 
 function renderToListingsList(listings){
     const listingsArray = []
+    // console.log(listings)
     for (let i = listings.length - 1; i >= 0; i--){
         const listingData = JSON.parse(listings[i].listing)
+        // const picture = JSON.parse(listings[i].Picture) == null ? require('../client/Resources/Images/Alina.jpg') : JSON.parse(listings[i].Picture)
+        // console.log(picture);
         // console.log(listingData);
         const listing = {
             listing_id: listings[i].listing_id,
@@ -378,10 +385,13 @@ function renderToListingsList(listings){
             // image: require('../Resources/Images/food.png'),
             timeStamp: listings[i].time,
             priceCategory: '£'.repeat(listingData.price),
-            location: listingData.location
+            location: listingData.location,
+            creator: listings[i].user,
+            profilePic: JSON.parse(listings[i].Picture)
         }
         listingsArray.push(listing)
     }
+    // console.log(listingsArray)
     return listingsArray
 }
 
