@@ -6,6 +6,7 @@ import {LogBox} from 'react-native';
 import LoginScreen from "./Screens/LoginScreen";
 import FeedScreen from "./Screens/FeedScreen";
 import ChatListScreen from "./Screens/ChatListScreen";
+import ChatScreen from "./Screens/ChatScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
@@ -26,7 +27,7 @@ export default function App() {
       //<SignupScreen/>
       // <NewListingScreen/>
       //<ProfileScreen/>
-
+      //<ChatScreen listing_id = {1} receiver = {"bob"} username = {"user"}/>
 // <FullListing listID={73}/>
   <AuthNavigator/>
 // <FeedScreen/>
