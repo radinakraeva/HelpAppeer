@@ -18,6 +18,8 @@ app.listen(3001, function(){
     console.log('yay server running on port 3001');
 })
 
+
+
 connection.connect(function(error){
     if(error){
         console.log("couldn't connect" );
@@ -27,6 +29,10 @@ connection.connect(function(error){
         console.log('connected');
     }
 });
+
+app.get('/', function (req, res) {
+    res.send('Space! Safe! Protect!')
+})
 
 app.post('/register', (req, res) => {
     console.log('received data');
@@ -264,6 +270,29 @@ app.post('/getOpenConvos',(req, res) =>{
     )
 })
 
+app.post('/getConvoNames', (req, res) =>{
+    connection.query(
+        "SELECT listing_id, listing FROM `Listings`", [],
+        function(error, result){
+            if (error){
+                console.log(error);
+            }
+            else if (result){
+                res.send(unwrapListingNames(result));
+            }
+        }
+    )
+})
+
+function unwrapListingNames(listings){
+    let listingNames = {}
+    for(let listing in listings){
+        const listingData = JSON.parse(listings[listing].listing);
+        listingNames[listings[listing].listing_id] = listingData.title
+    }
+    console.log(listingNames);
+    return listingNames
+}
 app.post('/getMessages',(req, res) =>{
     console.log('I just ran, I ran all night and day....');
     connection.query(
@@ -308,6 +337,7 @@ function renderToListingsList(listings){
         const listing = {
             listing_id: listings[i].listing_id,
             title: listingData.title,
+            user: listings[i].user,
             category: listingData.category,
             // image: require('../Resources/Images/food.png'),
             timeStamp: listings[i].time,

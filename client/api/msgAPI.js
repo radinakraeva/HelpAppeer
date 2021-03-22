@@ -28,6 +28,11 @@ const getReceiver = (reci_user) => {
     return client.post('/getReceiverToken', {username: reci_user});
 }
 
-export default {getOpenConvos, getMessages, sendMessage, getReceiver};
+const getConvoNames = () => {
+    console.log('Getting convo names');
+    return client.post('/getConvoNames', {});
+}
+
+export default {getOpenConvos, getMessages, sendMessage, getReceiver, getConvoNames};
 
 

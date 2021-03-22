@@ -129,6 +129,8 @@ export default function Feed({sort, filter, ...props}){
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}
+            user = {props.username}
+            creator={item.user}
         />
     );
 

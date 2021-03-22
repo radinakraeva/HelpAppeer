@@ -24,7 +24,6 @@ export default function FeedScreen(props){
     };
 
     const goToChat = () => {
-        //doesn't currently work in the chat screen, need to change the way it receives props
         navigation.navigate("ChatListScreen", {username: props.route.params.username});
     };
 
@@ -76,7 +75,7 @@ export default function FeedScreen(props){
 
             </View>
 
-            <Feed style = {styles.feed} sort={filterMenu.sorting} filter={[filterMenu.prices1,filterMenu.prices2,filterMenu.prices3]}/>
+            <Feed style = {styles.feed} sort={filterMenu.sorting} filter={[filterMenu.prices1,filterMenu.prices2,filterMenu.prices3]} username ={props.route.params.username}/>
             {filterMenu.visible ? showFilterMenu() : null}
 
             <View style = {styles.bottomSection}>

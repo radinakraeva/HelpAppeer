@@ -90,7 +90,9 @@ const FullListing = (props) => {
     };
 
     //TODO: fill this function
-    const acceptListing = () => {};
+    const acceptListing = () => {
+        navigation.navigate("ChatScreen", {listing_id: props.route.params.listID ,username: props.route.params.username, receiver: props.route.params.creator, nowPending: true});
+    };
 
     const getPhotos = () => {
         return (
