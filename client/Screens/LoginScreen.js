@@ -58,7 +58,7 @@ const LoginScreen  = () => {
                 if(r.data === 'NO USER'){
                     alert('User with this username does not exist, please try again or register a new account');
                 }else if(r.data === 'AUTHORIZED'){
-                    navigation.navigate("FeedScreen");
+                    navigation.navigate("FeedScreen", {username: data.username});
                 }else if(r.data === 'INCORRECT'){
                     alert('Password is incorrect, please try again');
                 }
@@ -73,7 +73,7 @@ const LoginScreen  = () => {
     return (
 
         <SafeAreaView style={styles.backing}>
-            <Image style={styles.pic} source={require('../Resources/Images/SignIn.png')}/>
+            <Image style={styles.pic} source={require('../Resources/Images/LogIn.png')}/>
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Username" onChangeText={(input)=> usernameChange(input)}/>
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>

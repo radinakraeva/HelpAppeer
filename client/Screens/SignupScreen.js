@@ -14,7 +14,6 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ImageChooser from '../Components/ImageChooser';
 import ImagePreview from '../Components/ImagePreview';
 import * as ImagePicker from 'expo-image-picker';
-import listingsApi from '../api/listingsApi';
 
 const SignupScreen  = () => {
 
@@ -123,12 +122,12 @@ const SignupScreen  = () => {
                 token: data.token,
                 picture: JSON.stringify(data),
             }
-            console.log(submission);
+            // console.log(submission);
             usersApi.verify(data).then(r => {
-                console.log("here " + r.data);
+                // console.log("here " + r.data);
                 if (r.data === 'NO USER') {
                     usersApi.addUser(submission).then(() => alert('Added new user'));
-                    navigation.navigate("FeedScreen");
+                    navigation.navigate("FeedScreen", {username: data.username});
                 } else {
                     alert('User with this username already exists, please try another username');
                 }
@@ -171,7 +170,7 @@ const SignupScreen  = () => {
         };
         let result = await ImagePicker.launchImageLibraryAsync(options);
 
-        console.log(result);
+        // console.log(result);
 
         if (!result.cancelled) {
             const b64 = 'data:image/png;base64,'+result.base64;

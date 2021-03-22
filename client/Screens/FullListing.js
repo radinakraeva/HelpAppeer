@@ -107,6 +107,7 @@ const FullListing = (props) => {
 
     const getCoverPhoto = () => {
         let cover;
+
         if (!isEmpty(listingData.listing.photo1)) {
             cover = listingData.listing.photo1;
         } else {

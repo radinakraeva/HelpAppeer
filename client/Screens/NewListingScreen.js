@@ -20,8 +20,9 @@ import {useNavigation} from "@react-navigation/native";
 
 const NewListingScreen = (props) => {
 
-
     const navigation = useNavigation()
+
+    console.log(props.route.params.username  + ' UUUUUUUUUSE');
 
     const [data, setData] = React.useState({
         title: '',
@@ -32,7 +33,7 @@ const NewListingScreen = (props) => {
         photo2: {},
         photo3: {},
         location: {},
-        addInfo: ''
+        addInfo: '',
     });
 
     const titleChange = (input) => {
@@ -212,22 +213,9 @@ const NewListingScreen = (props) => {
         } else { //if not, submit
 
             databaseSubmission();
-            navigation.navigate("PostedAnimationScreen");
+            navigation.navigate("PostedAnimationScreen", {username: props.route.params.username});
         }
 
-        // const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
-        // Alert.alert("Submit", msg,
-        //     [{  text: 'Edit',
-        //         onPress: () => console.log('returning to editing'),
-        //         style: 'cancel',
-        //     }, {
-        //         text: 'Post',
-        //         onPress: () => {
-        //             databaseSubmission();
-        //         },
-        //     }],
-        //     { cancelable : true}
-        // );
 
     };
 
@@ -236,7 +224,7 @@ const NewListingScreen = (props) => {
         let date = new Date();
 
         let submission = {
-            user: "username???",
+            user: props.route.params.username,
             time: date,
             listing: JSON.stringify(data)
         };
@@ -257,7 +245,7 @@ const NewListingScreen = (props) => {
             }, {
                 text: 'OK',
                 onPress: () =>{ console.log('sashay, away')
-                    navigation.navigate("FeedScreen"); },
+                    navigation.navigate("FeedScreen", {username: props.route.params.username})},
             }],
             { cancelable : true}
         );
@@ -281,7 +269,7 @@ const NewListingScreen = (props) => {
         let options = {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
-            quality: 1,
+            quality: 0.5,
             base64: true,
 
         };
@@ -298,7 +286,7 @@ const NewListingScreen = (props) => {
     const captureImage = async () => {
         let options = {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 1,
+            quality: 0.5,
             saveToPhotos: true,
             storageOptions: {
                 privateDirectory: true,
@@ -447,7 +435,7 @@ const NewListingScreen = (props) => {
                 </View>}
             </View>
 
-            <InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>
+            {/*<InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>*/}
 
 
             <View style={styles.bottomSection}>

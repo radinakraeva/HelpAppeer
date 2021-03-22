@@ -11,7 +11,6 @@ import NewListingScreen from "./Screens/NewListingScreen";
 import SignupScreen from './Screens/SignupScreen';
 import Feed from "./Components/Feed";
 import FullListing from "./Screens/FullListing";
-import ListingsNavigator from "./Navigation/ListingsNavigator";
 import {Image} from "react-native-web";
 
 export default function App() {

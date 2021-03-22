@@ -6,16 +6,12 @@ import {useNavigation} from '@react-navigation/native';
 import 'react-native-gesture-handler';
 
 
-const PostedAnimationScreen  = () => {
+const PostedAnimationScreen  = (props) => {
 
     const navigation = useNavigation();
 
-    // const fadeAnim1 = useRef(new Animated.Value(0)).current;
-    // const fadeAnim2 = useRef(new Animated.Value(0)).current;
-    // const fadeAnim3 = useRef(new Animated.Value(0)).current;
-
     const navCheck = () => {
-        navigation.navigate("FeedScreen2");
+        navigation.navigate("FeedScreen2", {username: props.route.params.username});
     };
 
     const finalT = () => {
@@ -23,9 +19,6 @@ const PostedAnimationScreen  = () => {
     }
 
     const fadeIn = () => {
-        // Animated.timing(fadeAnim1, { toValue: 1, duration: 4000, useNativeDriver:true }).start();
-        // Animated.timing(fadeAnim2, { toValue: 1, duration: 6000, useNativeDriver:true }).start();
-        // Animated.timing(fadeAnim3, { toValue: 1, duration: 8000, useNativeDriver:true }).start();
         setTimeout(navCheck,3000);
     };
 
