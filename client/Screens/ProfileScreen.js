@@ -10,8 +10,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import ProfileFeed from '../Components/ProfileFeed';
 import usersApi from '../api/usersApi';
+import Feed from '../Components/Feed';
 
 const ProfileScreen = (props) => {
+
+    const userN = props.route.params.user;
 
     const [userData, setUserData] = React.useState({
         name:  '',
@@ -52,7 +55,7 @@ const ProfileScreen = (props) => {
                    city: c,
                    mobile: m,
                    email: e,
-                   pic: p,
+                   pic: {},
                 });
 
                 /*console.log("p is " + p);
@@ -102,7 +105,7 @@ const ProfileScreen = (props) => {
                     fontWeight: 'bold',}} >Your Current Orders</Text>
             </View>
 
-            <ProfileFeed/>
+            <ProfileFeed style = {styles.feed} user={userN}/>
 
         </SafeAreaView>
 
@@ -113,6 +116,10 @@ const styles = StyleSheet.create({
     backing: {
         backgroundColor: 'white',
         flex: 1,
+    },
+    feed: {
+        position: 'absolute',
+        zIndex: 0,
     },
     alin: {
         justifyContent: 'center',

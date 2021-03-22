@@ -20,13 +20,13 @@ export default function ProfileFeed({sort, filter, ...props}){
         getLocation();
     }, []);
 
-    useEffect(() => {
+/*    useEffect(() => {
         filterListings();
 
-    },[filter]);
+    },[filter]);*/
 
-    const filterListings = async () => {
-        const r = await listingsApi.getSpecificListings({userName: props.route.params.userName});
+/*    const filterListings = async () => {
+        const r = await listingsApi.getSpecificListings({userName: props.route.params.user});
         let lists = r.data;
         console.log(lists);
 
@@ -41,12 +41,10 @@ export default function ProfileFeed({sort, filter, ...props}){
             console.log(filteredListings);
             setListings(filteredListings);
         }
-
-
-    };
+    };*/
 
     const loadListings = async() => {
-        const r = await listingsApi.getListings();
+        const r = await listingsApi.getSpecificListings({userN: props.user});
         setListings(r.data);
 
     }

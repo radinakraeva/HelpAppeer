@@ -4,8 +4,8 @@ const getListing = (listingID) => {
     return client.post("/getAListing", listingID);
 };
 
-const getSpecificListings = (userName) => {
-    return client.post("/getSpecificListing", userName);
+const getSpecificListings = (userN) => {
+    return client.post("/getSpecificListing", userN);
 };
 
 const getListings = () => {
