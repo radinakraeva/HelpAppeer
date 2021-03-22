@@ -187,7 +187,6 @@ app.post('/getSpecificListing',(req, res) => {
     console.log("Getting the specific listing data");
 
     const username = req.fields.userN;
-    {console.log("index y" + req.fields.userN)}
 
     connection.query(
         "SELECT * FROM Listings WHERE user = (?)", [username],
