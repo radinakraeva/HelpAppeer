@@ -231,6 +231,25 @@ app.post('/removeListing',(req, res) => {
     );
 })
 
+app.post('/getProfilePhoto', (req, res) => {
+    const username = req.fields.username;
+    connection.query(
+        "SELECT Picture FROM Register WHERE Username = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    // console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+})
+
 //make an array with all the listing and send it to the frontend
 app.post('/getListings', (req, res) => {
     console.log('get Listings request');

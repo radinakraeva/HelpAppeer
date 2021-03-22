@@ -4,6 +4,7 @@ import Listing from './Listing';
 import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
 import { getDistanceBetween } from 'geolocation-distance-between';
+import usersApi from "../api/usersApi";
 
 export default function Feed({sort, filter, ...props}){
 
@@ -33,6 +34,7 @@ export default function Feed({sort, filter, ...props}){
         let lists = JSON.parse(JSON.stringify(allListings));
 
         let filteredListings = [];
+        console.log(filter);
         if (filter.includes(false)) {
             for (let index = 0; index < lists.length; index++) {
                 if (filter[lists[index].priceCategory.length -1]) {
@@ -103,13 +105,27 @@ export default function Feed({sort, filter, ...props}){
         if(category == 'general') return require('../Resources/Images/general.png')
     }
 
+    getProfileImage("username???")
+
+    function getProfileImage(username){
+        usersApi.getProfileImage({username: username}).then(r => {
+            if(r.data != null){
+                const data = r.data[0]
+                const photo = JSON.parse(data.Picture)
+                console.log(photo.pic);
+                return photo.pic
+            }
+        })
+    }
+
     const listingRender = ({ item }) => (
         <Listing
             listing_id = {item.listing_id}
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            profilePicture={require('../Resources/Images/Alina.jpg')}
+            profilePicture={require('../Resources/Images/Michael.jpg')}
+            //profilePicture={getProfileImage("username???")}
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}

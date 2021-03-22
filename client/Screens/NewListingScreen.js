@@ -20,8 +20,9 @@ import {useNavigation} from "@react-navigation/native";
 
 const NewListingScreen = (props) => {
 
-
     const navigation = useNavigation()
+
+    console.log(props.route.params.username  + ' UUUUUUUUUSE');
 
     const [data, setData] = React.useState({
         title: '',
@@ -32,7 +33,7 @@ const NewListingScreen = (props) => {
         photo2: {},
         photo3: {},
         location: {},
-        addInfo: ''
+        addInfo: '',
     });
 
     const titleChange = (input) => {
@@ -212,22 +213,9 @@ const NewListingScreen = (props) => {
         } else { //if not, submit
 
             databaseSubmission();
-            navigation.navigate("PostedAnimationScreen");
+            navigation.navigate("PostedAnimationScreen", {username: props.route.params.username});
         }
 
-        // const msg = "Are you sure you want to submit? Listing cannot be edited afterwards."
-        // Alert.alert("Submit", msg,
-        //     [{  text: 'Edit',
-        //         onPress: () => console.log('returning to editing'),
-        //         style: 'cancel',
-        //     }, {
-        //         text: 'Post',
-        //         onPress: () => {
-        //             databaseSubmission();
-        //         },
-        //     }],
-        //     { cancelable : true}
-        // );
 
     };
 
@@ -236,7 +224,7 @@ const NewListingScreen = (props) => {
         let date = new Date();
 
         let submission = {
-            user: "username???",
+            user: props.route.params.username,
             time: date,
             listing: JSON.stringify(data)
         };
@@ -257,7 +245,7 @@ const NewListingScreen = (props) => {
             }, {
                 text: 'OK',
                 onPress: () =>{ console.log('sashay, away')
-                    navigation.navigate("FeedScreen"); },
+                    navigation.navigate("FeedScreen", {username: props.route.params.username})},
             }],
             { cancelable : true}
         );
@@ -281,7 +269,7 @@ const NewListingScreen = (props) => {
         let options = {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: false,
-            quality: 1,
+            quality: 0.5,
             base64: true,
 
         };
@@ -298,7 +286,7 @@ const NewListingScreen = (props) => {
     const captureImage = async () => {
         let options = {
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
-            quality: 1,
+            quality: 0.5,
             saveToPhotos: true,
             storageOptions: {
                 privateDirectory: true,
@@ -411,16 +399,16 @@ const NewListingScreen = (props) => {
                     <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                 </View>
             </View>
-            <Text style={styles.subtitle}> Title</Text>
+            <Text style={styles.subtitle}> Title <Text style={styles.star}>*</Text></Text>
             <InputField placeholder="Listing's title" onChangeText={text => titleChange(text)}/>
 
-            <Text style={styles.subtitle}>Category</Text>
+            <Text style={styles.subtitle}>Category <Text style={styles.star}>*</Text></Text>
             {getCategories()}
 
-            <Text style={styles.subtitle}>Description</Text>
+            <Text style={styles.subtitle}>Description <Text style={styles.star}>*</Text></Text>
             <InputField size={150} placeholder="Description" onChangeText={text => descChange(text)}/>
 
-            <Text style={styles.subtitle}>Price</Text>
+            <Text style={styles.subtitle}>Price <Text style={styles.star}>*</Text></Text>
             <View style={styles.pounds}>
                 <PriceSelection text={'£'} color={data.price == 1 ? ColourPalette.yellow : ColourPalette.darkBlue} el={5} onPress={() => priceChange("1")}/>
                 <PriceSelection text={'££'} color={data.price == 2 ? ColourPalette.yellow : ColourPalette.darkBlue} el={5} onPress={() => priceChange("2")}/>
@@ -437,7 +425,7 @@ const NewListingScreen = (props) => {
             {getPhotos()}
 
 
-            <Text style={styles.subtitle}>Location</Text>
+            <Text style={styles.subtitle}>Location <Text style={styles.star}>*</Text></Text>
 
             <View style={styles.mapSection}>
             {displayLoc ?
@@ -447,7 +435,7 @@ const NewListingScreen = (props) => {
                 </View>}
             </View>
 
-            <InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>
+            {/*<InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>*/}
 
 
             <View style={styles.bottomSection}>
@@ -542,6 +530,11 @@ const styles = StyleSheet.create({
         height: 150,
         width:'100%',
     },
+    star: {
+        color: ColourPalette.darkBlue,
+        fontSize: 15,
+    },
+
 
     bottomSection:{
         marginTop: 20,

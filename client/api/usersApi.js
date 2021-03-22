@@ -19,6 +19,10 @@ const getUser = (userN) => {
     return client.post("/registers", userN);
 }
 
-export default { addUser, verifyUser, verify, getUser
+const getProfileImage = (username) => {
+    return client.post("/getProfilePhoto", username);
+}
+
+export default { addUser, verifyUser, verify, getUser, getProfileImage
 };
 
