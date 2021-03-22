@@ -12,7 +12,7 @@ export default function Feed({sort, filter, ...props}){
         location: {},
     });
 
-
+    const [allListings, setAllListings] = useState([]);
     const[refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
@@ -25,13 +25,14 @@ export default function Feed({sort, filter, ...props}){
 
     },[filter]);
 
-    const filterListings = async () => {
-        const r = await listingsApi.getListings();
-        let lists = r.data;
-        console.log(lists);
+    useEffect(()=> {
+        sortListings();
+    },[sort])
+
+    const filterListings = () => {
+        let lists = JSON.parse(JSON.stringify(allListings));
 
         let filteredListings = [];
-        console.log(filter);
         if (filter.includes(false)) {
             for (let index = 0; index < lists.length; index++) {
                 if (filter[lists[index].priceCategory.length -1]) {
@@ -40,14 +41,30 @@ export default function Feed({sort, filter, ...props}){
             }
             console.log(filteredListings);
             setListings(filteredListings);
+        } else {
+            setListings(lists);
         }
 
 
     };
 
+    const sortListings = () => {
+        let lists = JSON.parse(JSON.stringify(allListings));
+
+        if (sort === "distance") {
+            console.log("sorting by distance")
+            //TODO: sort by distance
+
+        } else {
+            console.log("sorting by time")
+            setListings(lists);
+        }
+    };
+
     const loadListings = async() => {
         const r = await listingsApi.getListings();
         setListings(r.data);
+        setAllListings(r.data);
 
     }
 
