@@ -5,7 +5,6 @@ import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
 import { getDistanceBetween } from 'geolocation-distance-between';
 import usersApi from "../api/usersApi";
-import ImagePreview from "./ImagePreview";
 
 export default function Feed({sort, filter, ...props}){
 
@@ -14,7 +13,7 @@ export default function Feed({sort, filter, ...props}){
         location: {},
     });
 
-
+    const [allListings, setAllListings] = useState([]);
     const[refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
@@ -27,9 +26,12 @@ export default function Feed({sort, filter, ...props}){
 
     },[filter]);
 
-    const filterListings = async () => {
-        const r = await listingsApi.getListings();
-        let lists = r.data;
+    useEffect(()=> {
+        sortListings();
+    },[sort])
+
+    const filterListings = () => {
+        let lists = JSON.parse(JSON.stringify(allListings));
 
         let filteredListings = [];
         console.log(filter);
@@ -41,14 +43,31 @@ export default function Feed({sort, filter, ...props}){
             }
             console.log(filteredListings);
             setListings(filteredListings);
+        } else {
+            setListings(lists);
         }
 
 
     };
 
+    const sortListings = () => {
+        let lists = JSON.parse(JSON.stringify(allListings));
+
+        if (sort === "distance") {
+            console.log("sorting by distance")
+            //TODO: sort by distance
+
+        } else {
+            console.log("sorting by time")
+            setListings(lists);
+        }
+    };
+
     const loadListings = async() => {
         const r = await listingsApi.getListings();
         setListings(r.data);
+        setAllListings(r.data);
+
     }
 
 
@@ -100,14 +119,13 @@ export default function Feed({sort, filter, ...props}){
     }
 
     const listingRender = ({ item }) => (
-
         <Listing
             listing_id = {item.listing_id}
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            // profilePicture={require('../Resources/Images/Michael.jpg')}
-            profilePicture={getProfileImage("username???")}
+            profilePicture={require('../Resources/Images/Michael.jpg')}
+            //profilePicture={getProfileImage("username???")}
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}

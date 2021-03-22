@@ -4,6 +4,10 @@ const getListing = (listingID) => {
     return client.post("/getAListing", listingID);
 };
 
+const getSpecificListings = (userN) => {
+    return client.post("/getSpecificListing", userN);
+};
+
 const getListings = () => {
     return client.post("/getListings");
 }
@@ -14,6 +18,6 @@ const addListing = (listingInfo) => {
 
 
 
-export default { addListing, getListings, getListing }
+export default { addListing, getListings, getListing, getSpecificListings }
 
 

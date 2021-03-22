@@ -10,8 +10,11 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import ProfileFeed from '../Components/ProfileFeed';
 import usersApi from '../api/usersApi';
+import Feed from '../Components/Feed';
 
 const ProfileScreen = (props) => {
+
+    const userN = props.route.params.user;
 
     const [userData, setUserData] = React.useState({
         name:  '',
@@ -40,7 +43,9 @@ const ProfileScreen = (props) => {
                 const m = data["Mobile"];
                 const e = data["Email"];
                 const u = props.route.params.user;
-                const p = data["Picture"];
+                /*const p = data["Picture"].pic.uri;*/
+                /*const p = JSON.parse(data["Picture"]);
+                const test = data.picture;*/
 
 
                setUserData({
@@ -50,11 +55,11 @@ const ProfileScreen = (props) => {
                    city: c,
                    mobile: m,
                    email: e,
-                   pic: {p},
+                   pic: {},
                 });
 
-                console.log("p is " + p);
-                console.log("userData.email is " + userData.pic);
+                /*console.log("p is " + p);
+                console.log("userData.pic is " + userData.pic);*/
 
             }
         });
@@ -97,10 +102,10 @@ const ProfileScreen = (props) => {
             </View>
             <View style={{marginTop:1, borderBottomWidth: 3, borderColor:ColourPalette.yellow,alignItems: 'center',}}>
                 <Text style={{fontSize: 25, paddingTop: 7, paddingBottom: 7,color: ColourPalette.yellow,
-                    fontWeight: 'bold',}} >Your Current Orders</Text>
+                    fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
 
-            <ProfileFeed/>
+            <ProfileFeed style = {styles.feed} user={userN}/>
 
         </SafeAreaView>
 
@@ -111,6 +116,10 @@ const styles = StyleSheet.create({
     backing: {
         backgroundColor: 'white',
         flex: 1,
+    },
+    feed: {
+        position: 'absolute',
+        zIndex: 0,
     },
     alin: {
         justifyContent: 'center',

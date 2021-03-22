@@ -94,7 +94,7 @@ app.post('/verify', (req, res) => {
     const password = req.fields.password
 
     connection.query(
-        "SELECT Password FROM Register where name = (?)", [username],
+        "SELECT Password FROM Register where username = (?)", [username],
         function (error, result) {
             if (error) {
                 console.log(error);
@@ -183,6 +183,27 @@ app.post('/getAListing',(req, res) => {
     );
 })
 
+app.post('/getSpecificListing',(req, res) => {
+    console.log("Getting the specific listing data");
+
+    const username = req.fields.userN;
+
+    connection.query(
+        "SELECT * FROM Listings WHERE user = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log(result);
+                    res.send(renderToListingsList(result));
+                }
+
+            }
+        }
+    );
+})
 
 app.post('/getProfilePhoto', (req, res) => {
     const username = req.fields.username;
