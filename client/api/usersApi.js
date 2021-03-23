@@ -24,6 +24,5 @@ const getProfileImage = (username) => {
     return client.post("/getProfilePhoto", username);
 }
 
-export default { addUser, verifyUser, verify, getUser, getProfileImage
-};
+export default { addUser, verifyUser, verify, getUser, getProfileImage };
 

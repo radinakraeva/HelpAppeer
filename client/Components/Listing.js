@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 
 import ColourPalette from '../Resources/ColourPalette';
 import {useNavigation} from "@react-navigation/native";
-import {NavigationInjectedProps, withNavigation} from 'react-navigation';
+// import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 
 
 function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance, creator, user}){
