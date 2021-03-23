@@ -24,10 +24,14 @@ const ProfileScreen = (props) => {
         city: '',
         mobile: '',
         email: '',
-        pic: {},
         token: 't',
         secureTextEntry: true,
     });
+
+    const [userPic, setPicData] = React.useState({
+        pic: {},
+    });
+
 
     useEffect(() => getData(), []);
 
@@ -46,7 +50,6 @@ const ProfileScreen = (props) => {
                 const u = props.route.params.user;
 
                 setUserData({
-                    ...userData,
                     name: n,
                     username: u,
                     address: a,
@@ -65,8 +68,7 @@ const ProfileScreen = (props) => {
                         const p = JSON.parse(dataT.Picture);
                         console.log("p is " + p);
 
-                        setUserData({
-                            ...userData,
+                        setPicData({
                             pic: {p},
                         });
 
@@ -81,7 +83,7 @@ const ProfileScreen = (props) => {
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
-                    <CircleImage  resizeMode={'cover'} size={110} image={userData.pic.p} style={{borderRadius: 150,
+                    <CircleImage  resizeMode={'cover'} size={110} image={userPic.pic.p} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
                     <View>
                         <Text style={styles.writing}>{userData.name}</Text>
