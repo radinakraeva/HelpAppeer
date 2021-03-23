@@ -76,6 +76,7 @@ app.post('/registers',(req, res) => {
     console.log("Getting the user data");
 
     const username = req.fields.userN;
+    console.log("index username = "+username)
 
     connection.query(
         "SELECT * FROM Register WHERE username = (?)", [username],
@@ -248,8 +249,8 @@ app.post('/removeListing',(req, res) => {
 })
 
 app.post('/getProfilePhoto', (req, res) => {
-    const username = req.fields.username;
-    console.log(username)
+    const username = req.fields.userN;
+    console.log("username idex = "+username)
 
     console.log("getting profile photo")
     connection.query(
@@ -261,7 +262,7 @@ app.post('/getProfilePhoto', (req, res) => {
             } else if (result) {
                 if(result[0]){
                     console.log("database result")
-                    // console.log(result);
+                    console.log(result);
                     res.send(result);
                 }
 

@@ -15,6 +15,7 @@ import Feed from '../Components/Feed';
 const ProfileScreen = (props) => {
 
     const userN = props.route.params.user;
+    console.log("userN is "+userN);
 
     const [userData, setUserData] = React.useState({
         name:  '',
@@ -32,8 +33,10 @@ const ProfileScreen = (props) => {
 
     useEffect(() => getData(), []);
 
+
     const getData = () => {
         usersApi.getUser({userN: props.route.params.user}).then( r => {
+            console.log("r.data is " + r.data);
 
             if (r.data != null) {
                 const data = r.data[0];
@@ -43,26 +46,35 @@ const ProfileScreen = (props) => {
                 const m = data["Mobile"];
                 const e = data["Email"];
                 const u = props.route.params.user;
-                /*const p = data["Picture"].pic.uri;*/
-                /*const p = JSON.parse(data["Picture"]);
-                const test = data.picture;*/
 
-
-               setUserData({
-                   name:  n,
-                   username: u,
-                   address: a,
-                   city: c,
-                   mobile: m,
-                   email: e,
-                   pic: {},
+                setUserData({
+                    ...userData,
+                    name: n,
+                    username: u,
+                    address: a,
+                    city: c,
+                    mobile: m,
+                    email: e,
                 });
-
-                /*console.log("p is " + p);
-                console.log("userData.pic is " + userData.pic);*/
-
             }
+            usersApi.getProfileImage({userN: props.route.params.user}).then(t => {
+                console.log("t.data is for image is " + t.data);
+
+                if (t.data != null) {
+                    const dataT = t.data[0];
+                    console.log("pic dataT" + dataT);
+                    const p = JSON.parse(dataT.Picture);
+                    console.log("p is " + p);
+
+                    setUserData({
+                        ...userData,
+                        pic: {p},
+                    });
+
+                }
         });
+        });
+
     }
 
     const message = () => {
@@ -72,7 +84,7 @@ const ProfileScreen = (props) => {
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
-                    <CircleImage  resizeMode={'cover'} size={110} image={require('../Resources/Images/Mark.png')} style={{borderRadius: 150,
+                    <CircleImage  resizeMode={'cover'} size={110} image={userData.pic.p} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
                     <View>
                         <Text style={styles.writing}>{userData.name}</Text>
