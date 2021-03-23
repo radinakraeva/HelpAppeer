@@ -10,25 +10,27 @@ import NewListingScreen from '../Screens/NewListingScreen';
 import ChatScreen from '../Screens/ChatScreen';
 import ChatListScreen from '../Screens/ChatListScreen';
 
-import ListingsNavigator from "./ListingsNavigator";
+
 import FullListing from "../Screens/FullListing";
 import PostedAnimationScreen from "../Screens/PostedAnimationScreen";
+import ProfileScreen from '../Screens/ProfileScreen';
 
 const Stack = createStackNavigator();
 
 const AuthNavigator  = () => (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName="SignupScreen" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName="ProfileScreen" screenOptions={{ headerShown: false }}>
             <Stack.Screen name='AnimationScreen' component={AnimationScreen}/>
             <Stack.Screen name='LoginScreen' component={LoginScreen}/>
             <Stack.Screen name='SignupScreen' component={SignupScreen}/>
-            <Stack.Screen name='FeedScreen' component={FeedScreen}/>
-            <Stack.Screen name='NewListingScreen' component={NewListingScreen}/>
+            <Stack.Screen name='FeedScreen' component={FeedScreen} initialParams={{ username: 'hobo'}} />
+            <Stack.Screen name='NewListingScreen' component={NewListingScreen} initialParams={{ username: 'hobo' }}/>
             <Stack.Screen name='ChatListScreen' component={ChatListScreen}/>
             <Stack.Screen name='FeedScreen2' component={FeedScreen}/>
-            <Stack.Screen name='FullListing' component={FullListing} initialParams={{ listID: 20 }}/>
+            <Stack.Screen name='FullListing' component={FullListing} initialParams={{ listID: 79 }}/>
             <Stack.Screen name='PostedAnimationScreen' component={PostedAnimationScreen}/>
             <Stack.Screen name='ChatScreen' component={ChatScreen}/>
+            <Stack.Screen name='ProfileScreen' component={ProfileScreen} initialParams={{ user: 'slavkatest2' }}/>
         </Stack.Navigator>
     </NavigationContainer>
 

@@ -1,17 +1,42 @@
-import React from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import React, { useState} from 'react';
+import {View, StyleSheet, Image, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
 import CircleImage from './CircleImage';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 import ColourPalette from '../Resources/ColourPalette';
+import {useNavigation} from "@react-navigation/native";
+import {NavigationInjectedProps, withNavigation} from 'react-navigation';
+import listingsApi from '../api/listingsApi';
+import ProfileFeed from './ProfileFeed';
+
+function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory}){
+
+    const navigation = useNavigation();
 
 
-export default function ProfileListing({title, category, image, profilePicture, priceCategory}){
+    function seeListing(){
+        navigation.navigate('FullListing', {listID: listing_id})
+    }
+
+    function removePost() {
+        const user = listingsApi.getUser({listID: listing_id}).then(t => {
+            console.log(user);
+            navigation.navigate('ProfileScreen', {user: user})
+            /*listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
+                navigation.navigate('ProfileScreen', {user: user})
+            });*/
+        })
+
+    }
+
     return (
         <View style = {styles.listing}>
+            <TouchableWithoutFeedback onPress = {() =>seeListing()}>
             <View style = {styles.upperSection}>
-                <Image style = {styles.image} source={image} />
+                <Image style = {styles.image} source={image}/>
                 <CircleImage size = {45} image ={profilePicture}/>
             </View>
+            </TouchableWithoutFeedback>
             <View style = {styles.lowerSection}>
                 <View style = {styles.lowerLeftSection}>
                     <Text style = {styles.headerText}>{title}</Text>
@@ -22,9 +47,9 @@ export default function ProfileListing({title, category, image, profilePicture, 
                 </View>
                 <View style = {styles.lowerRightSection}>
                     <View style={styles.button}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={removePost}>
                         <Text style={{fontSize: 20, justifyContent: 'center',
-                            alignItems: 'center',paddingLeft: 17, paddingTop: 3,fontWeight:'bold', color:'white' }}>Re-Order</Text>
+                            alignItems: 'center',paddingLeft: 27, paddingTop: 3,fontWeight:'bold', color:'white' }}>Delete</Text>
                     </TouchableOpacity>
                     </View>
                 </View>
@@ -88,3 +113,5 @@ const styles = StyleSheet.create({
         backgroundColor: ColourPalette.yellow,
     },
 })
+
+export default ProfileListing;

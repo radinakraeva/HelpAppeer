@@ -54,10 +54,13 @@ const styles = StyleSheet.create({
     }
 })
 
-export default function ChatScreen({listing_id, username, receiver}){
+export default function ChatScreen(props){
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState([]);
     const messagesList = useRef();
+    const listing_id = props.route.params.listing_id;
+    const username = props.route.params.username;
+    const receiver = props.route.params.receiver;
 
     useEffect( () => {
         initLoadMessages();
@@ -139,6 +142,15 @@ export default function ChatScreen({listing_id, username, receiver}){
         );
     }
 
+    if(props.route.params.nowPending === true){
+        console.log("Sending Message");
+        let currentDate = new Date();
+        let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
+        msgAPI.sendMessage(listing_id,username,receiver,
+            "Hi! I have accepted the listing you posted ( the name is above :) ) I'm on my way to pick it up now. If you have any questions, let me know, and I'll ask you if I have any questions. See you soon",
+            formattedDate);
+        props.route.params.nowPending = false;
+    }
 
     return (
         <SafeAreaView style = {styles.chatScreen}>

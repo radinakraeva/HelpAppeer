@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, SafeAreaView, StyleSheet, BackHandler} from 'react-native';
 import Feed from '../Components/Feed';
 
 import ColourPalette from '../Resources/ColourPalette';
@@ -11,17 +11,31 @@ import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
 
-export default function FeedScreen(){
+export default function FeedScreen(props){
+
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => true);
+    }, []);
+
+
+    console.log('USERNAME' + props.route.params.username);
 
     const [filterMenu, toggleFilterMenu] = useState({visible: false, sorting: 'time', prices1: true, prices2: true, prices3: true});
 
     const navigation = useNavigation();
 
     const newListing = () => {
-        navigation.navigate("NewListingScreen");
+        navigation.navigate("NewListingScreen", {username: props.route.params.username});
+    };
+
+
+
+    const goToChat = () => {
+        navigation.navigate("ChatListScreen", {username: props.route.params.username});
     };
 
     const showFilterMenu = () => {
+
             return (
                 <View style={styles.filterMenu}>
                     <Text style={styles.filterMenuTitle}>Sort by</Text>
@@ -66,20 +80,26 @@ export default function FeedScreen(){
                     <Text style = {styles.text}>Find a listing in</Text>
                     <Text style = {styles.locationText}>Glasgow</Text>
                 </View>
-                <View style = {styles.topRightSection}>
-                    <IconButton iconName='filter' iconBgColor = {ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()}/>
-                </View>
+
             </View>
 
-            <Feed style = {styles.feed} />
+            <Feed style = {styles.feed} sort={filterMenu.sorting} filter={[filterMenu.prices1,filterMenu.prices2,filterMenu.prices3]} username ={props.route.params.username}/>
             {filterMenu.visible ? showFilterMenu() : null}
 
             <View style = {styles.bottomSection}>
+                <View style={{marginHorizontal: 70}}>
+                    <IconButton iconName='filter' iconBgColor = {filterMenu.visible ? ColourPalette.yellow : ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()} />
+                </View>
                 <Button title = "Add" onPress={newListing} />
+                <View style={{marginHorizontal: 70}}>
+                    <IconButton iconName='message1' iconBgColor = {ColourPalette.darkBlue} size ={45} onPress={()=>goToChat()}/>
+                </View>
             </View>
         </SafeAreaView>
 
     );
+
+
 }
 
 const styles = StyleSheet.create({
@@ -102,10 +122,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent: 'center',
     },
-    topRightSection:{
-        marginTop: 13,
-        alignItems: 'flex-end',
-    },
+
     locationText:{
         fontSize: 24,
         color: ColourPalette.yellow,
@@ -117,6 +134,8 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         alignItems: 'center',
         height: '8%',
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
     filterMenu: {
         backgroundColor: ColourPalette.darkBlue,

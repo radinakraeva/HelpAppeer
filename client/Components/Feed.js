@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {Text, ScrollView,  View, FlatList} from 'react-native';
+import {Text, ScrollView,  View, FlatList, BackHandler} from 'react-native';
 import Listing from './Listing';
 import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
 import { getDistanceBetween } from 'geolocation-distance-between';
+import usersApi from "../api/usersApi";
 
-export default function Feed(){
+export default function Feed({sort, filter, ...props}){
 
     const [listings, setListings] = useState([]);
     const [location, setLocation] = React.useState({
         location: {},
     });
 
+    const [allListings, setAllListings] = useState([]);
     const[refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
@@ -19,9 +21,74 @@ export default function Feed(){
         getLocation();
     }, []);
 
+    useEffect(() => {
+        filterListings();
+
+    },[filter]);
+
+    useEffect(()=> {
+        sortListings();
+    },[sort])
+
+
+    const filterListings = () => {
+        let lists = JSON.parse(JSON.stringify(allListings));
+
+        let filteredListings = [];
+        if (filter.includes(false)) {
+            for (let index = 0; index < lists.length; index++) {
+                if (filter[lists[index].priceCategory.length -1]) {
+                    filteredListings.push(lists[index])
+                }
+            }
+            setListings(filteredListings);
+        } else {
+            setListings(lists);
+        }
+
+
+    };
+
+    const sortListings = () => {
+        let lists = JSON.parse(JSON.stringify(allListings));
+
+        if (sort === "distance") {
+
+            let distListingMap = {}
+            console.log("sorting by distance")
+            let lists = JSON.parse(JSON.stringify(allListings));
+            for (let index = 0; index < lists.length; index++) {
+                const dist = distance(location.location.lat1, location.location.lon1, lists[index].location.lat1, lists[index].location.lon1)
+                distListingMap[JSON.stringify(lists[index])] = dist
+            }
+
+            let sorted = Object.keys(distListingMap).sort(function (a,b) {return distListingMap[a] - distListingMap[b]});
+
+            let sortedListings = []
+            for(let index = 0; index < sorted.length; index++) {
+                sortedListings.push(JSON.parse(sorted[index]));
+            }
+            setListings(sortedListings)
+
+        } else {
+            console.log("sorting by time")
+            setListings(lists);
+        }
+    };
+
     const loadListings = async() => {
         const r = await listingsApi.getListings();
+
+        // for (let listing in lists) {
+        //     // let user = listing.username;
+        //     let user = listing.creator;
+        //
+        //
+        // }
+
         setListings(r.data);
+        setAllListings(r.data);
+
     }
 
 
@@ -59,16 +126,36 @@ export default function Feed(){
         if(category == 'general') return require('../Resources/Images/general.png')
     }
 
+    // getProfileImage("username???")
+
+    const getProfileImage = (username) =>{
+
+        // usersApi.getProfileImage({username: username}).then(r => {
+        //     if(r.data != null){
+        //         const data = r.data[0]
+        //         console.log("here")
+        //         // console.log(r.data)
+        //         const photo = JSON.parse(data.Picture)
+        //         // console.log(photo);
+        //
+        //         return photo
+        //     }
+        // })
+    }
+
     const listingRender = ({ item }) => (
         <Listing
             listing_id = {item.listing_id}
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            profilePicture={require('../Resources/Images/Alina.jpg')}
+            // profilePicture={require('../Resources/Images/Michael.jpg')}
+            profilePicture={item.profilePic == null ? require('../Resources/Images/Alina.jpg') : item.profilePic}
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}
+            user = {props.username}
+            creator={item.user}
         />
     );
 

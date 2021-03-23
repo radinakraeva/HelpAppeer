@@ -18,6 +18,8 @@ app.listen(3001, function(){
     console.log('yay server running on port 3001');
 })
 
+
+
 connection.connect(function(error){
     if(error){
         console.log("couldn't connect" );
@@ -27,6 +29,10 @@ connection.connect(function(error){
         console.log('connected');
     }
 });
+
+app.get('/', function (req, res) {
+    res.send('Space! Safe! Protect!')
+})
 
 app.post('/register', (req, res) => {
     console.log('received data');
@@ -69,17 +75,17 @@ app.post('/register', (req, res) => {
 app.post('/registers',(req, res) => {
     console.log("Getting the user data");
 
-    const username = req.fields.username;
+    const username = req.fields.userN;
+    console.log("index username = "+username)
 
     connection.query(
-        "SELECT * FROM Listings WHERE username = (?)", [username],
+        "SELECT * FROM Register WHERE username = (?)", [username],
         function (error, result) {
             if (error) {
                 console.log(error);
                 res.send(null);
             } else if (result) {
                 if(result[0]){
-                    // console.log(result);
                     res.send(result);
                 }
 
@@ -95,7 +101,7 @@ app.post('/verify', (req, res) => {
     const password = req.fields.password
 
     connection.query(
-        "SELECT Password FROM Register where name = (?)", [username],
+        "SELECT Password FROM Register where username = (?)", [username],
         function (error, result) {
             if (error) {
                 console.log(error);
@@ -184,6 +190,87 @@ app.post('/getAListing',(req, res) => {
     );
 })
 
+app.post('/getAListingUser',(req, res) => {
+    console.log("Getting the listing username");
+
+    const listingID = req.fields.listID;
+
+    connection.query(
+        "SELECT User FROM Listings WHERE listing_id = (?)", [listingID],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+})
+
+app.post('/getSpecificListing',(req, res) => {
+    console.log("Getting the specific listing data");
+
+    const username = req.fields.userN;
+
+    connection.query(
+        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username = (?)", [username],
+        /*"SELECT * FROM Listings WHERE User = (?)", [username],*/
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log(result);
+                    res.send(renderToListingsList(result));
+                }
+
+            }
+        }
+    );
+})
+
+app.post('/removeListing',(req, res) => {
+    console.log("Getting the listing data to remove");
+
+    console.log("here is "+ req.fields.listID)
+
+
+    const listingID = req.fields.listID;
+
+
+    connection.query(
+        "DELETE FROM Listings WHERE listing_id = (?)", [listingID],
+    );
+})
+
+app.post('/getProfilePhoto', (req, res) => {
+    const username = req.fields.userN;
+    console.log("username idex = "+username)
+
+    console.log("getting profile photo")
+    connection.query(
+        "SELECT Picture FROM Register WHERE Username = (?)", [username],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log("database result")
+                    console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+})
 
 //make an array with all the listing and send it to the frontend
 app.post('/getListings', (req, res) => {
@@ -191,7 +278,7 @@ app.post('/getListings', (req, res) => {
     // console.log(req.fields);
 
     connection.query(
-        "SELECT * FROM Listings",
+        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username",
         function (error, result) {
             if (error) {
                 console.log(error);
@@ -224,6 +311,30 @@ app.post('/getOpenConvos',(req, res) =>{
         }
     )
 })
+
+app.post('/getConvoNames', (req, res) =>{
+    connection.query(
+        "SELECT listing_id, listing FROM `Listings`", [],
+        function(error, result){
+            if (error){
+                console.log(error);
+            }
+            else if (result){
+                res.send(unwrapListingNames(result));
+            }
+        }
+    )
+})
+
+function unwrapListingNames(listings){
+    let listingNames = {}
+    for(let listing in listings){
+        const listingData = JSON.parse(listings[listing].listing);
+        listingNames[listings[listing].listing_id] = listingData.title
+    }
+    console.log(listingNames);
+    return listingNames
+}
 
 app.post('/getMessages',(req, res) =>{
     console.log('I just ran, I ran all night and day....');
@@ -263,20 +374,27 @@ app.post('/sendMessage',(req, res) => {
 
 function renderToListingsList(listings){
     const listingsArray = []
+    // console.log(listings)
     for (let i = listings.length - 1; i >= 0; i--){
         const listingData = JSON.parse(listings[i].listing)
+        // const picture = JSON.parse(listings[i].Picture) == null ? require('../client/Resources/Images/Alina.jpg') : JSON.parse(listings[i].Picture)
+        // console.log(picture);
         // console.log(listingData);
         const listing = {
             listing_id: listings[i].listing_id,
             title: listingData.title,
+            user: listings[i].user,
             category: listingData.category,
             // image: require('../Resources/Images/food.png'),
             timeStamp: listings[i].time,
             priceCategory: '£'.repeat(listingData.price),
-            location: listingData.location
+            location: listingData.location,
+            creator: listings[i].user,
+            profilePic: JSON.parse(listings[i].Picture)
         }
         listingsArray.push(listing)
     }
+    // console.log(listingsArray)
     return listingsArray
 }
 

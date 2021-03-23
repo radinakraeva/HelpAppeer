@@ -8,11 +8,11 @@ import {useNavigation} from "@react-navigation/native";
 import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 
 
-function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance}){
+function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance, creator, user}){
 
     const navigation = useNavigation();
     function seeListing(){
-        navigation.navigate('FullListing', {listID: listing_id})
+        navigation.navigate('FullListing', {listID: listing_id, username: user, creator: creator})
     }
 
     let timeMeasurment = 'min';

@@ -15,10 +15,15 @@ const addUser = (userInfo) => {
     return client.post("/register", userInfo);
 }
 
-const getUser = (userInfo) => {
-    return client.post("/registers", userInfo);
+const getUser = (userN) => {
+    return client.post("/registers", userN);
 }
 
-export default { addUser, verifyUser, verify, getUser
+const getProfileImage = (username) => {
+    console.log("userAPI profile data is" + username);
+    return client.post("/getProfilePhoto", username);
+}
+
+export default { addUser, verifyUser, verify, getUser, getProfileImage
 };
 
