@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     },
     titleText:{
         fontSize: 24,
-        color: ColourPalette.yellow,
+        color: ColourPalette.darkBlue,
     },
     text:{
         fontSize: 15,
@@ -61,6 +61,7 @@ export default function ChatScreen(props){
     const listing_id = props.route.params.listing_id;
     const username = props.route.params.username;
     const receiver = props.route.params.receiver;
+    const listingName = props.route.params.listingName;
 
     useEffect( () => {
         initLoadMessages();
@@ -71,7 +72,7 @@ export default function ChatScreen(props){
         setInterval(loadMessages, 3000);
     }
     const loadMessages = async () =>{
-        const m = await msgAPI.getMessages(listing_id);
+        const m = await msgAPI.getMessages(listing_id, username);
         setMessages(m.data);
     }
 
@@ -157,7 +158,7 @@ export default function ChatScreen(props){
             <View style = {styles.topSection}>
                 <View style = {styles.topLeftSection}>
                     <Text style = {styles.text}>Chat regarding:</Text>
-                    <Text style = {styles.titleText}>{listing_id}</Text>
+                    <Text style = {styles.titleText}>{listingName}</Text>
                 </View>
             </View>
             <View>

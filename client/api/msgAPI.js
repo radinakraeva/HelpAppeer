@@ -8,9 +8,9 @@ const getOpenConvos= (username) => {
     return client.post("/getOpenConvos", {username: username});
 };
 
-const getMessages = (listing_id) => {
+const getMessages = (listing_id, username) => {
     console.log('Gonna get messages');
-    return client.post("/getMessages" , {listing_id : listing_id});
+    return client.post("/getMessages" , {listing_id : listing_id,  username: username});
 };
 
 const sendMessage = (listing_id, send_user, reci_user, msg_contents, time_sent) => {
