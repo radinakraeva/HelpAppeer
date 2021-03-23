@@ -218,8 +218,8 @@ app.post('/getSpecificListing',(req, res) => {
     const username = req.fields.userN;
 
     connection.query(
-        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username = (?)", [username],
-        /*"SELECT * FROM Listings WHERE User = (?)", [username],*/
+        /*"SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username = (?)", [username],*/
+        "SELECT * FROM Listings WHERE User = (?)", [username],
         function (error, result) {
             if (error) {
                 console.log(error);
@@ -327,19 +327,18 @@ app.post('/getConvoNames', (req, res) =>{
 })
 
 function unwrapListingNames(listings){
-    let listingNames = {}
+    let listingNames = []
     for(let listing in listings){
         const listingData = JSON.parse(listings[listing].listing);
-        listingNames[listings[listing].listing_id] = listingData.title
+        listingNames.push({listing_id: listings[listing].listing_id, listingName: listingData.title});
     }
-    console.log(listingNames);
     return listingNames
 }
 
 app.post('/getMessages',(req, res) =>{
     console.log('I just ran, I ran all night and day....');
     connection.query(
-        "SELECT * FROM `msgTable` WHERE `listing_id` = (?)", [req.fields.listing_id],
+        "SELECT * FROM `msgTable` WHERE `listing_id` = (?) and (`send_user` = (?) or `reci_user` = (?))", [req.fields.listing_id, req.fields.username, req.fields.username],
         function (error, result){
             if (error) {
                 console.log(error);

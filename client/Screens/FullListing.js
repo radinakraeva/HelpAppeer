@@ -18,6 +18,7 @@ import Icon2 from 'react-native-vector-icons/AntDesign';
 
 import CircleIcon from '../Components/CircleIcon';
 import CircleImage from '../Components/CircleImage';
+import usersApi from '../api/usersApi';
 
 
 const FullListing = (props) => {
@@ -41,9 +42,61 @@ const FullListing = (props) => {
 
     });
     const [userLocation, setUserLocation] = useState({lat2: 0, lon2: 0});
+    const [profilePic, setProfilePic] = useState(null);
 
-    useEffect(() => getList(), []);
-    useEffect(()=> {getYourLocation()},[]);
+    useEffect(() => {getList()}, []);
+    useEffect(() => {getYourLocation()},[]);
+    // useEffect(() => {
+    //     const creator = props.route.params.creator;
+    //     usersApi.getProfileImage({userN: creator}).then( r =>{
+    //         // console.log(r.data)
+    //         if  (r.data != null) {
+    //             const data = r.data[0]
+    //             // console.log("here")
+    //
+    //             const photo = JSON.parse(data.Picture)
+    //             // console.log(photo)
+    //             setProfilePic(photo)
+    //         }
+    //     })
+    // }, []);
+
+    const getList = async () => {
+        await listingsApi.getListing({listingID: props.route.params.listID}).then( r => {
+            // console.log(r.data);
+            if (r.data != null) {
+                const data = r.data[0];
+                const listingInfo = JSON.parse(data.listing);
+                const user = data.user;
+                const postingTime = data.time;
+
+                setListingData({
+                    user: user,
+                    time: new Date(postingTime),
+                    listing: listingInfo
+                });
+
+            }
+        });
+
+        await usersApi.getProfileImage({userN: props.route.params.creator}).then( r =>{
+            // console.log(r.data)
+            if  (r.data != null) {
+                const data = r.data[0]
+                // console.log("here")
+
+                const photo = JSON.parse(data.Picture)
+                // console.log(photo)
+                setProfilePic(photo);
+
+            } else {
+                setProfilePic(null);
+            }
+        })
+    }
+
+
+
 
     const getYourLocation = async () => {
         const {granted} = await Location.requestPermissionsAsync();
@@ -89,7 +142,6 @@ const FullListing = (props) => {
         navigation.navigate('FeedScreen')
     };
 
-    //TODO: fill this function
     const acceptListing = () => {
         navigation.navigate("ChatScreen", {listing_id: props.route.params.listID ,username: props.route.params.username, receiver: props.route.params.creator, nowPending: true});
     };
@@ -165,25 +217,6 @@ const FullListing = (props) => {
         return Object.keys(obj).length === 0;
     };
 
-    const getList = () => {
-        listingsApi.getListing({listingID: props.route.params.listID}).then( r => {
-            // console.log(r.data);
-
-            if (r.data != null) {
-                const data = r.data[0];
-                const listingInfo = JSON.parse(data.listing);
-                const user = data.user;
-                const postingTime = data.time;
-
-                setListingData({
-                    user: user,
-                    time: new Date(postingTime),
-                    listing: listingInfo
-                });
-
-            }
-        });
-    }
 
     //TODO: get user!!
 
@@ -207,7 +240,7 @@ const FullListing = (props) => {
 
                    <View style={styles.topOfMiddle}>
                     <View style={styles.userInf}>
-                        <CircleImage image={require('../Resources/Images/Alina.jpg')} size={50}/>
+                        <CircleImage image={profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : profilePic} size={50}/>
                         <Text style={styles.userInfTime}>{getTime()}</Text>
                     </View>
                        <View style={styles.descInf}>
@@ -356,7 +389,8 @@ const styles = StyleSheet.create({
         fontSize: 22.5,
         letterSpacing: 2,
 
-    }, poundsEnd: {
+    },
+    poundsEnd: {
         color: "rgba(0, 51, 102,0.75)",
         fontWeight: 'normal',
         fontSize: 22.5,
@@ -406,7 +440,7 @@ const styles = StyleSheet.create({
     },
     descInf:{
         width: '75%',
-        paddingLeft: 10,
+        paddingLeft: 15,
         paddingTop: 10,
     },
 
