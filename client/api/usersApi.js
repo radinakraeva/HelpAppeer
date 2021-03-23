@@ -20,6 +20,7 @@ const getUser = (userN) => {
 }
 
 const getProfileImage = (username) => {
+    console.log("userAPI profile data is" + username);
     return client.post("/getProfilePhoto", username);
 }
 

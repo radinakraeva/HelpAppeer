@@ -22,7 +22,7 @@ function ProfileListing({listing_id, title, category, image, profilePicture, pri
         const user = listingsApi.getUser({listID: listing_id}).then(t => {
             console.log(user);
             listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
-                navigation.navigate('ProfileScreen', {user: user})
+                /*navigation.navigate('ProfileScreen', {user: user})*/
             });
         })
 
