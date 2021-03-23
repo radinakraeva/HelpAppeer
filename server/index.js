@@ -241,10 +241,7 @@ app.post('/removeListing',(req, res) => {
     console.log("Getting the listing data to remove");
 
     console.log("here is "+ req.fields.listID)
-
-
     const listingID = req.fields.listID;
-
 
     connection.query(
         "DELETE FROM Listings WHERE listing_id = (?)", [listingID],

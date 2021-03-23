@@ -21,10 +21,10 @@ function ProfileListing({listing_id, title, category, image, profilePicture, pri
     function removePost() {
         const user = listingsApi.getUser({listID: listing_id}).then(t => {
             console.log(user);
-            navigation.navigate('ProfileScreen', {user: user})
-            /*listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
+            // navigation.navigate('ProfileScreen', {user: user})
+            listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
                 navigation.navigate('ProfileScreen', {user: user})
-            });*/
+            });
         })
 
     }

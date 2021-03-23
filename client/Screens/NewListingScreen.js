@@ -228,6 +228,18 @@ const NewListingScreen = (props) => {
             listing: JSON.stringify(data)
         };
 
+        setData({
+            title: '',
+            category: '',
+            description: '',
+            price: -1,
+            photo1: {},
+            photo2: {},
+            photo3: {},
+            location: {},
+            addInfo: '',
+        });
+
         console.log(JSON.stringify(submission));
         // listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
         listingsApi.addListing(submission);
