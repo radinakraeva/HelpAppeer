@@ -4,6 +4,7 @@ import ProfileListing from './ProfileListing';
 import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
 import { getDistanceBetween } from 'geolocation-distance-between';
+import Listing from './Listing';
 
 export default function ProfileFeed({sort, filter, ...props}){
 
@@ -64,8 +65,18 @@ export default function ProfileFeed({sort, filter, ...props}){
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            profilePicture={require('../Resources/Images/Alina.jpg')}
+            // profilePicture={require('../Resources/Images/Michael.jpg')}
+            profilePicture={item.profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : item.profilePic}
             priceCategory={item.priceCategory}
+            user = {props.username}
+            creator={item.user}
+
+            /*listing_id = {item.listing_id}
+            title={item.title}
+            category={item.category}
+            image = {getImage(item.category)}
+            profilePicture={require('../Resources/Images/Alina.jpg')}
+            priceCategory={item.priceCategory}*/
         />
     );
 
