@@ -4,10 +4,15 @@ import ProfileListing from './ProfileListing';
 import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
 import { getDistanceBetween } from 'geolocation-distance-between';
+import Listing from './Listing';
 
 export default function ProfileFeed({sort, filter, ...props}){
 
+    const listingsArray = []
     const [listings, setListings] = useState([]);
+    const [listingsFinal, setListingsFinal] = useState([]);
+
+
     const [location, setLocation] = React.useState({
         location: {},
     });
@@ -23,7 +28,15 @@ export default function ProfileFeed({sort, filter, ...props}){
     const loadListings = async() => {
         const r = await listingsApi.getSpecificListings({userN: props.user});
         setListings(r.data);
-
+        console.log("listings =" + listings);
+        for (let i = 0; i< listings.length; i++) {
+            console.log("listings[i].user " + listings[i].user );
+            if (listings[i].user === props.user) {
+                listingsArray.push(listings[i]);
+                console.log("final listings"+listingsFinal);
+            }
+        }
+        setListingsFinal(listingsArray);
     }
 
     const getLocation = async () => {
@@ -52,14 +65,24 @@ export default function ProfileFeed({sort, filter, ...props}){
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            profilePicture={require('../Resources/Images/Alina.jpg')}
+            // profilePicture={require('../Resources/Images/Michael.jpg')}
+            profilePicture={item.profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : item.profilePic}
             priceCategory={item.priceCategory}
+            user = {props.username}
+            creator={item.user}
+
+            /*listing_id = {item.listing_id}
+            title={item.title}
+            category={item.category}
+            image = {getImage(item.category)}
+            profilePicture={require('../Resources/Images/Alina.jpg')}
+            priceCategory={item.priceCategory}*/
         />
     );
 
     return (
         <FlatList style = {{flex: 1}} showsVerticalScrollIndicator={false}
-                  data = {listings}
+                  data = {listingsFinal}
                   keyExtractor = {item => item.listing_id.toString()}
                   renderItem={listingRender}
                   refreshing = {refreshing}

@@ -9,13 +9,13 @@ import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 import listingsApi from '../api/listingsApi';
 import ProfileFeed from './ProfileFeed';
 
-function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory}){
+function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory, creator, user}){
 
     const navigation = useNavigation();
 
 
     function seeListing(){
-        navigation.navigate('FullListing', {listID: listing_id})
+        navigation.navigate('FullListing', {listID: listing_id, username: user, creator: creator})
     }
 
     function removePost() {
