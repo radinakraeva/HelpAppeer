@@ -25,6 +25,8 @@ export default function ProfileFeed({sort, filter, ...props}){
         getLocation();
     }, []);
 
+
+
     const loadListings = async() => {
         await listingsApi.getSpecificListings({userN: props.user}).then( r => {
         setListings(r.data);
@@ -71,6 +73,7 @@ export default function ProfileFeed({sort, filter, ...props}){
             priceCategory={item.priceCategory}
             user = {props.username}
             creator={item.user}
+            refreshFunc ={loadListings}
 
             /*listing_id = {item.listing_id}
             title={item.title}

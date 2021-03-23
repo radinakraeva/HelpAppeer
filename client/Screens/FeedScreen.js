@@ -32,8 +32,6 @@ export default function FeedScreen(props){
         navigation.navigate("NewListingScreen", {username: props.route.params.username});
     };
 
-
-
     const goToChat = () => {
         navigation.navigate("ChatListScreen", {username: props.route.params.username});
     };

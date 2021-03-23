@@ -19,7 +19,6 @@
     },
     "android": {
       "adaptiveIcon": {
-
         "backgroundColor": "#FFFFFF"
       },
       "config": {
@@ -28,8 +27,7 @@
         }
       }
     },
-    "web": {
-
-    }
+    "web": {},
+    "description": ""
   }
 }

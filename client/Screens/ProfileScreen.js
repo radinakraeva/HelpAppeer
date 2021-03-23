@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, View, TextInput, StyleSheet, TouchableOpacity, Text,} from 'react-native';
 
 import CircleImage from '../Components/CircleImage';
@@ -127,6 +127,8 @@ const styles = StyleSheet.create({
     backing: {
         backgroundColor: 'white',
         flex: 1,
+        paddingTop:30,
+        padding:10
     },
     feed: {
         position: 'absolute',

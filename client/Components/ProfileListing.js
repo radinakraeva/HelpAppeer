@@ -9,10 +9,11 @@ import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 import listingsApi from '../api/listingsApi';
 import ProfileFeed from './ProfileFeed';
 
-function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory, creator, user}){
+function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory, creator, user, refreshFunc}){
 
     const navigation = useNavigation();
 
+    const [refreshPage, setRefreshPage] = useState("");
 
     function seeListing(){
         navigation.navigate('FullListing', {listID: listing_id, username: user, creator: creator})
@@ -21,10 +22,14 @@ function ProfileListing({listing_id, title, category, image, profilePicture, pri
     function removePost() {
         const user = listingsApi.getUser({listID: listing_id}).then(t => {
             console.log(user);
+
+            refreshFunc()
             // navigation.navigate('ProfileScreen', {user: user})
             listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
-                navigation.navigate('ProfileScreen', {user: user})
+                // navigation.navigate('ProfileScreen', {user: user})
+                refreshFunc()
             });
+            refreshFunc()
         })
 
     }
