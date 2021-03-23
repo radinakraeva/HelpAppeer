@@ -7,7 +7,11 @@ import { getDistanceBetween } from 'geolocation-distance-between';
 
 export default function ProfileFeed({sort, filter, ...props}){
 
+    const listingsArray = []
     const [listings, setListings] = useState([]);
+    const [listingsFinal, setListingsFinal] = useState([]);
+
+
     const [location, setLocation] = React.useState({
         location: {},
     });
@@ -23,7 +27,15 @@ export default function ProfileFeed({sort, filter, ...props}){
     const loadListings = async() => {
         const r = await listingsApi.getSpecificListings({userN: props.user});
         setListings(r.data);
-
+        console.log("listings =" + listings);
+        for (let i = 0; i< listings.length; i++) {
+            console.log("listings[i].user " + listings[i].user );
+            if (listings[i].user === props.user) {
+                listingsArray.push(listings[i]);
+                console.log("final listings"+listingsFinal);
+            }
+        }
+        setListingsFinal(listingsArray);
     }
 
     const getLocation = async () => {
@@ -59,7 +71,7 @@ export default function ProfileFeed({sort, filter, ...props}){
 
     return (
         <FlatList style = {{flex: 1}} showsVerticalScrollIndicator={false}
-                  data = {listings}
+                  data = {listingsFinal}
                   keyExtractor = {item => item.listing_id.toString()}
                   renderItem={listingRender}
                   refreshing = {refreshing}

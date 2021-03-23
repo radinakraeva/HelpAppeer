@@ -116,7 +116,7 @@ const ProfileScreen = (props) => {
                     fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
 
-            {/*<ProfileFeed style = {styles.feed} user={userN}/>*/}
+            <ProfileFeed style = {styles.feed} user={userN}/>
 
         </SafeAreaView>
 
