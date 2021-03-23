@@ -121,23 +121,6 @@ export default function Feed({sort, filter, ...props}){
         if(category == 'general') return require('../Resources/Images/general.png')
     }
 
-    // getProfileImage("username???")
-
-    const getProfileImage = (username) =>{
-
-        // usersApi.getProfileImage({username: username}).then(r => {
-        //     if(r.data != null){
-        //         const data = r.data[0]
-        //         console.log("here")
-        //         // console.log(r.data)
-        //         const photo = JSON.parse(data.Picture)
-        //         // console.log(photo);
-        //
-        //         return photo
-        //     }
-        // })
-    }
-
     const listingRender = ({ item }) => (
         <Listing
             listing_id = {item.listing_id}
