@@ -41,7 +41,7 @@ export default function ChatSelector({listingName, mostRecentMessage, timeSinceM
 
     function openChat(){
         console.log("Opening Chat");
-        navigation.navigate('ChatScreen', {listing_id: listing_id, username: username , receiver: receiver})
+        navigation.navigate('ChatScreen', {listing_id: listing_id, listingName: listingName, username: username , receiver: receiver})
     }
     return(
         <TouchableWithoutFeedback onPress = {() =>openChat()} style = {styles.test}>
