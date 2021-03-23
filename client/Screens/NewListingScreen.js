@@ -22,7 +22,7 @@ const NewListingScreen = (props) => {
 
     const navigation = useNavigation()
 
-    console.log(props.route.params.username  + ' UUUUUUUUUSE');
+    // console.log(props.route.params.username  + ' UUUUUUUUUSE');
 
     const [data, setData] = React.useState({
         title: '',
@@ -35,6 +35,20 @@ const NewListingScreen = (props) => {
         location: {},
         addInfo: '',
     });
+
+    useEffect(() => {
+        setData({
+            title: '',
+            category: '',
+            description: '',
+            price: -1,
+            photo1: {},
+            photo2: {},
+            photo3: {},
+            location: {},
+            addInfo: '',
+        })
+    },[])
 
     const titleChange = (input) => {
         setData({
@@ -211,38 +225,34 @@ const NewListingScreen = (props) => {
             alert('Sorry all required fields need to be filled. ');
 
         } else { //if not, submit
-            databaseSubmission();
+            const list = JSON.stringify(data);
+
+
+
+            databaseSubmission(list);
             navigation.navigate("PostedAnimationScreen", {username: props.route.params.username});
         }
 
 
     };
 
-    const databaseSubmission = () => {
+    const databaseSubmission = (list) => {
 
         let date = new Date();
 
         let submission = {
             user: props.route.params.username,
             time: date,
-            listing: JSON.stringify(data)
+            listing: list
         };
 
-        setData({
-            title: '',
-            category: '',
-            description: '',
-            price: -1,
-            photo1: {},
-            photo2: {},
-            photo3: {},
-            location: {},
-            addInfo: '',
-        });
-
+        console.log("printing here")
+        console.log(data)
         console.log(JSON.stringify(submission));
         // listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
-        listingsApi.addListing(submission);
+        listingsApi.addListing(submission).then( r=> {
+
+        });
 
 
     };
@@ -256,7 +266,7 @@ const NewListingScreen = (props) => {
             }, {
                 text: 'OK',
                 onPress: () =>{ console.log('sashay, away')
-                    navigation.navigate("FeedScreen", {username: props.route.params.username})},
+                    navigation.navigate("FeedScreen", {username: props.route.params.username})}
             }],
             { cancelable : true}
         );
@@ -446,7 +456,7 @@ const NewListingScreen = (props) => {
                 </View>}
             </View>
 
-            {/*<InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>*/}
+            <InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>
 
 
             <View style={styles.bottomSection}>

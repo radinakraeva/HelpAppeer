@@ -86,7 +86,7 @@ export default function ProfileFeed({sort, filter, ...props}){
 
     return (
         <FlatList style = {{flex: 1}} showsVerticalScrollIndicator={false}
-                  data = {listings}
+                  data = {listingsFinal}
                   keyExtractor = {item => item.listing_id.toString()}
                   renderItem={listingRender}
                   refreshing = {refreshing}
