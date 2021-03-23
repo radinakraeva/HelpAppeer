@@ -24,12 +24,14 @@ const ProfileScreen = (props) => {
         city: '',
         mobile: '',
         email: '',
-        password: '',
-        passwordConfirm: '',
-        pic: {},
         token: 't',
         secureTextEntry: true,
     });
+
+    const [userPic, setPicData] = React.useState({
+        pic: {},
+    });
+
 
     useEffect(() => getData(), []);
 
@@ -48,7 +50,6 @@ const ProfileScreen = (props) => {
                 const u = props.route.params.user;
 
                 setUserData({
-                    ...userData,
                     name: n,
                     username: u,
                     address: a,
@@ -57,25 +58,23 @@ const ProfileScreen = (props) => {
                     email: e,
                 });
             }
-            usersApi.getProfileImage({userN: props.route.params.user}).then(t => {
-                console.log("t.data is for image is " + t.data);
-
-                if (t.data != null) {
-                    const dataT = t.data[0];
-                    console.log("pic dataT" + dataT);
-                    const p = JSON.parse(dataT.Picture);
-                    console.log("p is " + p);
-
-                    setUserData({
-                        ...userData,
-                        pic: {p},
-                    });
-
-                }
         });
-        });
+                usersApi.getProfileImage({userN: props.route.params.user}).then(t => {
+                    console.log("t.data is for image is " + t.data);
 
-    }
+                    if (t.data != null) {
+                        const dataT = t.data[0];
+                        console.log("pic dataT" + dataT);
+                        const p = JSON.parse(dataT.Picture);
+                        console.log("p is " + p);
+
+                        setPicData({
+                            pic: {p},
+                        });
+
+                    }
+                });
+        }
 
     const message = () => {
         alert('Sorry This Profile Is Fixed For Testing');
@@ -84,7 +83,7 @@ const ProfileScreen = (props) => {
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
-                    <CircleImage  resizeMode={'cover'} size={110} image={userData.pic.p} style={{borderRadius: 150,
+                    <CircleImage  resizeMode={'cover'} size={110} image={userPic.pic.p} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
                     <View>
                         <Text style={styles.writing}>{userData.name}</Text>
@@ -117,7 +116,7 @@ const ProfileScreen = (props) => {
                     fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
 
-            <ProfileFeed style = {styles.feed} user={userN}/>
+            {/*<ProfileFeed style = {styles.feed} user={userN}/>*/}
 
         </SafeAreaView>
 
