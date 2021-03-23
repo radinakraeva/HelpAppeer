@@ -218,7 +218,8 @@ app.post('/getSpecificListing',(req, res) => {
     const username = req.fields.userN;
 
     connection.query(
-        "SELECT * FROM Listings WHERE user = (?)", [username],
+        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username = (?)", [username],
+        /*"SELECT * FROM Listings WHERE User = (?)", [username],*/
         function (error, result) {
             if (error) {
                 console.log(error);
@@ -334,6 +335,7 @@ function unwrapListingNames(listings){
     console.log(listingNames);
     return listingNames
 }
+
 app.post('/getMessages',(req, res) =>{
     console.log('I just ran, I ran all night and day....');
     connection.query(

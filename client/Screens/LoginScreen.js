@@ -42,7 +42,7 @@ const LoginScreen  = () => {
     };
 
     const forgot = () => {
-        alert('For Testing Username: MarkD , Password: LovesThisApp');
+        alert('For Aesthetic Design Purpose');
     };
 
     const signCheck = () => {

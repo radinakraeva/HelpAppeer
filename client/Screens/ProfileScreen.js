@@ -24,8 +24,6 @@ const ProfileScreen = (props) => {
         city: '',
         mobile: '',
         email: '',
-        password: '',
-        passwordConfirm: '',
         pic: {},
         token: 't',
         secureTextEntry: true,
@@ -57,25 +55,24 @@ const ProfileScreen = (props) => {
                     email: e,
                 });
             }
-            usersApi.getProfileImage({userN: props.route.params.user}).then(t => {
-                console.log("t.data is for image is " + t.data);
-
-                if (t.data != null) {
-                    const dataT = t.data[0];
-                    console.log("pic dataT" + dataT);
-                    const p = JSON.parse(dataT.Picture);
-                    console.log("p is " + p);
-
-                    setUserData({
-                        ...userData,
-                        pic: {p},
-                    });
-
-                }
         });
-        });
+                usersApi.getProfileImage({userN: props.route.params.user}).then(t => {
+                    console.log("t.data is for image is " + t.data);
 
-    }
+                    if (t.data != null) {
+                        const dataT = t.data[0];
+                        console.log("pic dataT" + dataT);
+                        const p = JSON.parse(dataT.Picture);
+                        console.log("p is " + p);
+
+                        setUserData({
+                            ...userData,
+                            pic: {p},
+                        });
+
+                    }
+                });
+        }
 
     const message = () => {
         alert('Sorry This Profile Is Fixed For Testing');
@@ -117,7 +114,7 @@ const ProfileScreen = (props) => {
                     fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
 
-            <ProfileFeed style = {styles.feed} user={userN}/>
+            {/*<ProfileFeed style = {styles.feed} user={userN}/>*/}
 
         </SafeAreaView>
 
