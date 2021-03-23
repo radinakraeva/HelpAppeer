@@ -69,22 +69,17 @@ export default function Feed({sort, filter, ...props}){
                 sortedListings.push(JSON.parse(sorted[index]));
             }
             setListings(sortedListings)
+            setAllListings(lists)
 
         } else {
             console.log("sorting by time")
             setListings(lists);
+            // setAllListings(listingsOriginal);
         }
     };
 
     const loadListings = async() => {
         const r = await listingsApi.getListings();
-
-        // for (let listing in lists) {
-        //     // let user = listing.username;
-        //     let user = listing.creator;
-        //
-        //
-        // }
 
         setListings(r.data);
         setAllListings(r.data);
@@ -150,7 +145,7 @@ export default function Feed({sort, filter, ...props}){
             category={item.category}
             image = {getImage(item.category)}
             // profilePicture={require('../Resources/Images/Michael.jpg')}
-            profilePicture={item.profilePic == null ? require('../Resources/Images/Alina.jpg') : item.profilePic}
+            profilePicture={item.profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : item.profilePic}
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}
