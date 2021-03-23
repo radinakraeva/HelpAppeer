@@ -11,8 +11,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import ProfileFeed from '../Components/ProfileFeed';
 import usersApi from '../api/usersApi';
 import Feed from '../Components/Feed';
+import IconButton from '../Components/IconButton';
+import {useNavigation} from '@react-navigation/native';
 
 const ProfileScreen = (props) => {
+
+    const navigation = useNavigation();
 
     const userN = props.route.params.user;
     console.log("userN is "+userN);
@@ -80,11 +84,18 @@ const ProfileScreen = (props) => {
         alert('Sorry This Profile Is Fixed For Testing');
     };
 
+    const goBack = () => {
+        navigation.navigate('FeedScreen')
+    };
+
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
                     <CircleImage  resizeMode={'cover'} size={110} image={userPic.pic.p} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
+                    <View style={styles.backButton}>
+                        <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                    </View>
                     <View>
                         <Text style={styles.writing}>{userData.name}</Text>
                         <Text style={styles.user}>{userData.username}</Text>
@@ -181,6 +192,14 @@ const styles = StyleSheet.create({
         marginTop:1,
         borderBottomWidth: 3,
         borderColor:ColourPalette.yellow,
+    },
+    backButton: {
+        flex:2,
+        marginTop:40,
+        marginRight:20,
+        position: 'absolute',
+        top:0,
+        right:0
     },
 });
 
