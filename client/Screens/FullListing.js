@@ -125,7 +125,7 @@ const FullListing = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate('FeedScreen')
+        navigation.navigate('FeedScreen2', {username: listingData.user})
     };
 
     const acceptListing = () => {

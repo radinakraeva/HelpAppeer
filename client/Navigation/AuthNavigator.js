@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 
 const AuthNavigator  = () => (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName="ProfileScreen" screenOptions={{ headerShown: false }}>
+        <Stack.Navigator initialRouteName="AnimationScreen" screenOptions={{ headerShown: false }}>
             <Stack.Screen name='AnimationScreen' component={AnimationScreen}/>
             <Stack.Screen name='LoginScreen' component={LoginScreen}/>
             <Stack.Screen name='SignupScreen' component={SignupScreen}/>
@@ -30,7 +30,7 @@ const AuthNavigator  = () => (
             <Stack.Screen name='FullListing' component={FullListing} initialParams={{ listID: 79 }}/>
             <Stack.Screen name='PostedAnimationScreen' component={PostedAnimationScreen}/>
             <Stack.Screen name='ChatScreen' component={ChatScreen}/>
-            <Stack.Screen name='ProfileScreen' component={ProfileScreen} initialParams={{ user: 'slavkatest2' }}/>
+            <Stack.Screen name='ProfileScreen' component={ProfileScreen} initialParams={{ user: 'as' }}/>
         </Stack.Navigator>
     </NavigationContainer>
 
