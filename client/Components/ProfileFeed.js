@@ -26,7 +26,7 @@ export default function ProfileFeed({sort, filter, ...props}){
     }, []);
 
     const loadListings = async() => {
-        const r = await listingsApi.getSpecificListings({userN: props.user});
+        await listingsApi.getSpecificListings({userN: props.user}).then( r => {
         setListings(r.data);
         console.log("listings =" + listings);
         for (let i = 0; i< listings.length; i++) {
@@ -37,6 +37,7 @@ export default function ProfileFeed({sort, filter, ...props}){
             }
         }
         setListingsFinal(listingsArray);
+        });
     }
 
     const getLocation = async () => {

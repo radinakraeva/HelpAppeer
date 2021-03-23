@@ -218,7 +218,7 @@ app.post('/getSpecificListing',(req, res) => {
     const username = req.fields.userN;
 
     connection.query(
-        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username", [username],
+        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username AND Listings.user = (?)", [username],
         /*"SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username",*/
         /*"SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username = (?)", [username],*/
         /*"SELECT * FROM Listings WHERE User = (?)", [username],*/
