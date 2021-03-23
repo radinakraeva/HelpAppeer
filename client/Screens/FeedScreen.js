@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
-import {View, Text, SafeAreaView, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, SafeAreaView, StyleSheet, BackHandler} from 'react-native';
 import Feed from '../Components/Feed';
 
 import ColourPalette from '../Resources/ColourPalette';
@@ -13,6 +13,11 @@ import PriceSelection from '../Components/PriceSelection';
 
 export default function FeedScreen(props){
 
+    useEffect(() => {
+        BackHandler.addEventListener('hardwareBackPress', () => true);
+    }, []);
+
+
     console.log('USERNAME' + props.route.params.username);
 
     const [filterMenu, toggleFilterMenu] = useState({visible: false, sorting: 'time', prices1: true, prices2: true, prices3: true});
@@ -23,11 +28,14 @@ export default function FeedScreen(props){
         navigation.navigate("NewListingScreen", {username: props.route.params.username});
     };
 
+
+
     const goToChat = () => {
         navigation.navigate("ChatListScreen", {username: props.route.params.username});
     };
 
     const showFilterMenu = () => {
+
             return (
                 <View style={styles.filterMenu}>
                     <Text style={styles.filterMenuTitle}>Sort by</Text>

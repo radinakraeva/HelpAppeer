@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier,no-trailing-spaces */
 import React, {useEffect, useState} from 'react';
-import {View, Text, Alert, StyleSheet, Image, ScrollView} from 'react-native';
+import {View, Text, Alert, StyleSheet, Image, ScrollView, BackHandler} from 'react-native';
 
 import Screen from '../Components/Screen';
 import ColourPalette from '../Resources/ColourPalette';
@@ -41,7 +41,6 @@ const FullListing = (props) => {
 
     });
     const [userLocation, setUserLocation] = useState({lat2: 0, lon2: 0});
-
 
     useEffect(() => getList(), []);
     useEffect(()=> {getYourLocation()},[]);
@@ -313,7 +312,7 @@ const styles = StyleSheet.create({
     },
     backButton: {
         flex:2,
-        marginTop:20,
+        marginTop:40,
         marginRight:20,
         position: 'absolute',
         top:0,

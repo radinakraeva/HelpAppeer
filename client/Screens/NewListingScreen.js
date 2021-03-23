@@ -211,7 +211,6 @@ const NewListingScreen = (props) => {
             alert('Sorry all required fields need to be filled. ');
 
         } else { //if not, submit
-
             databaseSubmission();
             navigation.navigate("PostedAnimationScreen", {username: props.route.params.username});
         }

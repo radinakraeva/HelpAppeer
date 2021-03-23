@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, ScrollView,  View, FlatList} from 'react-native';
+import {Text, ScrollView,  View, FlatList, BackHandler} from 'react-native';
 import Listing from './Listing';
 import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
@@ -29,6 +29,7 @@ export default function Feed({sort, filter, ...props}){
     useEffect(()=> {
         sortListings();
     },[sort])
+
 
     const filterListings = () => {
         let lists = JSON.parse(JSON.stringify(allListings));
