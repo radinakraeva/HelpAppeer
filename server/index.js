@@ -1,6 +1,5 @@
 const express = require('express');
 const formidable = require('express-formidable');
-
 const mysql = require('mysql');
 
 const app = express();
