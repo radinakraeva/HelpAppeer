@@ -23,16 +23,12 @@ const sendMessage = (listing_id, send_user, reci_user, msg_contents, time_sent) 
         time_sent: time_sent});
 }
 
-const getReceiver = (reci_user) => {
-    console.log('Getting token of receiver');
-    return client.post('/getReceiverToken', {username: reci_user});
-}
 
 const getConvoNames = () => {
     console.log('Getting convo names');
     return client.post('/getConvoNames', {});
 }
 
-export default {getOpenConvos, getMessages, sendMessage, getReceiver, getConvoNames};
+export default {getOpenConvos, getMessages, sendMessage, getConvoNames};
 
 

@@ -24,5 +24,15 @@ const getProfileImage = (username) => {
     return client.post("/getProfilePhoto", username);
 }
 
-export default { addUser, verifyUser, verify, getUser, getProfileImage };
+const setNotifToken = (username) => {
+    console.log("setting notif token for " + username)
+    return client.post("/setToken", {username: username})
+}
+
+const getNotifToken = (reci_user) => {
+    console.log('Getting token of receiver');
+    return client.post('/getReceiverToken', {username: reci_user});
+}
+
+export default { addUser, verifyUser, verify, getUser, getProfileImage, setNotifToken, getNotifToken };
 

@@ -8,11 +8,16 @@ import ColourPalette from "../Resources/ColourPalette";
 
 import {useNavigation} from '@react-navigation/native';
 import usersApi from "../api/usersApi";
+import msgAPI from '../api/msgAPI';
+import pushNotifications from '../Resources/pushNotifications';
 // import AuthNavigator from "../Navigation/AuthNavigator";
+import Constants from 'expo-constants';
+
 
 const LoginScreen  = () => {
     // eslint-disable-next-line no-undef
     const navigation = useNavigation();
+
 
     const [data, setData] = React.useState({
         password: '',
@@ -58,6 +63,18 @@ const LoginScreen  = () => {
                 if(r.data === 'NO USER'){
                     alert('User with this username does not exist, please try again or register a new account');
                 }else if(r.data === 'AUTHORIZED'){
+
+                    if (Constants.isDevice) {
+                        usersApi.getNotifToken(data.username).then( r=> {
+                            if (r.data == null || r.data[0] == 't' || r.data[0] == '') {
+                                pushNotifications.registerForPushNotificationsAsync().then( token=> {
+                                    usersApi.setNotifToken(data.username)
+                                })
+                            }
+                        })
+                    }
+
+
                     navigation.navigate("FeedScreen", {username: data.username});
                 }else if(r.data === 'INCORRECT'){
                     alert('Password is incorrect, please try again');

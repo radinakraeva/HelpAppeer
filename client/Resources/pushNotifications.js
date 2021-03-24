@@ -18,7 +18,8 @@ const registerForPushNotificationsAsync = async () => {
         token = (await Notifications.getExpoPushTokenAsync()).data;
         console.log(token);
     } else {
-        alert('Must use physical device for Push Notifications');
+        console.log("Must use physical device for push notifications")
+        // alert('Must use physical device for Push Notifications');
     }
 
     if (Platform.OS === 'android') {
@@ -33,12 +34,13 @@ const registerForPushNotificationsAsync = async () => {
     return token;
 };
 
-const sendPushNotification = async (expoPushToken) => {
+const sendPushNotification = async (expoPushToken, listingTitle) => {
+    const messBody = 'An incoming update about your ' + listingTitle + ' listing'
     const message = {
         to: expoPushToken,
         sound: 'default',
-        title: 'Original Title',
-        body: 'And here is the body!',
+        title: 'HelpAppeer',
+        body: messBody,
         data: { someData: 'goes here' },
     };
 
@@ -56,4 +58,4 @@ const sendPushNotification = async (expoPushToken) => {
 
 
 
-export default { registerForPushNotificationsAsync }
+export default { registerForPushNotificationsAsync, sendPushNotification }
