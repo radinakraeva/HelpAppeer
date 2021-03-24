@@ -6,6 +6,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import ColourPalette from '../Resources/ColourPalette';
 import LoginScreen from '../Screens/LoginScreen';
+import CardPaymentScreen from '../Screens/CardPaymentScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -33,7 +34,7 @@ const DrawerNavigation = () => {
             >
                 <Drawer.Screen name="Feed" component={FeedScreen} initialParams={{username: "as"}} />
                 <Drawer.Screen name="Profile" component={ProfileScreen} initialParams={{username: "as"}} />
-                {/*<Drawer.Screen name="Card Payment" component={}/>*/}
+                <Drawer.Screen name="Card Payment" component={CardPaymentScreen}/>
                 {/*<Drawer.Screen name="Sign Out" component={LoginScreen}/>*/}
             </Drawer.Navigator>
     );
