@@ -5,6 +5,8 @@ import msgAPI from '../api/msgAPI';
 import ColourPalette from '../Resources/ColourPalette';
 import CircleIcon from '../Components/CircleIcon';
 import ChatMessage from '../Components/ChatMessage';
+import IconButton from '../Components/IconButton';
+import {useNavigation} from "@react-navigation/native";
 
 const styles = StyleSheet.create({
     chatScreen: {
@@ -51,7 +53,15 @@ const styles = StyleSheet.create({
     chatMessages:{
         height: '75%',
         padding: 5
-    }
+    },
+    backButton: {
+        flex:2,
+        marginTop:40,
+        marginRight:20,
+        position: 'absolute',
+        top:0,
+        right:0
+    },
 })
 
 export default function ChatScreen(props){
@@ -62,6 +72,7 @@ export default function ChatScreen(props){
     const username = props.route.params.username;
     const receiver = props.route.params.receiver;
     const listingName = props.route.params.listingName;
+    const navigation = useNavigation();
 
     useEffect( () => {
         initLoadMessages();
@@ -117,6 +128,10 @@ export default function ChatScreen(props){
         setNewMessage(input);
     }
 
+    const goBack = () => {
+        navigation.navigate('ChatListScreen', {username: username})
+    };
+
     function timeDifference(date){
         let date2 = new Date();
         let diffMs = (date2 - Date.parse(date));
@@ -159,6 +174,9 @@ export default function ChatScreen(props){
                 <View style = {styles.topLeftSection}>
                     <Text style = {styles.text}>Chat regarding:</Text>
                     <Text style = {styles.titleText}>{listingName}</Text>
+                    <View style={styles.backButton}>
+                        <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                    </View>
                 </View>
             </View>
             <View>

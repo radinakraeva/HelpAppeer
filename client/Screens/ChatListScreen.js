@@ -3,17 +3,20 @@ import {View, Text, SafeAreaView, StyleSheet, FlatList} from 'react-native';
 import msgAPI from '../api/msgAPI';
 import ColourPalette from '../Resources/ColourPalette';
 import ChatSelector from '../Components/ChatSelector';
+import usersApi from '../api/usersApi';
 
 export default function ChatListScreen(props){
-
 
     const [openConvos, setOpenConvos] = useState([]);
     const [convoNames, setConvoNames] = useState([]);
 
-    useEffect( () => {
-        loadOpenConvos().then(() => {});
+    useEffect(() => {
+        loadOpenConvos().then(() => {
+        });
         loadConvoNames().then(() => {});
     }, [])
+
+
 
     const loadOpenConvos = async () => {
         const x = await msgAPI.getOpenConvos(props.route.params.username);
@@ -23,7 +26,10 @@ export default function ChatListScreen(props){
     const loadConvoNames = async () => {
         const names = await msgAPI.getConvoNames();
         setConvoNames(names.data);
+
     }
+
+
 
     function timeDifference(date) {
         let date2 = new Date();
@@ -38,16 +44,24 @@ export default function ChatListScreen(props){
 
     }
 
-    const getChatSelector = (convo) => {
+
+
+    const getChatSelector =  (convo) => {
         convo = convo["item"];
+        let userN = "";
+        if (convo.send_user === props.route.params.username) {
+            userN = convo.reci_user;
+        } else {
+            userN = convo.send_user;
+        }
         return (
             <ChatSelector
                 listingName={getChatName(convo.listing_id)}
-                profilePicture={require('../Resources/Images/Ludwig.jpg')}
+                profilePictureID={userN}
                 timeSinceMRM={timeDifference(convo["time_sent"])}
                 mostRecentMessage={convo["msg_contents"]}
                 unread={false}
-                username = {convo["send_user"]}
+                username={convo["send_user"]}
                 receiver={convo["reci_user"]}
                 listing_id={convo["listing_id"]}
             />
@@ -68,13 +82,13 @@ export default function ChatListScreen(props){
 
     const chatList = () => {
         if (openConvos.length == 0) {
-            return (
+            return(
                 <View style = {styles.back}>
                     <Text style = {styles.emptyText}>You have no listings pending. Make a listing and wait for someone to accept it or go accept someone
                         else's listing</Text>
                 </View>);
         } else {
-            return (
+            return(
                 <FlatList
                     data={openConvos}
                     keyExtractor={convo => convo.msg_id.toString()}
@@ -92,6 +106,8 @@ export default function ChatListScreen(props){
             {chatList()}
         </SafeAreaView>
     );
+
+
 }
 
 const styles = StyleSheet.create({

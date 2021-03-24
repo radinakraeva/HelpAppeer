@@ -1,11 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, TouchableWithoutFeedback} from 'react-native';
 import CircleImage from './CircleImage';
 import ColourPalette from '../Resources/ColourPalette';
-
 import {useNavigation} from "@react-navigation/native";
+import usersApi from '../api/usersApi';
 
-export default function ChatSelector({listingName, mostRecentMessage, timeSinceMRM, profilePicture, unread, listing_id, username, receiver}){
+export default function ChatSelector({listingName, mostRecentMessage, timeSinceMRM, profilePictureID, unread, listing_id, username, receiver}){
+    //require('../Resources/Images/defaultProfile.jpg')
+    //profilePicture={profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : profilePic}
+
+    const defaultProfilePic = require('../Resources/Images/defaultProfile.jpg');
+    const [profilePicture, setProfilePicture] = useState([]);
+    if(listingName == null){
+        listingName = "Unnamed Listing"
+    }
+
+    useEffect(() => {loadProfilePic().then(r => {})},[])
     const navigation = useNavigation();
     let textStyles = StyleSheet.create({
         listingName:{
@@ -18,6 +28,23 @@ export default function ChatSelector({listingName, mostRecentMessage, timeSinceM
             padding: 1
         }
     });
+
+    async function loadProfilePic() {
+        //console.log(profilePictureID)
+        await usersApi.getProfileImage({userN: profilePictureID}).then(r => {
+            //console.log(r.data[0].Picture);
+            if (r.data[0].Picture != "null") {
+                const data = r.data[0]
+                //console.log("here")
+                const photo = JSON.parse(data.Picture)
+                //console.log(photo)
+                setProfilePicture(photo);
+            } else {
+                setProfilePicture(require('../Resources/Images/defaultProfile.jpg'));
+            }
+        })
+    }
+
     if(unread === true){
         textStyles = StyleSheet.create({
             listingName:{

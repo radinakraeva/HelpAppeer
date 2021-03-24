@@ -7,7 +7,6 @@ import ColourPalette from '../Resources/ColourPalette';
 import {useNavigation} from "@react-navigation/native";
 import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 import listingsApi from '../api/listingsApi';
-import ProfileFeed from './ProfileFeed';
 
 function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory}){
 
