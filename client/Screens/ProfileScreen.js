@@ -91,7 +91,7 @@ const ProfileScreen = (props) => {
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
-                    <CircleImage  resizeMode={'cover'} size={110} image={userPic.pic.p} style={{borderRadius: 150,
+                    <CircleImage  resizeMode={'cover'} size={110} image={userPic.pic.p === null ? require('../Resources/Images/defaultProfile.jpg') : userPic.pic.p} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
                     <View style={styles.backButton}>
                         <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
