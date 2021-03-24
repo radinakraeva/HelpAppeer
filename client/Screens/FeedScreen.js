@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import {Button, View, Text, SafeAreaView, StyleSheet, BackHandler} from 'react-native';
+import {View, Text, SafeAreaView, StyleSheet, BackHandler} from 'react-native';
 import Feed from '../Components/Feed';
 
 import ColourPalette from '../Resources/ColourPalette';
@@ -10,10 +10,9 @@ import listingsApi from "../api/listingsApi";
 import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
-import {DrawerActions} from '@react-navigation/routers';
-import * as React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
+import LoginScreen from './LoginScreen';
 
 
 export default function FeedScreen(props){
@@ -53,7 +52,7 @@ export default function FeedScreen(props){
 
     const Drawer = createDrawerNavigator();
 
-    export default function SideMenu() {
+    function SideMenu() {
         return (
             <NavigationContainer>
                 <Drawer.Navigator initialRouteName="Feed">
