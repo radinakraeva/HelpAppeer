@@ -75,6 +75,8 @@ export default function ChatScreen(props){
     const navigation = useNavigation();
     let pageOpen = true;
 
+    console.log(username);
+    console.log(receiver);
 
     useEffect( () => {
         loadMessages().then(r => {});

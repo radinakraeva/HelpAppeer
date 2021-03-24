@@ -75,8 +75,8 @@ export default function ChatListScreen(props){
                 timeSinceMRM={timeDifference(convo["time_sent"])}
                 mostRecentMessage={convo["msg_contents"]}
                 unread={false}
-                username={convo["send_user"]}
-                receiver={convo["reci_user"]}
+                username={props.route.params.username}
+                receiver={userN}
                 listing_id={convo["listing_id"]}
             />
         );
