@@ -111,8 +111,9 @@ export default function FeedScreen(props){
     return (
         <SafeAreaView style = {styles.feedScreen} >
             <View style = {styles.topSection}>
-                <IconButton iconName='bars' iconBgColor={ColourPalette.yellow} onPress={openSideMenu}/>
-
+                <View style={styles.sideMenuButton}>
+                <IconButton iconName='bars' iconBgColor={ColourPalette.darkBlue} onPress={openSideMenu} size={50}/>
+                </View>
                 <View style = {styles.topLeftSection}>
 
                     <Text style = {styles.text}>Find a listing in</Text>
@@ -155,6 +156,10 @@ const styles = StyleSheet.create({
     topSection: {
         height: '15%',
         flexDirection: 'row',
+    },
+    sideMenuButton: {
+        paddingVertical: '5%',
+        paddingRight: 15,
     },
     topLeftSection:{
         flex:1,

@@ -9,9 +9,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@react-navigation/drawer": "^5.12.4",
     "express": "^4.16.3",
     "express-formidable": "^1.2.0",
     "formidable": "^1.2.2",
-    "mysql": "^2.18.1"
+    "lottie-react-native": "^3.5.0",
+    "mysql": "^2.18.1",
+    "react-hook-form": "^6.15.5",
+    "react-native-awesome-card-io": "^0.9.0",
+    "react-native-credit-card-display": "^0.3.5",
+    "react-native-credit-card-input": "^0.4.1",
+    "react-navigation-drawer": "^2.7.0",
+    "rn-credit-card": "^0.1.7"
+  },
+  "devDependencies": {
+    "@react-navigation/routers": "^5.7.2"
   }
 }
