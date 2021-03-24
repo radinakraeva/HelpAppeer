@@ -312,6 +312,51 @@ app.post('/getOpenConvos',(req, res) =>{
     )
 })
 
+app.post('/getReceiverToken', (req, res) => {
+    console.log("getting the token of user from database")
+
+    const user = req.fields.username
+
+    connection.query(
+        "SELECT Token FROM Register WHERE Username = (?)", [user],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log("database result")
+                    console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+
+})
+
+app.post('/setToken', (req, res) => {
+    console.log("setting the token of user to database")
+    const user = req.fields.username
+    connection.query(
+        "INSERT INTO Register (Token) WHERE Username = (?)", [user],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    console.log("database result")
+                    console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+})
+
 app.post('/getConvoNames', (req, res) =>{
     connection.query(
         "SELECT listing_id, listing FROM `Listings`", [],

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, View, TextInput, StyleSheet, Text, TouchableOpacity, ScrollView} from 'react-native';
 
 import 'react-native-gesture-handler';
@@ -14,6 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ImageChooser from '../Components/ImageChooser';
 import ImagePreview from '../Components/ImagePreview';
 import * as ImagePicker from 'expo-image-picker';
+import pushNotifications from '../Resources/pushNotifications';
 
 const SignupScreen  = () => {
 
@@ -30,9 +31,13 @@ const SignupScreen  = () => {
         password: '',
         passwordConfirm: '',
         pic: {},
-        token: 't',
+        token: '',
         secureTextEntry: true,
     });
+
+    useEffect(()=>{
+        tokenChange()
+    },[])
 
     const nameChange = (input) => {
         setData({
@@ -96,6 +101,15 @@ const SignupScreen  = () => {
             pic: input,
         });
     };
+
+    const tokenChange = () => {
+        pushNotifications.registerForPushNotificationsAsync().then(t => {
+            setData({
+                ...data,
+                token: t
+            })
+        })
+    }
 
     const update = () => {
         setData({
