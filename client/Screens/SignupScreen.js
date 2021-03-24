@@ -15,6 +15,7 @@ import ImageChooser from '../Components/ImageChooser';
 import ImagePreview from '../Components/ImagePreview';
 import * as ImagePicker from 'expo-image-picker';
 import pushNotifications from '../Resources/pushNotifications';
+import Constants from 'expo-constants';
 
 const SignupScreen  = () => {
 
@@ -36,7 +37,10 @@ const SignupScreen  = () => {
     });
 
     useEffect(()=>{
-        tokenChange()
+        if (Constants.isDevice) {
+            tokenChange()
+        }
+
     },[])
 
     const nameChange = (input) => {

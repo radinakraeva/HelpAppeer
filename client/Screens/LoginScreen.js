@@ -11,6 +11,8 @@ import usersApi from "../api/usersApi";
 import msgAPI from '../api/msgAPI';
 import pushNotifications from '../Resources/pushNotifications';
 // import AuthNavigator from "../Navigation/AuthNavigator";
+import Constants from 'expo-constants';
+
 
 const LoginScreen  = () => {
     // eslint-disable-next-line no-undef
@@ -62,13 +64,16 @@ const LoginScreen  = () => {
                     alert('User with this username does not exist, please try again or register a new account');
                 }else if(r.data === 'AUTHORIZED'){
 
-                    usersApi.getNotifToken(data.username).then( r=> {
-                        if (r.data == null) {
-                            pushNotifications.registerForPushNotificationsAsync().then( token=> {
-                                usersApi.setNotifToken(data.username)
-                            })
-                        }
-                    })
+                    if (Constants.isDevice) {
+                        usersApi.getNotifToken(data.username).then( r=> {
+                            if (r.data == null || r.data[0] == 't' || r.data[0] == '') {
+                                pushNotifications.registerForPushNotificationsAsync().then( token=> {
+                                    usersApi.setNotifToken(data.username)
+                                })
+                            }
+                        })
+                    }
+
 
                     navigation.navigate("FeedScreen", {username: data.username});
                 }else if(r.data === 'INCORRECT'){
