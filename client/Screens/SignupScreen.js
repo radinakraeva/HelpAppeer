@@ -55,6 +55,7 @@ const SignupScreen  = () => {
             ...data,
             username: input,
         });
+        global.username = input
     };
 
     const mobileChange = (input) => {

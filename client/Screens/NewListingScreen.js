@@ -230,7 +230,7 @@ const NewListingScreen = (props) => {
 
 
             databaseSubmission(list);
-            navigation.navigate("PostedAnimationScreen", {username: props.route.params.username});
+            navigation.navigate("PostedAnimationScreen", {username: global.username});
         }
 
 
@@ -241,7 +241,7 @@ const NewListingScreen = (props) => {
         let date = new Date();
 
         let submission = {
-            user: props.route.params.username,
+            user: global.username,
             time: date,
             listing: list
         };
@@ -266,7 +266,7 @@ const NewListingScreen = (props) => {
             }, {
                 text: 'OK',
                 onPress: () =>{ console.log('sashay, away')
-                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: props.route.params.username}} )
+                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} )
                 }
             }],
             { cancelable : true}

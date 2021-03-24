@@ -18,7 +18,7 @@ const ProfileScreen = (props) => {
 
     const navigation = useNavigation();
 
-    const userN = props.route.params.user;
+    const userN = global.username;
     console.log("userN is "+userN);
 
     const [userData, setUserData] = React.useState({
@@ -41,7 +41,7 @@ const ProfileScreen = (props) => {
 
 
     const getData = () => {
-        usersApi.getUser({userN: props.route.params.user}).then( r => {
+        usersApi.getUser({userN: userN}).then( r => {
             console.log("r.data is " + r.data);
 
             if (r.data != null) {
@@ -51,7 +51,7 @@ const ProfileScreen = (props) => {
                 const a = data["Address"];
                 const m = data["Mobile"];
                 const e = data["Email"];
-                const u = props.route.params.user;
+                const u = userN;
 
                 setUserData({
                     name: n,
@@ -63,7 +63,7 @@ const ProfileScreen = (props) => {
                 });
             }
         });
-                usersApi.getProfileImage({userN: props.route.params.user}).then(t => {
+                usersApi.getProfileImage({userN: userN}).then(t => {
                     console.log("t.data is for image is " + t.data);
 
                     if (t.data != null) {
@@ -85,7 +85,7 @@ const ProfileScreen = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: props.route.params.username}} );
+        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} );
     };
 
     return (

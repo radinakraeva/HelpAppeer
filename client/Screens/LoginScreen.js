@@ -37,6 +37,7 @@ const LoginScreen  = () => {
             ...data,
             username: input,
         });
+        global.username = input
     };
 
     const update = () => {

@@ -65,7 +65,7 @@ const FullListing = (props) => {
             }
         });
 
-        await usersApi.getProfileImage({userN: props.route.params.creator}).then( r =>{
+        await usersApi.getProfileImage({userN: global.username}).then( r =>{
             // console.log(r.data)
             if  (r.data != null) {
                 const data = r.data[0]
@@ -125,11 +125,11 @@ const FullListing = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: props.route.params.username}} );
+        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} );
     };
 
     const acceptListing = () => {
-        navigation.navigate("ChatScreen", {listing_id: props.route.params.listID ,username: props.route.params.username, receiver: props.route.params.creator, nowPending: true});
+        navigation.navigate("ChatScreen", {listing_id: props.route.params.listID ,username: global.username, receiver: props.route.params.creator, nowPending: true});
     };
 
     const getPhotos = () => {

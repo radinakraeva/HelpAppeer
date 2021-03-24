@@ -11,7 +11,10 @@ import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
 
+
 export default function FeedScreen(props){
+
+    console.log('FROM GLOBAL' + global.username);
 
     console.disableYellowBox = true;
 
@@ -31,39 +34,44 @@ export default function FeedScreen(props){
     const navigation = useNavigation();
 
     const newListing = () => {
-        navigation.navigate("NewListingScreen", {username: props.route.params.username});
+        navigation.navigate("NewListingScreen", {username: global.username});
     };
 
     const goToChat = () => {
-        navigation.navigate("ChatListScreen", {username: props.route.params.username});
+        navigation.navigate("ChatListScreen", {username: global.username});
+    };
+
+    const openSideMenu = () => {
+        // navigation.navigate("DrawerNavigation", {screen: "Profile", params: {username: props.route.params.username}} );
+        navigation.openDrawer();
     };
 
     const showFilterMenu = () => {
 
-            return (
-                <View style={styles.filterMenu}>
-                    {/*<Text style={styles.filterMenuTitle}>Sort by</Text>*/}
-                    {/*<View style={styles.sortBy}>*/}
-                    {/*    <PriceSelection text={'time'} color={filterMenu.sorting === 'time' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'time'})}/>*/}
-                    {/*    <PriceSelection text={'distance'} color={filterMenu.sorting === 'distance' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'distance'})}/>*/}
-                    {/*</View>*/}
-                    <Text style={styles.filterMenuTitle}>Filter</Text>
-                    <View style={styles.sortBy}>
-                        <PriceSelection text={'£'} color={filterMenu.prices1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices1()}/>
-                        <PriceSelection text={'££'} color={filterMenu.prices2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() =>changePrices2()}/>
-                        <PriceSelection text={'£££'} color={filterMenu.prices3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices3()}/>
-                    </View>
-                    <View style={styles.sortBy}>
-                        <PriceSelection text={'food'} color={filterMenu.food ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeFood()}/>
-                        <PriceSelection text={'medicine'} color={filterMenu.medicine ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeMedicine()}/>
-                    </View>
-                    <View style={styles.sortBy}>
-                        <PriceSelection text={'bills'} color={filterMenu.bills ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeBills()}/>
-                        <PriceSelection text={'general'} color={filterMenu.general ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeGeneral()}/>
-                    </View>
-
+        return (
+            <View style={styles.filterMenu}>
+                {/*<Text style={styles.filterMenuTitle}>Sort by</Text>*/}
+                {/*<View style={styles.sortBy}>*/}
+                {/*    <PriceSelection text={'time'} color={filterMenu.sorting === 'time' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'time'})}/>*/}
+                {/*    <PriceSelection text={'distance'} color={filterMenu.sorting === 'distance' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'distance'})}/>*/}
+                {/*</View>*/}
+                <Text style={styles.filterMenuTitle}>Filter</Text>
+                <View style={styles.sortBy}>
+                    <PriceSelection text={'£'} color={filterMenu.prices1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices1()}/>
+                    <PriceSelection text={'££'} color={filterMenu.prices2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() =>changePrices2()}/>
+                    <PriceSelection text={'£££'} color={filterMenu.prices3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices3()}/>
                 </View>
-            );
+                <View style={styles.sortBy}>
+                    <PriceSelection text={'food'} color={filterMenu.food ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeFood()}/>
+                    <PriceSelection text={'medicine'} color={filterMenu.medicine ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeMedicine()}/>
+                </View>
+                <View style={styles.sortBy}>
+                    <PriceSelection text={'bills'} color={filterMenu.bills ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeBills()}/>
+                    <PriceSelection text={'general'} color={filterMenu.general ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changeGeneral()}/>
+                </View>
+
+            </View>
+        );
     };
 
 
@@ -102,31 +110,12 @@ export default function FeedScreen(props){
 
 //hello
 
-    const changeCats = (cat) => {
-        console.log(cat)
-        console.log(filterMenu.categories);
-        if (filterMenu.categories.includes(cat)) {
-            let arr = []
-            for (let i = 0; i < filterMenu.categories.length; i++) {
-                if (filterMenu.categories[i]!==cat) {
-                    arr.push(filterMenu.categories[i])
-                }
-            }
-            // filterMenu.categories.pop(index);
-            console.log(arr)
-            toggleFilterMenu({...filterMenu, categories: arr})
-        } else {
-            const arr = filterMenu.categories
-            arr.push(cat)
-            console.log(arr)
-            toggleFilterMenu({...filterMenu, categories: arr})
-        }
-        console.log(filterMenu.categories)
-    };
-
     return (
         <SafeAreaView style = {styles.feedScreen} >
             <View style = {styles.topSection}>
+                <View style={styles.sideMenuButton}>
+                    <IconButton iconName='bars' iconBgColor={ColourPalette.darkBlue} onPress={openSideMenu} size={50}/>
+                </View>
                 <View style = {styles.topLeftSection}>
 
                     <Text style = {styles.text}>Find a listing in</Text>
@@ -135,7 +124,7 @@ export default function FeedScreen(props){
 
             </View>
 
-            <Feed style = {styles.feed} filterCats={{food: filterMenu.food, medicine: filterMenu.medicine, bills: filterMenu.bills, general: filterMenu.general}} filter={[filterMenu.prices1,filterMenu.prices2,filterMenu.prices3]} username ={props.route.params.username}/>
+            <Feed style = {styles.feed} filterCats={{food: filterMenu.food, medicine: filterMenu.medicine, bills: filterMenu.bills, general: filterMenu.general}} filter={[filterMenu.prices1,filterMenu.prices2,filterMenu.prices3]} username ={global.username}/>
             {filterMenu.visible ? showFilterMenu() : null}
 
             <View style = {styles.bottomSection}>
@@ -169,6 +158,10 @@ const styles = StyleSheet.create({
     topSection: {
         height: '15%',
         flexDirection: 'row',
+    },
+    sideMenuButton: {
+        paddingVertical: '5%',
+        paddingRight: 15,
     },
     topLeftSection:{
         flex:1,
