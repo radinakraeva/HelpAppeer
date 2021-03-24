@@ -74,7 +74,7 @@ const LoginScreen  = () => {
                         })
                     }
 
-                    navigation.navigate("DrawerNavigation", {screen: "Feed"}, {params: {username: data.username}} );
+                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: data.username}, });
 
                 }else if(r.data === 'INCORRECT'){
                     alert('Password is incorrect, please try again');

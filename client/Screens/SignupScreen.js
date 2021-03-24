@@ -57,20 +57,6 @@ const SignupScreen  = () => {
         });
     };
 
-    const addressChange = (input) => {
-        setData({
-            ...data,
-            address: input,
-        });
-    };
-
-    const cityChange = (input) => {
-        setData({
-            ...data,
-            city: input,
-        });
-    };
-
     const mobileChange = (input) => {
         setData({
             ...data,
@@ -123,7 +109,7 @@ const SignupScreen  = () => {
     };
 
     const SignUpCheck = () => {
-        if (data.name === '' || data.username === '' || data.email === '' || data.address === '' || data.city === '' ||
+        if (data.name === '' || data.username === '' || data.email === '' ||
             data.mobile === '' || data.password === '' || data.passwordConfirm === '') {
             alert('Sorry All Fields Need To Be Filled. You Do Not Need To Assign A Profile Picture. Please Try Again');
         } else if (data.password !== data.passwordConfirm) {
@@ -217,16 +203,6 @@ const SignupScreen  = () => {
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Username" onChangeText={(input)=> usernameChange(input)}/>
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
-            </View>
-
-            <View style={styles.input} >
-                <TextInput style={styles.textInput} placeholder="Address" onChangeText={(input)=> addressChange(input)}/>
-                <Ionicons name='location-sharp' size={30} style={styles.icon}/>
-            </View>
-
-            <View style={styles.input} >
-                <TextInput style={styles.textInput} placeholder="City" onChangeText={(input)=> cityChange(input)}/>
-                <MaterialIcons name='location-city' size={30} style={styles.icon}/>
             </View>
 
             <View style={styles.input} >

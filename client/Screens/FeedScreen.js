@@ -14,6 +14,8 @@ import PriceSelection from '../Components/PriceSelection';
 
 export default function FeedScreen(props){
 
+    console.disableYellowBox = true;
+
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => true);
     }, []);
