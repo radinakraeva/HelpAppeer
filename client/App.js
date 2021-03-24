@@ -21,11 +21,11 @@ export default function App() {
   ]);
 
   return (
-      // <WelcomeScreen/>
+       //<WelcomeScreen/>
       // <LoginScreen/>
       //<SignupScreen/>
-      // <NewListingScreen/>
-      //<ProfileScreen/>
+      //<NewListingScreen/>
+    //  <ProfileScreen/>
       //<ChatScreen listing_id = {1} receiver = {"bob"} username = {"user"}/>
 // <FullListing listID={73}/>
   <AuthNavigator/>
