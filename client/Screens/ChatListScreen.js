@@ -4,16 +4,26 @@ import msgAPI from '../api/msgAPI';
 import ColourPalette from '../Resources/ColourPalette';
 import ChatSelector from '../Components/ChatSelector';
 import usersApi from '../api/usersApi';
+import IconButton from '../Components/IconButton';
+import {useNavigation} from "@react-navigation/native";
 
 export default function ChatListScreen(props){
 
     const [openConvos, setOpenConvos] = useState([]);
     const [convoNames, setConvoNames] = useState([]);
-
+    const navigation = useNavigation();
     useEffect(() => {
-        loadOpenConvos().then(() => {
-        });
-        loadConvoNames().then(() => {});
+        const loadConvos = () => {
+            loadOpenConvos().then(() => {
+            });
+            loadConvoNames().then(() => {
+            });
+        }
+        loadConvos();
+        let convoUpdater = setInterval(loadConvos, 3000);
+        return function() {
+            clearInterval(convoUpdater);
+        }
     }, [])
 
 
@@ -34,17 +44,21 @@ export default function ChatListScreen(props){
     function timeDifference(date) {
         let date2 = new Date();
         let diffMs = (date2 - Date.parse(date));
-        if (Math.floor(diffMs / 86400000) > 1) {
+        if (Math.floor(diffMs / 86400000) > 1){
             return Math.floor(diffMs / 86400000) + "d";
         }
-        if (Math.floor((diffMs % 86400000) / 3600000) > 1) {
-            return Math.floor((diffMs % 86400000) / 3600000) + "h";
+        if (Math.floor((diffMs % 86400000)/ 3600000) > 1){
+            return Math.floor((diffMs % 86400000)/ 3600000) + "h";
         }
-        return (Math.floor(((diffMs % 86400000) % 3600000) / 60000)) + "m";
-
+        if ((Math.floor(((diffMs % 86400000) % 3600000) / 60000 )) > 0) {
+            return (Math.floor(((diffMs % 86400000) % 3600000) / 60000)) + "m";
+        }
+        return "Just now";
     }
 
-
+    const goBack = () => {
+        navigation.navigate('FeedScreen', {username: props.route.params.username});
+    };
 
     const getChatSelector =  (convo) => {
         convo = convo["item"];
@@ -102,6 +116,9 @@ export default function ChatListScreen(props){
                 <View style = {styles.topLeftSection}>
                     <Text style = {styles.titleText}>Your Current Pending Listings</Text>
                 </View>
+                <View style={styles.backButton}>
+                    <IconButton iconName={'back'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                </View>
             </View>
             {chatList()}
         </SafeAreaView>
@@ -136,5 +153,13 @@ const styles = StyleSheet.create({
         backgroundColor: ColourPalette.grey,
         width: '60%',
         alignSelf: 'center',
-    }
+    },
+    backButton: {
+        flex:2,
+        marginTop:40,
+        marginRight:20,
+        position: 'absolute',
+        top:0,
+        right:0
+    },
 })
