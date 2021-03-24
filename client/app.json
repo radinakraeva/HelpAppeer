@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.slavka.helpappeer"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,7 +26,8 @@
         "googleMaps": {
           "apiKey": "AIzaSyAhtkx6rESm6HILuq4FcYYMX1A1ImCkOa4"
         }
-      }
+      },
+      "package": "com.slavka.helpappeer"
     },
     "web": {},
     "description": ""

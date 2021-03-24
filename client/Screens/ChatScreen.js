@@ -8,6 +8,10 @@ import ChatMessage from '../Components/ChatMessage';
 import IconButton from '../Components/IconButton';
 import {useNavigation} from "@react-navigation/native";
 
+import pushNotifications from '../Resources/pushNotifications';
+import usersApi from '../api/usersApi';
+
+
 const styles = StyleSheet.create({
     chatScreen: {
         height: '100%',
@@ -75,6 +79,8 @@ export default function ChatScreen(props){
     const navigation = useNavigation();
     let pageOpen = true;
 
+    console.log(username);
+    console.log(receiver);
 
     useEffect( () => {
         loadMessages().then(r => {});
@@ -99,25 +105,7 @@ export default function ChatScreen(props){
 
     initLoadMessages().then(r => {});
 
-    const sendPushNotification = async (expoPushToken) => {
-        const message = {
-            to: expoPushToken,
-            sound: 'default',
-            title: 'Update on your listing!',
-            body: 'Tap to view the message',
-            data: { someData: 'goes here' },
-        };
 
-        await fetch('https://exp.host/--/api/v2/push/send', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Accept-encoding': 'gzip, deflate',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(message),
-        });
-    };
 
     const enter = () =>{
         console.log("Sending Message");
@@ -132,6 +120,16 @@ export default function ChatScreen(props){
         // if (rec != '') {
         //     sendPushNotification(rec).then(()=>console.log("notif sent!"), ()=>console.log("notif failed"));
         // }
+        usersApi.getNotifToken(receiver).then(r=> {
+            if (r.data != null) {
+                const token = r.data[0];
+                pushNotifications.sendPushNotification(token, listingName).then(
+                    ()=>console.log("notif sent!"),
+                    ()=>console.log("notif failed")
+                )
+
+            }
+        })
 
         setTimeout(loadMessages, 300);
     }

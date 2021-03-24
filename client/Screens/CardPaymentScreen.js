@@ -7,7 +7,6 @@ import {CreditCardInput} from "react-native-payment-card";
 const CardPaymentScreen = (props) => {
 
 
-
     return (
         <SafeAreaView style = {{paddingTop: 60}}>
 

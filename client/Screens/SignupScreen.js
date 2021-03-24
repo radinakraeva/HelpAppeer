@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView, View, TextInput, StyleSheet, Text, TouchableOpacity, ScrollView} from 'react-native';
 
 import 'react-native-gesture-handler';
@@ -14,6 +14,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ImageChooser from '../Components/ImageChooser';
 import ImagePreview from '../Components/ImagePreview';
 import * as ImagePicker from 'expo-image-picker';
+import pushNotifications from '../Resources/pushNotifications';
+import Constants from 'expo-constants';
 
 const SignupScreen  = () => {
 
@@ -30,9 +32,16 @@ const SignupScreen  = () => {
         password: '',
         passwordConfirm: '',
         pic: {},
-        token: 't',
+        token: '',
         secureTextEntry: true,
     });
+
+    useEffect(()=>{
+        if (Constants.isDevice) {
+            tokenChange()
+        }
+
+    },[])
 
     const nameChange = (input) => {
         setData({
@@ -97,6 +106,15 @@ const SignupScreen  = () => {
         });
     };
 
+    const tokenChange = () => {
+        pushNotifications.registerForPushNotificationsAsync().then(t => {
+            setData({
+                ...data,
+                token: t
+            })
+        })
+    }
+
     const update = () => {
         setData({
             ...data,
@@ -127,7 +145,7 @@ const SignupScreen  = () => {
                 // console.log("here " + r.data);
                 if (r.data === 'NO USER') {
                     usersApi.addUser(submission).then(() => alert('Added new user'));
-                    navigation.navigate("FeedScreen", {username: data.username});
+                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: data.username}} );
                 } else {
                     alert('User with this username already exists, please try another username');
                 }
