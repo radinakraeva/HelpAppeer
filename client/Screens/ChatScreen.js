@@ -73,7 +73,7 @@ export default function ChatScreen(props){
     const [newMessage, setNewMessage] = useState("");
     const messagesList = useRef();
     const listing_id = props.route.params.listing_id;
-    const username = props.route.params.username;
+    const username = global.username;
     const receiver = props.route.params.receiver;
     const listingName = props.route.params.listingName;
     const navigation = useNavigation();

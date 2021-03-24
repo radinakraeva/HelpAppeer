@@ -11,7 +11,8 @@ const PostedAnimationScreen  = (props) => {
     const navigation = useNavigation();
 
     const navCheck = () => {
-        navigation.navigate("FeedScreen2", {username: props.route.params.username});
+        navigation.navigate("FeedScreen2", {username: global.username});
+
     };
 
     const finalT = () => {

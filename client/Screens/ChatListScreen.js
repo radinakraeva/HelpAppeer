@@ -29,7 +29,7 @@ export default function ChatListScreen(props){
 
 
     const loadOpenConvos = async () => {
-        const x = await msgAPI.getOpenConvos(props.route.params.username);
+        const x = await msgAPI.getOpenConvos(global.username);
         setOpenConvos(x.data);
     }
 
@@ -57,14 +57,15 @@ export default function ChatListScreen(props){
     }
 
     const goBack = () => {
-        navigation.navigate('FeedScreen', {username: props.route.params.username});
+        navigation.navigate("DrawerNavigation", {screen: "Feed"} );
+
     };
 
     const getChatSelector =  (convo) => {
         convo = convo["item"];
         let userN = "";
         let unread = false;
-        if (convo.send_user === props.route.params.username) {
+        if (convo.send_user === global.username) {
             userN = convo.reci_user;
         } else {
             userN = convo.send_user;
@@ -79,7 +80,7 @@ export default function ChatListScreen(props){
                 timeSinceMRM={timeDifference(convo["time_sent"])}
                 mostRecentMessage={convo["msg_contents"]}
                 unread={unread}
-                username={props.route.params.username}
+                username={global.username}
                 receiver={userN}
                 listing_id={convo["listing_id"]}
             />

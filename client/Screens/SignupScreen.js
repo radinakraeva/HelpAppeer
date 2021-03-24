@@ -55,28 +55,9 @@ const SignupScreen  = () => {
             ...data,
             username: input,
         });
+        global.username = input
     };
 
-    const addressChange = (input) => {
-        setData({
-            ...data,
-            address: input,
-        });
-    };
-
-    const cityChange = (input) => {
-        setData({
-            ...data,
-            city: input,
-        });
-    };
-
-    const mobileChange = (input) => {
-        setData({
-            ...data,
-            mobile: input,
-        });
-    };
 
     const emailChange = (input) => {
         setData({
@@ -123,8 +104,8 @@ const SignupScreen  = () => {
     };
 
     const SignUpCheck = () => {
-        if (data.name === '' || data.username === '' || data.email === '' || data.address === '' || data.city === '' ||
-            data.mobile === '' || data.password === '' || data.passwordConfirm === '') {
+        if (data.name === '' || data.username === '' || data.email === '' ||
+            data.password === '' || data.passwordConfirm === '') {
             alert('Sorry All Fields Need To Be Filled. You Do Not Need To Assign A Profile Picture. Please Try Again');
         } else if (data.password !== data.passwordConfirm) {
             alert('Sorry Passwords Do Not Match. Please Try Again');
@@ -145,7 +126,7 @@ const SignupScreen  = () => {
                 // console.log("here " + r.data);
                 if (r.data === 'NO USER') {
                     usersApi.addUser(submission).then(() => alert('Added new user'));
-                    navigation.navigate("FeedScreen", {username: data.username});
+                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: data.username}} );
                 } else {
                     alert('User with this username already exists, please try another username');
                 }
@@ -219,20 +200,7 @@ const SignupScreen  = () => {
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
             </View>
 
-            <View style={styles.input} >
-                <TextInput style={styles.textInput} placeholder="Address" onChangeText={(input)=> addressChange(input)}/>
-                <Ionicons name='location-sharp' size={30} style={styles.icon}/>
-            </View>
 
-            <View style={styles.input} >
-                <TextInput style={styles.textInput} placeholder="City" onChangeText={(input)=> cityChange(input)}/>
-                <MaterialIcons name='location-city' size={30} style={styles.icon}/>
-            </View>
-
-            <View style={styles.input} >
-                <TextInput style={styles.textInput} placeholder="Mobile" onChangeText={(input)=> mobileChange(input)}/>
-                <MaterialCommunityIcons name='cellphone-basic' size={30} style={styles.icon}/>
-            </View>
 
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Email" onChangeText={(input)=> emailChange(input)}/>

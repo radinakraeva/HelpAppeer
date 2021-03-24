@@ -18,7 +18,7 @@ const ProfileScreen = (props) => {
 
     const navigation = useNavigation();
 
-    const userN = props.route.params.user;
+    const userN = global.username;
     console.log("userN is "+userN);
 
     const [userData, setUserData] = React.useState({
@@ -41,7 +41,7 @@ const ProfileScreen = (props) => {
 
 
     const getData = () => {
-        usersApi.getUser({userN: props.route.params.user}).then( r => {
+        usersApi.getUser({userN: userN}).then( r => {
             console.log("r.data is " + r.data);
 
             if (r.data != null) {
@@ -51,7 +51,7 @@ const ProfileScreen = (props) => {
                 const a = data["Address"];
                 const m = data["Mobile"];
                 const e = data["Email"];
-                const u = props.route.params.user;
+                const u = userN;
 
                 setUserData({
                     name: n,
@@ -63,7 +63,7 @@ const ProfileScreen = (props) => {
                 });
             }
         });
-                usersApi.getProfileImage({userN: props.route.params.user}).then(t => {
+                usersApi.getProfileImage({userN: userN}).then(t => {
                     console.log("t.data is for image is " + t.data);
 
                     if (t.data != null) {
@@ -85,30 +85,22 @@ const ProfileScreen = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate('FeedScreen')
+        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} );
     };
 
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
-                    <CircleImage  resizeMode={'cover'} size={110} image={userPic.pic.p === null ? require('../Resources/Images/defaultProfile.jpg') : userPic.pic.p} style={{borderRadius: 150,
+                    <CircleImage  resizeMode={'cover'} size={100} image={userPic.pic.p === null ? require('../Resources/Images/defaultProfile.jpg') : userPic.pic.p} style={{borderRadius: 150,
                     backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
-                    <View style={styles.backButton}>
-                        <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
-                    </View>
                     <View>
                         <Text style={styles.writing}>{userData.name}</Text>
+                        <View style={styles.backButton}>
+                            <IconButton iconName={'back'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                        </View>
                         <Text style={styles.user}>{userData.username}</Text>
                     </View>
-                </View>
-            <View style={styles.cent}>
-                <Ionicons name='location-sharp' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>{userData.address}</Text>
-            </View>
-            <View style={styles.cent}>
-                <MaterialIcons name='location-city' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>{userData.city}</Text>
-            </View>
+                       </View>
             <View style={styles.cent}>
                 <MaterialCommunityIcons name='cellphone-basic' size={30} style={{color:ColourPalette.yellow}}/>
                 <Text style={styles.fields}>{userData.mobile}</Text>
@@ -152,7 +144,7 @@ const styles = StyleSheet.create({
     writing: {
         color: ColourPalette.yellow,
         fontWeight: 'bold',
-        fontSize: 35,
+        fontSize: 30,
         paddingTop: 10,
         paddingBottom:10,
         paddingLeft: 13,
@@ -198,10 +190,10 @@ const styles = StyleSheet.create({
     backButton: {
         flex:2,
         marginTop:40,
-        marginRight:20,
+        marginLeft:10,
         position: 'absolute',
-        top:0,
-        right:0
+        bottom:70,
+        left:200
     },
 });
 
