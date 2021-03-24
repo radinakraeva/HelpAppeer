@@ -145,7 +145,7 @@ const SignupScreen  = () => {
                 // console.log("here " + r.data);
                 if (r.data === 'NO USER') {
                     usersApi.addUser(submission).then(() => alert('Added new user'));
-                    navigation.navigate("FeedScreen", {username: data.username});
+                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: data.username}} );
                 } else {
                     alert('User with this username already exists, please try another username');
                 }

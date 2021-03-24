@@ -11,6 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
 
+
 export default function FeedScreen(props){
 
     useEffect(() => {
@@ -34,6 +35,11 @@ export default function FeedScreen(props){
 
     const goToChat = () => {
         navigation.navigate("ChatListScreen", {username: props.route.params.username});
+    };
+
+    const openSideMenu = () => {
+        // navigation.navigate("DrawerNavigation", {screen: "Profile", params: {username: props.route.params.username}} );
+        navigation.openDrawer();
     };
 
     const showFilterMenu = () => {
@@ -100,31 +106,11 @@ export default function FeedScreen(props){
 
 
 
-    const changeCats = (cat) => {
-        console.log(cat)
-        console.log(filterMenu.categories);
-        if (filterMenu.categories.includes(cat)) {
-            let arr = []
-            for (let i = 0; i < filterMenu.categories.length; i++) {
-                if (filterMenu.categories[i]!==cat) {
-                    arr.push(filterMenu.categories[i])
-                }
-            }
-            // filterMenu.categories.pop(index);
-            console.log(arr)
-            toggleFilterMenu({...filterMenu, categories: arr})
-        } else {
-            const arr = filterMenu.categories
-            arr.push(cat)
-            console.log(arr)
-            toggleFilterMenu({...filterMenu, categories: arr})
-        }
-        console.log(filterMenu.categories)
-    };
-
     return (
         <SafeAreaView style = {styles.feedScreen} >
             <View style = {styles.topSection}>
+                <IconButton iconName='bars' iconBgColor={ColourPalette.yellow} onPress={openSideMenu}/>
+
                 <View style = {styles.topLeftSection}>
 
                     <Text style = {styles.text}>Find a listing in</Text>

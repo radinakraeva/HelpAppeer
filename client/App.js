@@ -16,6 +16,7 @@ import * as Notifications from 'expo-notifications';
 import * as Constants from 'expo';
 import registerForPushNotificationsAsync from '../client/Resources/pushNotifications'
 import pushNotifications from '../client/Resources/pushNotifications';
+// import Drawer from "./Screens/Drawer"
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -62,6 +63,8 @@ export default function App() {
       //<ChatScreen listing_id = {1} receiver = {"bob"} username = {"user"}/>
 // <FullListing listID={73}/>
   <AuthNavigator/>
+//       <navTestScreen/>
+//       <Drawer/>
 // <FeedScreen/>
 // <ListingsNavigator/>
 // <Image source = {require('Resources/Images/Alina.jpg')}/>
