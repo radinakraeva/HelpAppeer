@@ -56,4 +56,4 @@ const sendPushNotification = async (expoPushToken) => {
 
 
 
-export default { registerForPushNotificationsAsync }
+export default { registerForPushNotificationsAsync, sendPushNotification }
