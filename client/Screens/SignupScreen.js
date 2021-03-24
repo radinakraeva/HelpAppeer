@@ -58,12 +58,6 @@ const SignupScreen  = () => {
         global.username = input
     };
 
-    const mobileChange = (input) => {
-        setData({
-            ...data,
-            mobile: input,
-        });
-    };
 
     const emailChange = (input) => {
         setData({
@@ -111,7 +105,7 @@ const SignupScreen  = () => {
 
     const SignUpCheck = () => {
         if (data.name === '' || data.username === '' || data.email === '' ||
-            data.mobile === '' || data.password === '' || data.passwordConfirm === '') {
+            data.password === '' || data.passwordConfirm === '') {
             alert('Sorry All Fields Need To Be Filled. You Do Not Need To Assign A Profile Picture. Please Try Again');
         } else if (data.password !== data.passwordConfirm) {
             alert('Sorry Passwords Do Not Match. Please Try Again');
@@ -206,10 +200,7 @@ const SignupScreen  = () => {
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
             </View>
 
-            <View style={styles.input} >
-                <TextInput style={styles.textInput} placeholder="Mobile" onChangeText={(input)=> mobileChange(input)}/>
-                <MaterialCommunityIcons name='cellphone-basic' size={30} style={styles.icon}/>
-            </View>
+
 
             <View style={styles.input} >
                 <TextInput style={styles.textInput} placeholder="Email" onChangeText={(input)=> emailChange(input)}/>
