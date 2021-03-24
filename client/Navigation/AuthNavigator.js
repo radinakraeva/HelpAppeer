@@ -28,7 +28,7 @@ const AuthNavigator  = () => (
             <Stack.Screen name='SignupScreen' component={SignupScreen}/>
             {/*<Stack.Screen name='FeedScreen' component={FeedScreen} initialParams={{ username: 'as'}} />*/}
             <Stack.Screen name='NewListingScreen' component={NewListingScreen} initialParams={{ username: 'as' }}/>
-            <Stack.Screen name='ChatListScreen' component={ChatListScreen}/>
+            <Stack.Screen name='ChatListScreen' component={ChatListScreen} initialParams={{ username: '0xbb' }}/>
             <Stack.Screen name='FeedScreen2' component={FeedScreen}/>
             <Stack.Screen name='FullListing' component={FullListing} initialParams={{ listID: 79 }}/>
             <Stack.Screen name='PostedAnimationScreen' component={PostedAnimationScreen}/>

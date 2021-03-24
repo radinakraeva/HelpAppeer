@@ -64,10 +64,14 @@ export default function ChatListScreen(props){
     const getChatSelector =  (convo) => {
         convo = convo["item"];
         let userN = "";
+        let unread = false;
         if (convo.send_user === global.username) {
             userN = convo.reci_user;
         } else {
             userN = convo.send_user;
+            if(convo.receiver_seen == '0'){
+                unread = true;
+            }
         }
         return (
             <ChatSelector
@@ -75,7 +79,7 @@ export default function ChatListScreen(props){
                 profilePictureID={userN}
                 timeSinceMRM={timeDifference(convo["time_sent"])}
                 mostRecentMessage={convo["msg_contents"]}
-                unread={false}
+                unread={unread}
                 username={global.username}
                 receiver={userN}
                 listing_id={convo["listing_id"]}

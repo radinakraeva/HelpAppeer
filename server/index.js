@@ -395,13 +395,24 @@ app.post('/getMessages',(req, res) =>{
                 res.send(messages);
             }
         }
-    )
+    );
+    connection.query(
+        "UPDATE `msgTable` SET `receiver_seen` = '1' WHERE `msgTable`.`listing_id` = (?) AND `msgTable`.`reci_user` = (?);",[req.fields.listing_id, req.fields.username],
+        function(error, result){
+            if(error){
+                console.log(error);
+            }
+            else if (result){
+                console.log("Updated read reciepts");
+            }
+        }
+    );
 })
 
 app.post('/sendMessage',(req, res) => {
     console.log('...couldnt get away...');
     connection.query(
-        "INSERT INTO `msgTable` (`msg_id`, `listing_id`, `send_user`, `reci_user`, `msg_contents`, `time_sent`) VALUES (NULL, (?), (?), (?), (?), (?)) ",
+        "INSERT INTO `msgTable` (`msg_id`, `listing_id`, `send_user`, `reci_user`, `msg_contents`, `time_sent`, `receiver_seen`) VALUES (NULL, (?), (?), (?), (?), (?), 0) ",
         [req.fields.listing_id, req.fields.send_user, req.fields.reci_user, req.fields.msg_contents, req.fields.time_sent],
         function (error, result) {
             if (error) {
