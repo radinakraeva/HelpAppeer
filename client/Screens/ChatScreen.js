@@ -79,8 +79,6 @@ export default function ChatScreen(props){
     const navigation = useNavigation();
     let pageOpen = true;
 
-    console.log(username);
-    console.log(receiver);
 
     useEffect( () => {
         loadMessages().then(r => {});
@@ -97,9 +95,6 @@ export default function ChatScreen(props){
         if(pageOpen === true) {
             const m = await msgAPI.getMessages(listing_id, username);
             setMessages(m.data);
-        }
-        else{
-            clearInterval(messageUpdater);
         }
     }
 
