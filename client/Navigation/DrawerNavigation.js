@@ -8,6 +8,7 @@ import ColourPalette from '../Resources/ColourPalette';
 import LoginScreen from '../Screens/LoginScreen';
 import CardPaymentScreen from '../Screens/CardPaymentScreen';
 import ByeScreen from '../Screens/ByeScreen';
+import ChatListScreen from '../Screens/ChatListScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -35,6 +36,7 @@ const DrawerNavigation = () => {
             >
                 <Drawer.Screen name="Feed" component={FeedScreen} initialParams={{username: "as"}} />
                 <Drawer.Screen name="Profile" component={ProfileScreen} initialParams={{username: "as"}} />
+                <Drawer.Screen name="Messages" component={ChatListScreen}/>
                 <Drawer.Screen name="Card Payment" component={CardPaymentScreen}/>
                 <Drawer.Screen name="Sign Out" component={ByeScreen}/>
             </Drawer.Navigator>
