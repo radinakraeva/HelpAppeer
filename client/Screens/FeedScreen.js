@@ -10,6 +10,7 @@ import listingsApi from "../api/listingsApi";
 import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
+import {DrawerActions} from '@react-navigation/routers';
 
 export default function FeedScreen(props){
 
@@ -23,6 +24,7 @@ export default function FeedScreen(props){
     const [filterMenu, toggleFilterMenu] = useState({visible: false, sorting: 'time', prices1: true, prices2: true, prices3: true});
 
     const navigation = useNavigation();
+    navigation.dispatch(DrawerActions.toggleDrawer());
 
     const newListing = () => {
         navigation.navigate("NewListingScreen", {username: props.route.params.username});
