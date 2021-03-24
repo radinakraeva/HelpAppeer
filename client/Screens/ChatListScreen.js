@@ -57,7 +57,8 @@ export default function ChatListScreen(props){
     }
 
     const goBack = () => {
-        navigation.navigate('FeedScreen', {username: props.route.params.username});
+        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: props.route.params.username}} );
+
     };
 
     const getChatSelector =  (convo) => {
