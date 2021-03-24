@@ -10,9 +10,8 @@ import listingsApi from "../api/listingsApi";
 import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './LoginScreen';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {NavigationContainer} from '@react-navigation/native';
 
 
 export default function FeedScreen(props){
@@ -77,22 +76,22 @@ export default function FeedScreen(props){
 
     const showFilterMenu = () => {
 
-            return (
-                <View style={styles.filterMenu}>
-                    <Text style={styles.filterMenuTitle}>Sort by</Text>
-                    <View style={styles.sortBy}>
-                        <PriceSelection text={'time'} color={filterMenu.sorting === 'time' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'time'})}/>
-                        <PriceSelection text={'distance'} color={filterMenu.sorting === 'distance' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'distance'})}/>
-                    </View>
-                    <Text style={styles.filterMenuTitle}>Filter</Text>
-                    <View style={styles.sortBy}>
-                        <PriceSelection text={'£'} color={filterMenu.prices1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices1()}/>
-                        <PriceSelection text={'££'} color={filterMenu.prices2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() =>changePrices2()}/>
-                        <PriceSelection text={'£££'} color={filterMenu.prices3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices3()}/>
-                    </View>
-
+        return (
+            <View style={styles.filterMenu}>
+                <Text style={styles.filterMenuTitle}>Sort by</Text>
+                <View style={styles.sortBy}>
+                    <PriceSelection text={'time'} color={filterMenu.sorting === 'time' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'time'})}/>
+                    <PriceSelection text={'distance'} color={filterMenu.sorting === 'distance' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'distance'})}/>
                 </View>
-            );
+                <Text style={styles.filterMenuTitle}>Filter</Text>
+                <View style={styles.sortBy}>
+                    <PriceSelection text={'£'} color={filterMenu.prices1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices1()}/>
+                    <PriceSelection text={'££'} color={filterMenu.prices2 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() =>changePrices2()}/>
+                    <PriceSelection text={'£££'} color={filterMenu.prices3 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices3()}/>
+                </View>
+
+            </View>
+        );
     };
 
 

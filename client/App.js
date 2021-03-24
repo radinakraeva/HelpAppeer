@@ -13,6 +13,7 @@ import SignupScreen from './Screens/SignupScreen';
 import Feed from "./Components/Feed";
 import FullListing from "./Screens/FullListing";
 import {Image} from "react-native-web";
+import CardPaymentScreen from './Screens/CardPaymentScreen';
 
 export default function App() {
 
@@ -28,8 +29,9 @@ export default function App() {
     //  <ProfileScreen/>
       //<ChatScreen listing_id = {1} receiver = {"bob"} username = {"user"}/>
 // <FullListing listID={73}/>
-  <AuthNavigator/>
-// <FeedScreen/>
+ //<AuthNavigator/>
+      <CardPaymentScreen/>
+//<FeedScreen/>
 // <ListingsNavigator/>
 // <Image source = {require('Resources/Images/Alina.jpg')}/>
   );
