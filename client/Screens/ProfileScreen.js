@@ -85,7 +85,7 @@ const ProfileScreen = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate('FeedScreen')
+        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: props.route.params.username}} );
     };
 
     return (

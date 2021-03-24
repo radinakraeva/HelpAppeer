@@ -266,7 +266,8 @@ const NewListingScreen = (props) => {
             }, {
                 text: 'OK',
                 onPress: () =>{ console.log('sashay, away')
-                    navigation.navigate("FeedScreen", {username: props.route.params.username})}
+                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: props.route.params.username}} )
+                }
             }],
             { cancelable : true}
         );
