@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, BackHandler} from 'react-native';
+import {Button, View, Text, SafeAreaView, StyleSheet, BackHandler} from 'react-native';
 import Feed from '../Components/Feed';
 
 import ColourPalette from '../Resources/ColourPalette';
@@ -11,6 +11,10 @@ import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
 import {DrawerActions} from '@react-navigation/routers';
+import * as React from 'react';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigationContainer } from '@react-navigation/native';
+
 
 export default function FeedScreen(props){
 
@@ -24,7 +28,43 @@ export default function FeedScreen(props){
     const [filterMenu, toggleFilterMenu] = useState({visible: false, sorting: 'time', prices1: true, prices2: true, prices3: true});
 
     const navigation = useNavigation();
-    navigation.dispatch(DrawerActions.toggleDrawer());
+
+    function ProfileScreen({ navigation }) {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Button
+                    onPress={() => navigation.navigate('ProfileScreen',  {username: props.route.params.username})}
+                    title="Go to profile"
+                />
+            </View>
+        );
+    }
+
+    function CardPaymentScreen({ navigation }) {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Button
+                    onPress={() => navigation.navigate('CardPaymentScreen',  {username: props.route.params.username})}
+                    title="Go to payment"
+                />
+            </View>
+        );
+    }
+
+    const Drawer = createDrawerNavigator();
+
+    export default function SideMenu() {
+        return (
+            <NavigationContainer>
+                <Drawer.Navigator initialRouteName="Feed">
+                    <Drawer.Screen name="Profile" component={ProfileScreen} />
+                    <Drawer.Screen name="Payment" component={CardPaymentScreen} />
+                </Drawer.Navigator>
+            </NavigationContainer>
+        );
+    }
+
+    navigation.toggleDrawer();
 
     const newListing = () => {
         navigation.navigate("NewListingScreen", {username: props.route.params.username});
