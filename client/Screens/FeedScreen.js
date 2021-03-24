@@ -13,6 +13,8 @@ import PriceSelection from '../Components/PriceSelection';
 
 export default function FeedScreen(props){
 
+    console.disableYellowBox = true;
+
     useEffect(() => {
         BackHandler.addEventListener('hardwareBackPress', () => true);
     }, []);
@@ -98,7 +100,7 @@ export default function FeedScreen(props){
         filterMenu.bills ? toggleFilterMenu({...filterMenu, bills: false}) : toggleFilterMenu({...filterMenu, bills: true});
     };
 
-
+//hello
 
     const changeCats = (cat) => {
         console.log(cat)
