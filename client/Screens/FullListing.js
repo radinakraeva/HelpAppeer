@@ -46,20 +46,6 @@ const FullListing = (props) => {
 
     useEffect(() => {getList()}, []);
     useEffect(() => {getYourLocation()},[]);
-    // useEffect(() => {
-    //     const creator = props.route.params.creator;
-    //     usersApi.getProfileImage({userN: creator}).then( r =>{
-    //         // console.log(r.data)
-    //         if  (r.data != null) {
-    //             const data = r.data[0]
-    //             // console.log("here")
-    //
-    //             const photo = JSON.parse(data.Picture)
-    //             // console.log(photo)
-    //             setProfilePic(photo)
-    //         }
-    //     })
-    // }, []);
 
     const getList = async () => {
         await listingsApi.getListing({listingID: props.route.params.listID}).then( r => {
@@ -139,7 +125,7 @@ const FullListing = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate('FeedScreen')
+        navigation.navigate('FeedScreen2', {username: listingData.user})
     };
 
     const acceptListing = () => {

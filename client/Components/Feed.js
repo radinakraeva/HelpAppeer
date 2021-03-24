@@ -6,7 +6,7 @@ import * as Location from "expo-location";
 import { getDistanceBetween } from 'geolocation-distance-between';
 import usersApi from "../api/usersApi";
 
-export default function Feed({sort, filter, ...props}){
+export default function Feed({ filter, filterCats, ...props}){
 
     const [listings, setListings] = useState([]);
     const [location, setLocation] = React.useState({
@@ -21,23 +21,20 @@ export default function Feed({sort, filter, ...props}){
         getLocation();
     }, []);
 
+
     useEffect(() => {
-        filterListings();
+        ultimateFilter();
+    },[filterCats, filter])
 
-    },[filter]);
-
-    useEffect(()=> {
-        sortListings();
-    },[sort])
-
-
-    const filterListings = () => {
+    const ultimateFilter = () => {
         let lists = JSON.parse(JSON.stringify(allListings));
 
         let filteredListings = [];
-        if (filter.includes(false)) {
+        let vals = Object.values(filterCats)
+
+        if (filter.includes(false) || vals.includes(false)) {
             for (let index = 0; index < lists.length; index++) {
-                if (filter[lists[index].priceCategory.length -1]) {
+                if (filter[lists[index].priceCategory.length -1] && filterCats[lists[index].category]) {
                     filteredListings.push(lists[index])
                 }
             }
@@ -45,38 +42,40 @@ export default function Feed({sort, filter, ...props}){
         } else {
             setListings(lists);
         }
-
-
     };
 
-    const sortListings = () => {
-        let lists = JSON.parse(JSON.stringify(allListings));
-
-        if (sort === "distance") {
-
-            let distListingMap = {}
-            console.log("sorting by distance")
-            let lists = JSON.parse(JSON.stringify(allListings));
-            for (let index = 0; index < lists.length; index++) {
-                const dist = distance(location.location.lat1, location.location.lon1, lists[index].location.lat1, lists[index].location.lon1)
-                distListingMap[JSON.stringify(lists[index])] = dist
-            }
-
-            let sorted = Object.keys(distListingMap).sort(function (a,b) {return distListingMap[a] - distListingMap[b]});
-
-            let sortedListings = []
-            for(let index = 0; index < sorted.length; index++) {
-                sortedListings.push(JSON.parse(sorted[index]));
-            }
-            setListings(sortedListings)
-            setAllListings(lists)
-
-        } else {
-            console.log("sorting by time")
-            setListings(lists);
-            // setAllListings(listingsOriginal);
-        }
-    };
+    // const sortListings = () => {
+    //     console.log(sort);
+    //     let lists = JSON.parse(JSON.stringify(allListings));
+    //
+    //     if (sort === "distance") {
+    //
+    //         let distListingMap = {}
+    //         console.log("sorting by distance")
+    //         let lists = JSON.parse(JSON.stringify(allListings));
+    //         for (let index = 0; index < lists.length; index++) {
+    //             const dist = distance(location.location.lat1, location.location.lon1, lists[index].location.lat1, lists[index].location.lon1)
+    //             distListingMap[JSON.stringify(lists[index])] = dist
+    //         }
+    //
+    //         let sorted = Object.keys(distListingMap).sort(function (a,b) {return distListingMap[a] - distListingMap[b]});
+    //
+    //         let sortedListings = []
+    //         for(let index = 0; index < sorted.length; index++) {
+    //             sortedListings.push(JSON.parse(sorted[index]));
+    //         }
+    //
+    //         setAllListings(JSON.parse(JSON.stringify(lists)))
+    //
+    //         setListings(sortedListings)
+    //
+    //     } else {
+    //         console.log("sorting by time")
+    //         setListings(JSON.parse(JSON.stringify(allListings)));
+    //         setAllListings(JSON.parse(JSON.stringify(allListings)))
+    //         // setAllListings(listingsOriginal);
+    //     }
+    // };
 
     const loadListings = async() => {
         const r = await listingsApi.getListings();
@@ -119,23 +118,6 @@ export default function Feed({sort, filter, ...props}){
         if(category == 'medicine') return require('../Resources/Images/medicine.png')
         if(category == 'bills') return require('../Resources/Images/bills.png')
         if(category == 'general') return require('../Resources/Images/general.png')
-    }
-
-    // getProfileImage("username???")
-
-    const getProfileImage = (username) =>{
-
-        // usersApi.getProfileImage({username: username}).then(r => {
-        //     if(r.data != null){
-        //         const data = r.data[0]
-        //         console.log("here")
-        //         // console.log(r.data)
-        //         const photo = JSON.parse(data.Picture)
-        //         // console.log(photo);
-        //
-        //         return photo
-        //     }
-        // })
     }
 
     const listingRender = ({ item }) => (

@@ -8,22 +8,27 @@ import {useNavigation} from "@react-navigation/native";
 import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 import listingsApi from '../api/listingsApi';
 
-function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory}){
+function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory, creator, user, refreshFunc}){
 
     const navigation = useNavigation();
 
+    const [refreshPage, setRefreshPage] = useState("");
 
     function seeListing(){
-        navigation.navigate('FullListing', {listID: listing_id})
+        navigation.navigate('FullListing', {listID: listing_id, username: user, creator: creator})
     }
 
     function removePost() {
         const user = listingsApi.getUser({listID: listing_id}).then(t => {
             console.log(user);
-            navigation.navigate('ProfileScreen', {user: user})
-            /*listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
-                navigation.navigate('ProfileScreen', {user: user})
-            });*/
+
+            refreshFunc()
+            // navigation.navigate('ProfileScreen', {user: user})
+            listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
+                // navigation.navigate('ProfileScreen', {user: user})
+                refreshFunc()
+            });
+            refreshFunc()
         })
 
     }

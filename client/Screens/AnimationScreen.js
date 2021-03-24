@@ -34,9 +34,9 @@ const AnimationScreen  = () => {
             <View style={styles.alin}>
                 <Image style={styles.pic} source={require('../Resources/Images/LogIn.png')} onLoad={finalT}/>
                 <View style={styles.animi}>
-                    <Animated.Text style={[ styles.textS,{ opacity: fadeAnim1 },]} >HANDS. </Animated.Text>
-                    <Animated.Text style={[ styles.textS,{ opacity: fadeAnim2 },]} >FACE. </Animated.Text>
-                    <Animated.Text style={[ styles.textS,{ opacity: fadeAnim3 },]} >SPACE. </Animated.Text>
+                    <Animated.Text style={[ styles.textS,{ opacity: fadeAnim1 },]} >HELP</Animated.Text>
+                    <Animated.Text style={[ styles.textS,{ opacity: fadeAnim2 },]} >APP</Animated.Text>
+                    <Animated.Text style={[ styles.textS,{ opacity: fadeAnim3 },]} >EER</Animated.Text>
                 </View>
             </View>
         </SafeAreaView>
@@ -62,10 +62,11 @@ const styles = StyleSheet.create({
         paddingTop:100,
     },
     textS: {
-        fontSize: 25,
+        fontSize: 30,
         paddingTop: 15,
         fontWeight: 'bold',
         color: ColourPalette.darkBlue,
+        letterSpacing: 2,
     },
     animi: {
         flexDirection: 'row',
