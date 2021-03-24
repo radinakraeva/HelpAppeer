@@ -66,26 +66,38 @@ const styles = StyleSheet.create({
 
 export default function ChatScreen(props){
     const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState([]);
+    const [newMessage, setNewMessage] = useState("");
     const messagesList = useRef();
     const listing_id = props.route.params.listing_id;
     const username = props.route.params.username;
     const receiver = props.route.params.receiver;
     const listingName = props.route.params.listingName;
     const navigation = useNavigation();
+    let pageOpen = true;
+
 
     useEffect( () => {
-        initLoadMessages();
+        loadMessages().then(r => {});
+        let messageUpdater = setInterval(loadMessages, 3000);
+        return function(){
+            clearInterval(messageUpdater);
+        }
     }, [])
 
-    const initLoadMessages = async () => {
-        loadMessages();
-        setInterval(loadMessages, 3000);
+    async function initLoadMessages() {
+
     }
     const loadMessages = async () =>{
-        const m = await msgAPI.getMessages(listing_id, username);
-        setMessages(m.data);
+        if(pageOpen === true) {
+            const m = await msgAPI.getMessages(listing_id, username);
+            setMessages(m.data);
+        }
+        else{
+            clearInterval(messageUpdater);
+        }
     }
+
+    initLoadMessages().then(r => {});
 
     const sendPushNotification = async (expoPushToken) => {
         const message = {
@@ -111,7 +123,7 @@ export default function ChatScreen(props){
         console.log("Sending Message");
         let currentDate = new Date();
         let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
-        msgAPI.sendMessage(listing_id,username,receiver,newMessage, formattedDate);
+        msgAPI.sendMessage(listing_id, username, receiver, newMessage, formattedDate).then(r  => {});
         updateNewMessage("");
         messagesList.current.scrollToEnd();
 
@@ -129,6 +141,7 @@ export default function ChatScreen(props){
     }
 
     const goBack = () => {
+        pageOpen = false;
         navigation.navigate('ChatListScreen', {username: username})
     };
 
@@ -175,7 +188,7 @@ export default function ChatScreen(props){
                     <Text style = {styles.text}>Chat regarding:</Text>
                     <Text style = {styles.titleText}>{listingName}</Text>
                     <View style={styles.backButton}>
-                        <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                        <IconButton iconName={'back'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                     </View>
                 </View>
             </View>
