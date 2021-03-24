@@ -24,9 +24,9 @@ const ProfileScreen = (props) => {
     const [userData, setUserData] = React.useState({
         name:  '',
         username: '',
-        // address: '',
-        // city: '',
-        // mobile: '',
+        address: '',
+        city: '',
+        mobile: '',
         email: '',
         token: 't',
         secureTextEntry: true,
@@ -47,18 +47,18 @@ const ProfileScreen = (props) => {
             if (r.data != null) {
                 const data = r.data[0];
                 const n = data["Name"];
-                // const c = data["City"];
-                // const a = data["Address"];
-                // const m = data["Mobile"];
+                const c = data["City"];
+                const a = data["Address"];
+                const m = data["Mobile"];
                 const e = data["Email"];
                 const u = userN;
 
                 setUserData({
                     name: n,
                     username: u,
-                    // address: a,
-                    // city: c,
-                    // mobile: m,
+                    address: a,
+                    city: c,
+                    mobile: m,
                     email: e,
                 });
             }
@@ -85,7 +85,7 @@ const ProfileScreen = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} );
+        navigation.navigate("DrawerNavigation", {screen: "Feed"} );
     };
 
     return (
@@ -96,7 +96,7 @@ const ProfileScreen = (props) => {
                     <View>
                         <Text style={styles.writing}>{userData.name}</Text>
                         <View style={styles.backButton}>
-                            <IconButton iconName={'back'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
+                            <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                         </View>
                         <Text style={styles.user}>{userData.username}</Text>
                     </View>
@@ -119,7 +119,7 @@ const ProfileScreen = (props) => {
                     fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
 
-            <ProfileFeed style = {styles.feed} user={userN}/>
+            <ProfileFeed style = {styles.feed} />
 
         </SafeAreaView>
 
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     feed: {
         position: 'absolute',
         zIndex: 0,
+        margin: 5,
     },
     alin: {
         justifyContent: 'center',

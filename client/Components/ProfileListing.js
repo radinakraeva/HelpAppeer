@@ -15,7 +15,7 @@ function ProfileListing({listing_id, title, category, image, profilePicture, pri
     const [refreshPage, setRefreshPage] = useState("");
 
     function seeListing(){
-        navigation.navigate('FullListing', {listID: listing_id, username: user, creator: creator})
+        navigation.navigate('FullListing', {listID: listing_id, username: global.username, creator: creator})
     }
 
     function removePost() {

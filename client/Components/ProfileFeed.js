@@ -10,7 +10,6 @@ export default function ProfileFeed({sort, filter, ...props}){
 
     const listingsArray = []
     const [listings, setListings] = useState([]);
-    const [listingsFinal, setListingsFinal] = useState([]);
 
 
     const [location, setLocation] = React.useState({
@@ -28,17 +27,12 @@ export default function ProfileFeed({sort, filter, ...props}){
 
 
     const loadListings = async() => {
-        await listingsApi.getSpecificListings({userN: props.user}).then( r => {
-        setListings(r.data);
-        // console.log("listings =" + listings);
-        // for (let i = 0; i< listings.length; i++) {
-        //     console.log("listings[i].user " + listings[i].user );
-        //     if (listings[i].user === props.user) {
-        //         listingsArray.push(listings[i]);
-        //         console.log("final listings"+listingsFinal);
-        //     }
-        // }
-        // setListingsFinal(listingsArray);
+        console.log("gonna get listings")
+        await listingsApi.getSpecificListings({userN: global.username}).then( r => {
+            setListings(r.data);
+            console.log(listings)
+            console.log("hello")
+
         });
     }
 
@@ -71,8 +65,8 @@ export default function ProfileFeed({sort, filter, ...props}){
             // profilePicture={require('../Resources/Images/Michael.jpg')}
             profilePicture={item.profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : item.profilePic}
             priceCategory={item.priceCategory}
-            user = {props.username}
-            creator={item.user}
+            user = {global.username}
+            creator={global.username}
             refreshFunc ={loadListings}
 
             /*listing_id = {item.listing_id}
@@ -86,7 +80,7 @@ export default function ProfileFeed({sort, filter, ...props}){
 
     return (
         <FlatList style = {{flex: 1}} showsVerticalScrollIndicator={false}
-                  data = {listingsFinal}
+                  data = {listings}
                   keyExtractor = {item => item.listing_id.toString()}
                   renderItem={listingRender}
                   refreshing = {refreshing}
