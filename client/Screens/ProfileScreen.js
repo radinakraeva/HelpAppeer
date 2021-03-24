@@ -24,9 +24,9 @@ const ProfileScreen = (props) => {
     const [userData, setUserData] = React.useState({
         name:  '',
         username: '',
-        address: '',
-        city: '',
-        mobile: '',
+        // address: '',
+        // city: '',
+        // mobile: '',
         email: '',
         token: 't',
         secureTextEntry: true,
@@ -47,18 +47,18 @@ const ProfileScreen = (props) => {
             if (r.data != null) {
                 const data = r.data[0];
                 const n = data["Name"];
-                const c = data["City"];
-                const a = data["Address"];
-                const m = data["Mobile"];
+                // const c = data["City"];
+                // const a = data["Address"];
+                // const m = data["Mobile"];
                 const e = data["Email"];
                 const u = userN;
 
                 setUserData({
                     name: n,
                     username: u,
-                    address: a,
-                    city: c,
-                    mobile: m,
+                    // address: a,
+                    // city: c,
+                    // mobile: m,
                     email: e,
                 });
             }
@@ -101,10 +101,10 @@ const ProfileScreen = (props) => {
                         <Text style={styles.user}>{userData.username}</Text>
                     </View>
                        </View>
-            <View style={styles.cent}>
-                <MaterialCommunityIcons name='cellphone-basic' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>{userData.mobile}</Text>
-            </View>
+            {/*<View style={styles.cent}>*/}
+            {/*    <MaterialCommunityIcons name='cellphone-basic' size={30} style={{color:ColourPalette.yellow}}/>*/}
+            {/*    <Text style={styles.fields}>{userData.mobile}</Text>*/}
+            {/*</View>*/}
             <View style={styles.cent}>
                 <MaterialCommunityIcons name='email' size={30} style={{color:ColourPalette.yellow}}/>
                 <Text style={styles.fields}>{userData.email}</Text>

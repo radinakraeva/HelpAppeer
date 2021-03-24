@@ -11,7 +11,9 @@ const PostedAnimationScreen  = (props) => {
     const navigation = useNavigation();
 
     const navCheck = () => {
-        navigation.navigate("FeedScreen2", {username: global.username});
+        // navigation.navigate("FeedScreen2", {username: global.username});
+        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} );
+
 
     };
 
