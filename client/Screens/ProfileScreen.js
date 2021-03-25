@@ -92,6 +92,21 @@ const ProfileScreen = (props) => {
         navigation.openDrawer();
     };
 
+    const cropUsername = () =>{
+        let name = global.username
+        const croppedName = name.slice(0,11) + "..."
+        return croppedName
+        // for (let index in name){
+        //     if(convoNames[index].listing_id == id){
+        //         if (convoNames[index].listingName.length >= 25){
+        //             return convoNames[index].listingName.slice(0,24) + "...";
+        //         }
+        //         return convoNames[index].listingName;
+        //     }
+        // }
+        // return null
+    }
+
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
@@ -101,7 +116,7 @@ const ProfileScreen = (props) => {
                     <View style={styles.profilePart}>
                         <View>
                             <Text style={styles.writing}>{userData.name}</Text>
-                            <Text style={styles.user}>{userData.username}</Text>
+                            <Text style={styles.user}>{cropUsername()}</Text>
                         </View>
                         <View style={{width: 100}}>
                             <CircleImage  resizeMode={'cover'} size={100} image={userPic.pic.p === null ? require('../Resources/Images/defaultProfile.jpg') : userPic.pic.p} style={{borderRadius: 150,
