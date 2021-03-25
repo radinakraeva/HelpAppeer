@@ -12,4 +12,3 @@ const apiClient = create({
 
 export default apiClient;
 
-// ssh -L 3306:devweb2020.cis.strath.ac.uk:3306 gwb18150@cafe.cis.strath.ac.uk

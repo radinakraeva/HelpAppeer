@@ -96,7 +96,7 @@ const ProfileScreen = (props) => {
     };
 
     const cropUsername = () =>{
-        let name = global.username
+        let name = userData.name
         const croppedName = name.slice(0,11) + "..."
         return croppedName
         // for (let index in name){
@@ -118,8 +118,8 @@ const ProfileScreen = (props) => {
                     </View>
                     <View style={styles.profilePart}>
                         <View>
-                            <Text style={styles.writing}>{userData.name}</Text>
-                            <Text style={styles.user}>{cropUsername()}</Text>
+                            <Text style={styles.writing}>{cropUsername()}</Text>
+                            <Text style={styles.user}>{userData.username}</Text>
                         </View>
                         <View style={{width: 100}}>
                             <CircleImage  resizeMode={'cover'} size={100} image={userPic.pic.p === null ? require('../Resources/Images/defaultProfile.jpg') : userPic.pic.p} style={{borderRadius: 150,

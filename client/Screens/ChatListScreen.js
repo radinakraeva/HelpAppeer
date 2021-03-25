@@ -90,8 +90,8 @@ export default function ChatListScreen(props){
     const getChatName = (id) =>{
         for (let index in convoNames){
             if(convoNames[index].listing_id == id){
-                if (convoNames[index].listingName.length >= 25){
-                    return convoNames[index].listingName.slice(0,24) + "...";
+                if (convoNames[index].listingName.length >= 23){
+                    return convoNames[index].listingName.slice(0,22) + "...";
                 }
                 return convoNames[index].listingName;
             }
