@@ -189,6 +189,28 @@ app.post('/getAListing',(req, res) => {
     );
 })
 
+app.post('/getListingWithProfilePicture', (req, res) => {
+        console.log("Getting a listing data along with profile picture");
+
+    const listingID = req.fields.listingID;
+
+    connection.query(
+        "SELECT * FROM Listings JOIN Register WHERE Listings.user = Register.Username AND listing_id = (?)", [listingID],
+        function (error, result) {
+            if (error) {
+                console.log(error);
+                res.send(null);
+            } else if (result) {
+                if(result[0]){
+                    // console.log(result);
+                    res.send(result);
+                }
+
+            }
+        }
+    );
+})
+
 app.post('/getAListingUser',(req, res) => {
     console.log("Getting the listing username");
 
@@ -202,7 +224,7 @@ app.post('/getAListingUser',(req, res) => {
                 res.send(null);
             } else if (result) {
                 if(result[0]){
-                    console.log(result);
+                    // console.log(result);
                     res.send(result);
                 }
 
@@ -431,15 +453,12 @@ function renderToListingsList(listings){
     // console.log(listings)
     for (let i = listings.length - 1; i >= 0; i--){
         const listingData = JSON.parse(listings[i].listing)
-        // const picture = JSON.parse(listings[i].Picture) == null ? require('../client/Resources/Images/Alina.jpg') : JSON.parse(listings[i].Picture)
-        // console.log(picture);
-        // console.log(listingData);
+
         const listing = {
             listing_id: listings[i].listing_id,
             title: listingData.title,
             user: listings[i].user,
             category: listingData.category,
-            // image: require('../Resources/Images/food.png'),
             timeStamp: listings[i].time,
             priceCategory: '£'.repeat(listingData.price),
             location: listingData.location,

@@ -26,8 +26,12 @@ const addListing = (listingInfo) => {
     return client.post("/createListing", listingInfo);
 }
 
+const getAListingWithPhoto = (listingID) => {
+    return client.post("/getListingWithProfilePicture", {listingID: listingID})
+}
 
 
-export default { addListing, getListings, getListing, getSpecificListings, removeSpecificListings, getUser }
+
+export default { addListing, getListings, getListing, getSpecificListings, removeSpecificListings, getUser, getAListingWithPhoto }
 
 

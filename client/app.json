@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "helpAppeer",
-    "slug": "helpAppeer",
+    "name": "HelpAppeer",
+    "slug": "HelpAppeer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./Resources/Images/AppLogo.png",

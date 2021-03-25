@@ -47,6 +47,30 @@ const FullListing = (props) => {
 
     useEffect(() => {getList()}, []);
     useEffect(() => {getYourLocation()},[]);
+    // useEffect(() => {getProfilePic()},[]);
+    // useEffect(() => {getListImproved()},[]);
+
+    const getListImproved = async () => {
+        await listingsApi.getAListingWithPhoto(props.route.params.listID).then(r => {
+            if (r.data != null) {
+                const data = r.data[0];
+                const listingInfo = JSON.parse(data.listing);
+                const user = data.user;
+                const postingTime = data.time;
+                const pic = data.Picture
+                console.log("here")
+                console.log(pic)
+
+                setListingData({
+                    user: user,
+                    time: new Date(postingTime),
+                    listing: listingInfo,
+                    profilePic: pic
+                });
+            }
+        });
+    }
+
 
     const getList = async () => {
         await listingsApi.getListing({listingID: props.route.params.listID}).then( r => {
@@ -63,31 +87,38 @@ const FullListing = (props) => {
                     listing: listingInfo
                 });
 
+                // usersApi.getProfileImage({userN: listingData.user}).then( r =>{
+                //     // console.log(r.data)
+                //     if (r.data != null) {
+                //         const data = r.data[0]
+                //         // console.log("here")
+                //
+                //         const photo = JSON.parse(data.Picture)
+                //
+                //         // console.log(photo)
+                //
+                //
+                //         setListingData({
+                //             ...listingData,
+                //             profilePic: photo
+                //         })
+                //
+                //     } else {
+                //         setListingData({
+                //             ...listingData,
+                //             profilePic: null
+                //         })
+                //     }
+                // })
+
             }
+
         });
 
-        await usersApi.getProfileImage({userN: listingData.user}).then( r =>{
-            // console.log(r.data)
-            if (r.data != null) {
-                const data = r.data[0]
-                // console.log("here")
+    }
 
-                const photo = JSON.parse(data.Picture)
+    const getProfilePic = async () => {
 
-                // console.log(photo)
-
-                setListingData({
-                    ...listingData,
-                    profilePic: photo
-                })
-
-            } else {
-                setListingData({
-                    ...listingData,
-                    profilePic: null
-                })
-            }
-        })
     }
 
 
@@ -232,13 +263,17 @@ const FullListing = (props) => {
                <View style={styles.middlePart}>
 
                    <View style={styles.topOfMiddle}>
-                    <View style={styles.userInf}>
-                        <CircleImage image={listingData.profilePic === null ? require('../Resources/Images/defaultProfile.jpg') : listingData.profilePic} size={50}/>
-                        <Text style={styles.userInfTime}>{getTime()}</Text>
-                    </View>
+                    {/*<View style={styles.userInf}>*/}
+                    {/*    <CircleImage image={listingData.profilePic === null ? require('../Resources/Images/defaultProfile.jpg') : listingData.profilePic} size={50}/>*/}
+                    {/*    <Text style={styles.userInfTime}>{getTime()}</Text>*/}
+                    {/*</View>*/}
                        <View style={styles.descInf}>
                            <Text >
-                               <Text style={styles.descLabel}>asking for:  </Text>
+                               <Text style={styles.descName}>{listingData.user}</Text>
+                               <Text style={styles.descLabel}> asked </Text>
+                               <Text style={styles.descLabel}>{getTime()}</Text>
+                               <Text style={styles.descLabel}> for:   </Text>
+
                                <Text style={styles.desc}>{listingData.listing.description}</Text>
 
                            </Text>
@@ -431,11 +466,15 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     descInf:{
-        width: '75%',
-        paddingLeft: 15,
+        // width: '75%',
+        paddingHorizontal: 15,
         paddingTop: 10,
     },
-
+    descName:{
+        fontSize: 17,
+        fontWeight: 'bold',
+        color: ColourPalette.darkBlue,
+    },
     desc: {
         fontSize: 17,
         color: ColourPalette.darkBlue,
