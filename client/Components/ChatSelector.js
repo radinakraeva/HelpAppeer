@@ -10,7 +10,7 @@ export default function ChatSelector({listingName, mostRecentMessage, timeSinceM
     //profilePicture={profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : profilePic}
 
     const defaultProfilePic = require('../Resources/Images/defaultProfile.jpg');
-    const [profilePicture, setProfilePicture] = useState([]);
+    const [profilePicture, setProfilePicture] = useState(null);
     if(listingName == null){
         listingName = "Unnamed Listing"
     }
@@ -32,15 +32,15 @@ export default function ChatSelector({listingName, mostRecentMessage, timeSinceM
     async function loadProfilePic() {
         //console.log(profilePictureID)
         await usersApi.getProfileImage({userN: profilePictureID}).then(r => {
-            //console.log(r.data[0].Picture);
-            if (r.data[0].Picture != "null") {
+            console.log(r.data[0]);
+            if (r.data[0] != null) {
                 const data = r.data[0]
                 //console.log("here")
                 const photo = JSON.parse(data.Picture)
                 //console.log(photo)
                 setProfilePicture(photo);
             } else {
-                setProfilePicture(require('../Resources/Images/defaultProfile.jpg'));
+                setProfilePicture(null);
             }
         })
     }
@@ -74,7 +74,7 @@ export default function ChatSelector({listingName, mostRecentMessage, timeSinceM
         <TouchableWithoutFeedback onPress = {() =>openChat()} style = {styles.test}>
             <View style = {styles.chatSelector}>
                 <View>
-                    <CircleImage size={45} image={profilePicture}/>
+                    <CircleImage size={45} image={profilePicture === null ? require('../Resources/Images/defaultProfile.jpg') : profilePicture}/>
                 </View>
                 <View style = {styles.rightSideView}>
                     <View >

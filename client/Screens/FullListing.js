@@ -50,26 +50,6 @@ const FullListing = (props) => {
     // useEffect(() => {getProfilePic()},[]);
     // useEffect(() => {getListImproved()},[]);
 
-    const getListImproved = async () => {
-        await listingsApi.getAListingWithPhoto(props.route.params.listID).then(r => {
-            if (r.data != null) {
-                const data = r.data[0];
-                const listingInfo = JSON.parse(data.listing);
-                const user = data.user;
-                const postingTime = data.time;
-                const pic = data.Picture
-                console.log("here")
-                console.log(pic)
-
-                setListingData({
-                    user: user,
-                    time: new Date(postingTime),
-                    listing: listingInfo,
-                    profilePic: pic
-                });
-            }
-        });
-    }
 
 
     const getList = async () => {
@@ -87,29 +67,6 @@ const FullListing = (props) => {
                     listing: listingInfo
                 });
 
-                // usersApi.getProfileImage({userN: listingData.user}).then( r =>{
-                //     // console.log(r.data)
-                //     if (r.data != null) {
-                //         const data = r.data[0]
-                //         // console.log("here")
-                //
-                //         const photo = JSON.parse(data.Picture)
-                //
-                //         // console.log(photo)
-                //
-                //
-                //         setListingData({
-                //             ...listingData,
-                //             profilePic: photo
-                //         })
-                //
-                //     } else {
-                //         setListingData({
-                //             ...listingData,
-                //             profilePic: null
-                //         })
-                //     }
-                // })
 
             }
 
@@ -117,9 +74,6 @@ const FullListing = (props) => {
 
     }
 
-    const getProfilePic = async () => {
-
-    }
 
 
 
