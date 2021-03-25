@@ -15,7 +15,7 @@ const AnimationScreen  = () => {
     const fadeAnim3 = useRef(new Animated.Value(0)).current;
 
     const navCheck = () => {
-        navigation.navigate("LoginScreen");
+        navigation.navigate("SlideScreen");
     };
 
     const finalT = () => {

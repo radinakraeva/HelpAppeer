@@ -9,6 +9,7 @@ import AnimationScreen from '../Screens/AnimationScreen';
 import NewListingScreen from '../Screens/NewListingScreen';
 import ChatScreen from '../Screens/ChatScreen';
 import ChatListScreen from '../Screens/ChatListScreen';
+import SlideScreen from '../Screens/SlideScreen'
 
 
 import FullListing from "../Screens/FullListing";
@@ -34,7 +35,7 @@ const AuthNavigator  = () => (
             <Stack.Screen name='PostedAnimationScreen' component={PostedAnimationScreen}/>
             <Stack.Screen name='ChatScreen' component={ChatScreen}/>
             <Stack.Screen name='LoginScreen2' component={LoginScreen}/>
-
+            <Stack.Screen name='SlideScreen' component={SlideScreen}/>
             {/*<Stack.Screen name='ProfileScreen' component={ProfileScreen} initialParams={{ user: 'as' }}/>*/}
         </Stack.Navigator>
 

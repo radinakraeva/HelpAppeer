@@ -119,7 +119,7 @@ export default function ChatListScreen(props){
         <SafeAreaView style = {styles.chatListScreen}>
             <View style = {styles.topSection}>
                 <View style = {styles.topLeftSection}>
-                    <Text style = {styles.titleText}>Your Current Pending Listings</Text>
+                    <Text style = {styles.titleText}>Messages</Text>
                 </View>
                 <View style={styles.backButton}>
                     <IconButton iconName={'back'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     topSection: {
         height: '15%',
         flexDirection: 'row',
+        justifyContent: 'space-around',
     },
     topLeftSection:{
         flex:1,
