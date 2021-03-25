@@ -18,21 +18,18 @@ const PostedAnimationScreen  = (props) => {
     };
 
     const finalT = () => {
-        setTimeout(fadeIn,1000);
+        setTimeout(fadeIn,300);
     }
 
     const fadeIn = () => {
-        setTimeout(navCheck,3000);
+        setTimeout(navCheck,700);
     };
 
     return (
         <SafeAreaView style={styles.backing}>
             <View style={styles.alin} >
-                <Image style={styles.pic2} source={{
-                    uri: 'https://media.giphy.com/media/RIYgiYTCmostbz0wNx/giphy.gif'
-                }} onLoad={finalT}/>
                 <Image style={styles.pic1} source={{
-                    uri: 'https://media.giphy.com/media/kUTME7ABmhYg5J3psM/giphy.gif'
+                    uri: 'https://media.giphy.com/media/O6Yaj4lrSE9jSTkyl5/giphy.gif'
                 }} onLoad={finalT}/>
             </View>
         </SafeAreaView>
@@ -45,12 +42,13 @@ const picHeight = height*0.45;
 
 const styles = StyleSheet.create({
     backing: {
-        backgroundColor: 'white',
+        backgroundColor: ColourPalette.darkBlue,
         flex: 1,
     },
     pic1: {
-        width: 100,
-        height: 100,
+        paddingTop:250,
+        width: 250,
+        height: 250,
     },
     pic2: {
         width: picHeight,
@@ -59,7 +57,7 @@ const styles = StyleSheet.create({
     alin: {
         justifyContent: 'center',
         alignItems: 'center',
-        paddingTop:50,
+        paddingTop:250,
     },
     photo: {
         height: picHeight,

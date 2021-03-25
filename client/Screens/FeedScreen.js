@@ -22,11 +22,6 @@ export default function FeedScreen(props){
         BackHandler.addEventListener('hardwareBackPress', () => true);
     }, []);
 
-
-    // console.log('USERNAME' + props.route.params.username);
-
-    // const [filterMenu, toggleFilterMenu] = useState({visible: false, sorting: 'time', prices1: true, prices2: true, prices3: true});
-    //categories:["food","medicine","bills","general"],
     const [filterMenu, toggleFilterMenu] = useState({visible: false,
         food: true, medicine: true, bills: true, general: true,
         prices1: true, prices2: true, prices3: true});
