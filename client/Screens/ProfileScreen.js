@@ -46,7 +46,10 @@ const ProfileScreen = (props) => {
 
             if (r.data != null) {
                 const data = r.data[0];
-                const n = data["Name"];
+                let n = data["Name"];
+                if (n.length >= 11){
+                    n = n.slice(0,10) + "...";
+                }
                 const c = data["City"];
                 const a = data["Address"];
                 const m = data["Mobile"];
