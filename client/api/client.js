@@ -3,16 +3,10 @@ import { NetworkInfo } from "react-native-network-info";
 
 
 const apiClient = create({
-    // baseURL: 'https://devweb2020.cis.strath.ac.uk/kwb18179-nodejs/'
-    //Alina's
-    /*baseURL: 'http://192.168.1.161:3001'*/
-    //Mike's
-    // baseURL: 'http://192.168.1.151:3001'
-    //Slavka
-    // baseURL: 'http://172.20.10.6:3001'
+    baseURL: 'https://devweb2020.cis.strath.ac.uk/kwb18179-nodejs/'
 
     //MUST USE GENERAL
-    baseURL: 'http://10.0.2.2:3001'
+    // baseURL: 'http://10.0.2.2:3001'
 
 })
 
