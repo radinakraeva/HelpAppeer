@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, StyleSheet, Image, Text, Touchable, TouchableWithoutFeedback} from 'react-native';
 import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
@@ -8,7 +8,12 @@ import {useNavigation} from "@react-navigation/native";
 // import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 
 
-function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance, creator, user}){
+function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance, creator,user, refreshFunc}){
+
+
+    useEffect(()=>{
+        refreshFunc()
+    }, [])
 
     const navigation = useNavigation();
     function seeListing(){

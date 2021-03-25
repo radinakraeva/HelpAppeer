@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Animated, View, StyleSheet, Button, Image, SafeAreaView, Dimensions} from 'react-native';
 import ColourPalette from '../Resources/ColourPalette';
 
@@ -10,9 +10,14 @@ const ByeScreen  = () => {
 
     const navigation = useNavigation();
 
+
     const fadeAnim1 = useRef(new Animated.Value(0)).current;
     const fadeAnim2 = useRef(new Animated.Value(0)).current;
     const fadeAnim3 = useRef(new Animated.Value(0)).current;
+
+    // const fadeAnim1 = useRef(new Animated.Value(0)).current;
+    // const fadeAnim2 = useRef(new Animated.Value(0)).current;
+    // const fadeAnim3 = useRef(new Animated.Value(0)).current;
 
     const navCheck = () => {
         navigation.navigate("LoginScreen2");

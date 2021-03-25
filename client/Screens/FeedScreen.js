@@ -38,11 +38,10 @@ export default function FeedScreen(props){
     };
 
     const goToChat = () => {
-        navigation.navigate("ChatListScreen", {username: global.username});
+        navigation.navigate("DrawerNavigation", {screen: "Messages"});
     };
 
     const openSideMenu = () => {
-        // navigation.navigate("DrawerNavigation", {screen: "Profile", params: {username: props.route.params.username}} );
         navigation.openDrawer();
     };
 
