@@ -73,8 +73,10 @@ const ProfileScreen = () => {
 
     const cropUsername = () =>{
         let name = userData.name
-        const croppedName = name.slice(0,11) + "..."
-        return croppedName
+        if (name.length>=12) {
+             return name.slice(0,11) + "..."
+        }
+        return name
     }
 
     return (
