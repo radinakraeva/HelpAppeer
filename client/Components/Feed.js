@@ -42,46 +42,14 @@ export default function Feed({ filter, filterCats, ...props}){
         } else {
             setListings(lists);
         }
-    };
+           };
 
-    // const sortListings = () => {
-    //     console.log(sort);
-    //     let lists = JSON.parse(JSON.stringify(allListings));
-    //
-    //     if (sort === "distance") {
-    //
-    //         let distListingMap = {}
-    //         console.log("sorting by distance")
-    //         let lists = JSON.parse(JSON.stringify(allListings));
-    //         for (let index = 0; index < lists.length; index++) {
-    //             const dist = distance(location.location.lat1, location.location.lon1, lists[index].location.lat1, lists[index].location.lon1)
-    //             distListingMap[JSON.stringify(lists[index])] = dist
-    //         }
-    //
-    //         let sorted = Object.keys(distListingMap).sort(function (a,b) {return distListingMap[a] - distListingMap[b]});
-    //
-    //         let sortedListings = []
-    //         for(let index = 0; index < sorted.length; index++) {
-    //             sortedListings.push(JSON.parse(sorted[index]));
-    //         }
-    //
-    //         setAllListings(JSON.parse(JSON.stringify(lists)))
-    //
-    //         setListings(sortedListings)
-    //
-    //     } else {
-    //         console.log("sorting by time")
-    //         setListings(JSON.parse(JSON.stringify(allListings)));
-    //         setAllListings(JSON.parse(JSON.stringify(allListings)))
-    //         // setAllListings(listingsOriginal);
-    //     }
-    // };
 
     const loadListings = async() => {
-        const r = await listingsApi.getListings();
-
-        setListings(r.data);
-        setAllListings(r.data);
+         await listingsApi.getListings().then(r => {
+             setListings(r.data);
+             setAllListings(r.data);
+         })
 
     }
 
@@ -133,6 +101,7 @@ export default function Feed({ filter, filterCats, ...props}){
             distance={distance(location.location.lat1, location.location.lon1, item.location.lat1, item.location.lon1)}
             user = {props.username}
             creator={item.user}
+            refreshFunc={loadListings}
         />
     );
 

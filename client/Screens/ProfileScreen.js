@@ -88,33 +88,38 @@ const ProfileScreen = (props) => {
         navigation.navigate("DrawerNavigation", {screen: "Feed"} );
     };
 
+    const openSideMenu = () => {
+        navigation.openDrawer();
+    };
+
     return (
         <SafeAreaView style={styles.backing} >
                 <View style={styles.top}>
-                    <CircleImage  resizeMode={'cover'} size={100} image={userPic.pic.p === null ? require('../Resources/Images/defaultProfile.jpg') : userPic.pic.p} style={{borderRadius: 150,
-                    backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
-                    <View>
-                        <Text style={styles.writing}>{userData.name}</Text>
-                        <View style={styles.backButton}>
-                            <IconButton iconName={'close'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
-                        </View>
-                        <Text style={styles.user}>{userData.username}</Text>
+                    <View style={styles.sideMenuButton}>
+                        <IconButton iconName='bars' iconBgColor={ColourPalette.darkBlue} onPress={openSideMenu} size={50}/>
                     </View>
-                       </View>
+                    <View style={styles.profilePart}>
+                        <View>
+                            <Text style={styles.writing}>{userData.name}</Text>
+                            <Text style={styles.user}>{userData.username}</Text>
+                        </View>
+                        <View style={{width: 100}}>
+                            <CircleImage  resizeMode={'cover'} size={100} image={userPic.pic.p === null ? require('../Resources/Images/defaultProfile.jpg') : userPic.pic.p} style={{borderRadius: 150,
+                            backgroundColor: ColourPalette.yellow, borderWidth: 3,overflow: 'hidden'}}/>
+                        </View>
+                    </View>
+                </View>
+
             {/*<View style={styles.cent}>*/}
-            {/*    <MaterialCommunityIcons name='cellphone-basic' size={30} style={{color:ColourPalette.yellow}}/>*/}
-            {/*    <Text style={styles.fields}>{userData.mobile}</Text>*/}
+            {/*    <MaterialCommunityIcons name='email' size={30} style={{color:ColourPalette.yellow}}/>*/}
+            {/*    <Text style={styles.fields}>{userData.email}</Text>*/}
             {/*</View>*/}
-            <View style={styles.cent}>
-                <MaterialCommunityIcons name='email' size={30} style={{color:ColourPalette.yellow}}/>
-                <Text style={styles.fields}>{userData.email}</Text>
-            </View>
             <View style={styles.bord}>
-                <TouchableOpacity style={styles.alin} onPress={message}>
-                    <Text style={{fontSize: 20, paddingTop:5,paddingBottom:3, color:'gray' }}>Edit profile</Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity style={styles.alin} onPress={message}>*/}
+                {/*    <Text style={{fontSize: 20, paddingTop:5,paddingBottom:3, color:'gray' }}>Edit profile</Text>*/}
+                {/*</TouchableOpacity>*/}
             </View>
-            <View style={{marginTop:1, borderBottomWidth: 3, borderColor:ColourPalette.yellow,alignItems: 'center',}}>
+            <View style={{marginTop:1, borderBottomWidth: 3, borderColor:ColourPalette.yellow,alignItems: 'center', marginBottom: 10}}>
                 <Text style={{fontSize: 25, paddingTop: 7, paddingBottom: 7,color: ColourPalette.yellow,
                     fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
@@ -164,6 +169,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 20,
         paddingLeft: 10,
+        marginBottom: 30,
+        height: 97.5,
     },
     input: {
         flexDirection: 'row',
@@ -195,6 +202,17 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom:70,
         left:200
+    },
+    profilePart: {
+        position: 'absolute',
+        right: 0,
+        flexDirection: 'row',
+        paddingRight: 15,
+    },
+    sideMenuButton: {
+        paddingTop: 10,
+        paddingRight: 15,
+
     },
 });
 

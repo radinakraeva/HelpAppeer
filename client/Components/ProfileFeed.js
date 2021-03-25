@@ -27,11 +27,11 @@ export default function ProfileFeed({sort, filter, ...props}){
 
 
     const loadListings = async() => {
-        console.log("gonna get listings")
+        // console.log("gonna get listings")
         await listingsApi.getSpecificListings({userN: global.username}).then( r => {
             setListings(r.data);
-            console.log(listings)
-            console.log("hello")
+            // console.log(listings)
+            // console.log("hello")
 
         });
     }

@@ -28,6 +28,7 @@ const FullListing = (props) => {
     const [listingData, setListingData] = useState({
         user: '',
         time: new Date(),
+        profilePic: null,
         listing: {
             title: '',
             category: '',
@@ -65,18 +66,26 @@ const FullListing = (props) => {
             }
         });
 
-        await usersApi.getProfileImage({userN: global.username}).then( r =>{
+        await usersApi.getProfileImage({userN: listingData.user}).then( r =>{
             // console.log(r.data)
-            if  (r.data != null) {
+            if (r.data != null) {
                 const data = r.data[0]
                 // console.log("here")
 
                 const photo = JSON.parse(data.Picture)
+
                 // console.log(photo)
-                setProfilePic(photo);
+
+                setListingData({
+                    ...listingData,
+                    profilePic: photo
+                })
 
             } else {
-                setProfilePic(null);
+                setListingData({
+                    ...listingData,
+                    profilePic: null
+                })
             }
         })
     }
@@ -125,7 +134,7 @@ const FullListing = (props) => {
     };
 
     const goBack = () => {
-        navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} );
+        navigation.goBack();
     };
 
     const acceptListing = () => {
@@ -204,8 +213,6 @@ const FullListing = (props) => {
     };
 
 
-    //TODO: get user!!
-
         return (
             <ScrollView style={styles.screen}>
                 <View>
@@ -226,7 +233,7 @@ const FullListing = (props) => {
 
                    <View style={styles.topOfMiddle}>
                     <View style={styles.userInf}>
-                        <CircleImage image={profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : profilePic} size={50}/>
+                        <CircleImage image={listingData.profilePic === null ? require('../Resources/Images/defaultProfile.jpg') : listingData.profilePic} size={50}/>
                         <Text style={styles.userInfTime}>{getTime()}</Text>
                     </View>
                        <View style={styles.descInf}>
@@ -235,9 +242,6 @@ const FullListing = (props) => {
                                <Text style={styles.desc}>{listingData.listing.description}</Text>
 
                            </Text>
-                           {/*<Text></Text>*/}
-                           {/*<Text style={styles.desc}>{listingData.listing.addInfo}</Text>*/}
-
                        </View>
                    </View>
 
@@ -276,9 +280,11 @@ const FullListing = (props) => {
 
                     {getPhotos()}
                </View>
+                   {global.username === listingData.user ? null :
                     <View style={styles.bottomSection}>
                         <Button title="Accept" onPress={acceptListing}/>
                     </View>
+                   }
 
 
                 </View>

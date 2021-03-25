@@ -227,8 +227,6 @@ const NewListingScreen = (props) => {
         } else { //if not, submit
             const list = JSON.stringify(data);
 
-
-
             databaseSubmission(list);
             navigation.navigate("PostedAnimationScreen", {username: global.username});
         }
@@ -457,7 +455,7 @@ const NewListingScreen = (props) => {
                 </View>}
             </View>
 
-            <InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>
+            {/*<InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>*/}
 
 
             <View style={styles.bottomSection}>

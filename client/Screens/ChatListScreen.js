@@ -115,14 +115,18 @@ export default function ChatListScreen(props){
         }
     }
 
+    const openSideMenu = () => {
+        navigation.openDrawer();
+    };
+
     return (
         <SafeAreaView style = {styles.chatListScreen}>
             <View style = {styles.topSection}>
+                <View style={styles.sideMenuButton}>
+                    <IconButton iconName='bars' iconBgColor={ColourPalette.darkBlue} onPress={openSideMenu} size={50}/>
+                </View>
                 <View style = {styles.topLeftSection}>
                     <Text style = {styles.titleText}>Messages</Text>
-                </View>
-                <View style={styles.backButton}>
-                    <IconButton iconName={'back'} onPress={goBack} iconBgColor={ColourPalette.darkBlue} size={35}/>
                 </View>
             </View>
             {chatList()}
@@ -140,7 +144,12 @@ const styles = StyleSheet.create({
     topSection: {
         height: '15%',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        paddingTop: 15,
+        paddingLeft:10,
+    },
+    sideMenuButton: {
+        paddingVertical: '5%',
+        paddingRight: 15,
     },
     topLeftSection:{
         flex:1,
@@ -160,12 +169,5 @@ const styles = StyleSheet.create({
         width: '60%',
         alignSelf: 'center',
     },
-    backButton: {
-        flex:2,
-        marginTop:40,
-        marginRight:20,
-        position: 'absolute',
-        top:0,
-        right:0
-    },
+
 })
