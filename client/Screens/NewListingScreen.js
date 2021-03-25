@@ -16,7 +16,7 @@ import MapView, { Marker } from 'react-native-maps';
 
 import listingsApi from '../api/listingsApi';
 import {useNavigation} from "@react-navigation/native";
-
+import Feed from "../Components/Feed";
 
 const NewListingScreen = (props) => {
 
@@ -264,6 +264,7 @@ const NewListingScreen = (props) => {
             }, {
                 text: 'OK',
                 onPress: () =>{ console.log('sashay, away')
+
                     navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} )
                 }
             }],
