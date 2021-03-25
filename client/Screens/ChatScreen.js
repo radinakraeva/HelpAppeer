@@ -1,13 +1,11 @@
-import React, {useEffect, useState, useRef} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, FlatList} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import msgAPI from '../api/msgAPI';
-
 import ColourPalette from '../Resources/ColourPalette';
 import CircleIcon from '../Components/CircleIcon';
 import ChatMessage from '../Components/ChatMessage';
 import IconButton from '../Components/IconButton';
 import {useNavigation} from "@react-navigation/native";
-
 import pushNotifications from '../Resources/pushNotifications';
 import usersApi from '../api/usersApi';
 
@@ -97,20 +95,15 @@ export default function ChatScreen(props){
             setMessages(m.data);
         }
     }
-
     initLoadMessages().then(r => {});
 
-
-
     const enter = () =>{
-        console.log("Sending Message");
         let currentDate = new Date();
         let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
         msgAPI.sendMessage(listing_id, username, receiver, newMessage, formattedDate).then(r  => {});
         updateNewMessage("");
         messagesList.current.scrollToEnd();
 
-        //send notif to receiver
         sendNotif()
 
         setTimeout(loadMessages, 300);
@@ -121,10 +114,8 @@ export default function ChatScreen(props){
             if (r.data != null) {
                 const token = r.data[0];
                 pushNotifications.sendPushNotification(token, listingName).then(
-                    ()=>console.log("notif sent!"),
-                    ()=>console.log("notif failed")
-                )
 
+                )
             }
         })
     }
@@ -165,7 +156,6 @@ export default function ChatScreen(props){
     }
 
     if(props.route.params.nowPending === true){
-        console.log("Sending Message");
         let currentDate = new Date();
         let formattedDate = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate() + " " + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds()
         msgAPI.sendMessage(listing_id,username,receiver,
@@ -205,5 +195,3 @@ export default function ChatScreen(props){
         </SafeAreaView>
     );
 }
-
-

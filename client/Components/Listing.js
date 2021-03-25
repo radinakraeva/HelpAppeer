@@ -1,15 +1,11 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, Image, Text, Touchable, TouchableWithoutFeedback} from 'react-native';
+import {Image, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 import CircleImage from './CircleImage';
 import Icon from 'react-native-vector-icons/EvilIcons';
-
 import ColourPalette from '../Resources/ColourPalette';
 import {useNavigation} from "@react-navigation/native";
-// import {NavigationInjectedProps, withNavigation} from 'react-navigation';
-
 
 function Listing({listing_id, title, category, image, profilePicture, timeSincePosting, priceCategory, distance, creator,user, refreshFunc}){
-
 
     useEffect(()=>{
         refreshFunc()
@@ -28,7 +24,6 @@ function Listing({listing_id, title, category, image, profilePicture, timeSinceP
         if(timeSincePosting == 1)timeMeasurment = 'hour';
         else timeMeasurment = 'hours';
     }
-
 
     return (
         <TouchableWithoutFeedback onPress = {() =>seeListing()}>

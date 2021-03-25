@@ -1,10 +1,6 @@
-/* eslint-disable prettier/prettier,no-trailing-spaces */
 import React, {useEffect, useState} from 'react';
-import {View, Text, Alert, StyleSheet, Image, ScrollView, BackHandler} from 'react-native';
-
-import Screen from '../Components/Screen';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import ColourPalette from '../Resources/ColourPalette';
-
 import listingsApi from '../api/listingsApi';
 import IconButton from '../Components/IconButton';
 import Button from '../Components/Button';
@@ -15,11 +11,6 @@ import {getDistanceBetween} from 'geolocation-distance-between';
 import {useNavigation} from "@react-navigation/native";
 import Icon from 'react-native-vector-icons/EvilIcons';
 import Icon2 from 'react-native-vector-icons/AntDesign';
-
-import CircleIcon from '../Components/CircleIcon';
-import CircleImage from '../Components/CircleImage';
-import usersApi from '../api/usersApi';
-
 
 const FullListing = (props) => {
 
@@ -43,18 +34,11 @@ const FullListing = (props) => {
 
     });
     const [userLocation, setUserLocation] = useState({lat2: 0, lon2: 0});
-    const [profilePic, setProfilePic] = useState(null);
-
     useEffect(() => {getList()}, []);
     useEffect(() => {getYourLocation()},[]);
-    // useEffect(() => {getProfilePic()},[]);
-    // useEffect(() => {getListImproved()},[]);
-
-
 
     const getList = async () => {
         await listingsApi.getListing({listingID: props.route.params.listID}).then( r => {
-            // console.log(r.data);
             if (r.data != null) {
                 const data = r.data[0];
                 const listingInfo = JSON.parse(data.listing);
@@ -66,32 +50,21 @@ const FullListing = (props) => {
                     time: new Date(postingTime),
                     listing: listingInfo
                 });
-
-
             }
-
         });
-
     }
-
-
-
-
 
     const getYourLocation = async () => {
         const {granted} = await Location.requestPermissionsAsync();
         if (!granted) return;
         const {coords: {latitude, longitude}} = await Location.getLastKnownPositionAsync();
         setUserLocation({lat2: latitude, lon2:longitude});
-
     };
 
-    function distance(lat1, lng1, lat2, lng2) { // miles optional
+    function distance(lat1, lng1, lat2, lng2) {
         let coordinateOne = {latitude: lat1, longitude: lng1};
         let coordinateTwo = {latitude: lat2, longitude: lng2};
-
         let distanceBetween = getDistanceBetween(coordinateOne, coordinateTwo);
-
         return distanceBetween.toFixed(1);
     }
 
@@ -105,7 +78,6 @@ const FullListing = (props) => {
     function timeDifference(date1, date2){
         let diffMs = (date2 - Date.parse(date1));
         return Math.round(Math.floor(diffMs / 60000));
-
     }
 
     const getTime = () => {
@@ -148,7 +120,6 @@ const FullListing = (props) => {
             return <Text style={styles.poundsStart}>££<Text style={styles.poundsEnd}>£</Text></Text>
         } else {
             return <Text style={styles.poundsStart}>£££</Text>
-
         }
     };
 
@@ -190,13 +161,11 @@ const FullListing = (props) => {
                 <Image source={cover} style={styles.image}/>
             </View>
         );
-
     };
 
     const isEmpty = (obj) => {
         return Object.keys(obj).length === 0;
     };
-
 
         return (
             <ScrollView style={styles.screen}>
@@ -217,10 +186,6 @@ const FullListing = (props) => {
                <View style={styles.middlePart}>
 
                    <View style={styles.topOfMiddle}>
-                    {/*<View style={styles.userInf}>*/}
-                    {/*    <CircleImage image={listingData.profilePic === null ? require('../Resources/Images/defaultProfile.jpg') : listingData.profilePic} size={50}/>*/}
-                    {/*    <Text style={styles.userInfTime}>{getTime()}</Text>*/}
-                    {/*</View>*/}
                        <View style={styles.descInf}>
                            <Text >
                                <Text style={styles.descName}>{listingData.user}</Text>
@@ -239,7 +204,6 @@ const FullListing = (props) => {
                        <Text style={styles.priceText}>{getPrice()}</Text>
 
                    </View>
-
 
                    <View style={styles.mapTopView}>
                         <Text style={styles.subtitle}>Location</Text>
@@ -274,13 +238,9 @@ const FullListing = (props) => {
                         <Button title="Accept" onPress={acceptListing}/>
                     </View>
                    }
-
-
                 </View>
             </ScrollView>
-
             );
-
 }
 
 const styles = StyleSheet.create({
@@ -288,22 +248,13 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
     },
-
     title: {
         fontSize: 35,
         fontFamily: "Roboto",
         fontWeight: "bold",
-        // marginBottom: 20,
         color: ColourPalette.yellow,
         backgroundColor: ColourPalette.darkBlue,
-        // borderBottomLeftRadius: 20,
-        // borderBottomRightRadius: 20,
-        //"rgba(0,41,207,1)",
-
-        // textShadowColor: ColourPalette.grey,
-        // textShadowRadius: 15,
         flex:15,
-
         paddingHorizontal:35,
         paddingVertical: 15,
     },
@@ -346,7 +297,6 @@ const styles = StyleSheet.create({
 
     info:{
         flexDirection: 'row',
-        // justifyContent: 'center',
         marginBottom: 5,
         flex: 3,
         width: '100%',
@@ -360,7 +310,6 @@ const styles = StyleSheet.create({
     },
     distAndTimeText:{
         color: ColourPalette.darkBlue,
-        // paddingHorizontal: 50,
         fontSize: 17,
         opacity: 0.7
     },
@@ -378,7 +327,6 @@ const styles = StyleSheet.create({
 
         letterSpacing: 2,
     },
-
     map:{
         height: 150,
         width:'100%',
@@ -386,10 +334,7 @@ const styles = StyleSheet.create({
     uploadedImages: {
         flex: 1,
         flexDirection: "row",
-        // backgroundColor: ColourPalette.white,
-        // borderRadius: 20,
         justifyContent: 'center',
-
     },
     middlePart: {
         padding: 20,
@@ -400,9 +345,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '8%',
         marginBottom: 40,
-
     },
-
     topOfMiddle: {
         flex: 1,
         flexDirection: 'row',
@@ -420,7 +363,6 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     descInf:{
-        // width: '75%',
         paddingHorizontal: 15,
         paddingTop: 10,
     },
@@ -438,9 +380,7 @@ const styles = StyleSheet.create({
         color: "rgba(0, 51, 102,0.75)",
         fontStyle: 'italic',
         fontSize: 17,
-
     },
-
     mapTopView: {
         flex: 1,
         flexDirection: 'row'
@@ -459,7 +399,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 10,
         marginBottom: 20,
-
     },
     categoriesText: {
         fontSize:20,
@@ -467,34 +406,15 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         position: 'absolute',
         left: '15%',
-        // paddingVertical: 10,
-        // paddingHorizontal: 15,
-        // borderRadius: 20,
-        // backgroundColor: ColourPalette.white,
-
-
     },
     catText: {
         color: ColourPalette.darkBlue,
-
-
     },
     priceText: {
-        // fontSize:20,
         position: 'absolute',
         right: '15%',
         fontStyle: 'italic',
-        // paddingVertical: 10,
-        // paddingHorizontal: 15,
-        // // borderRadius: 20,
-        // // backgroundColor: ColourPalette.white,
-
-
     },
-
-
-
-
 });
 
 export default FullListing;

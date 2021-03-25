@@ -1,7 +1,5 @@
-/* eslint-disable prettier/prettier,no-trailing-spaces */
-import React, { useEffect } from 'react';
-import {StyleSheet, View, Text, Alert} from 'react-native';
-
+import React, {useEffect} from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
 import Screen from "../Components/Screen";
 import InputField from '../Components/InputField';
 import Button from '../Components/Button';
@@ -12,17 +10,14 @@ import ImagePreview from '../Components/ImagePreview';
 import PriceSelection from '../Components/PriceSelection';
 import * as Location from 'expo-location';
 import * as ImagePicker from 'expo-image-picker';
-import MapView, { Marker } from 'react-native-maps';
-
+import MapView, {Marker} from 'react-native-maps';
 import listingsApi from '../api/listingsApi';
 import {useNavigation} from "@react-navigation/native";
 import Feed from "../Components/Feed";
 
-const NewListingScreen = (props) => {
+const NewListingScreen = () => {
 
     const navigation = useNavigation()
-
-    // console.log(props.route.params.username  + ' UUUUUUUUUSE');
 
     const [data, setData] = React.useState({
         title: '',
@@ -75,13 +70,6 @@ const NewListingScreen = (props) => {
         setData({
             ...data,
             price: input,
-        });
-    };
-
-    const addInfoChange = (input) => {
-        setData({
-            ...data,
-            addInfo: input,
         });
     };
 
@@ -194,7 +182,6 @@ const NewListingScreen = (props) => {
         }
     };
 
-
     const [cats, updateCats] = React.useState({
         food: {
             icon: "shoppingcart",
@@ -217,54 +204,38 @@ const NewListingScreen = (props) => {
         },
     });
 
-
     const submitListing = () => {
 
-        //check if any required info is missing
         if (data.title === '' || data.category === '' || data.price === -1 || isEmpty(data.location) || data.description === '') {
             alert('Sorry all required fields need to be filled. ');
-
-        } else { //if not, submit
+        } else {
             const list = JSON.stringify(data);
-
             databaseSubmission(list);
             navigation.navigate("PostedAnimationScreen", {username: global.username});
         }
-
-
     };
 
     const databaseSubmission = (list) => {
-
         let date = new Date();
-
         let submission = {
             user: global.username,
             time: date,
             listing: list
         };
 
-        console.log("printing here")
-        console.log(data)
-        console.log(JSON.stringify(submission));
-        // listingsApi.addListing(submission).then(() => alert('Your listing has been created!'));
         listingsApi.addListing(submission).then( r=> {
-
         });
-
-
     };
 
     const goBack = () => {
         const msg = "Are you sure you want to go back?\nAll your progress will be lost.";
         Alert.alert("Exit", msg,
             [{  text: 'Cancel',
-                onPress: () => console.log('shantay, you stay'),
+                onPress: () => {},
                 style: 'cancel',
             }, {
                 text: 'OK',
-                onPress: () =>{ console.log('sashay, away')
-
+                onPress: () =>{
                     navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} )
                 }
             }],
@@ -272,8 +243,6 @@ const NewListingScreen = (props) => {
         );
 
     };
-
-
 
     useEffect(() => {
         (async () => {
@@ -296,8 +265,6 @@ const NewListingScreen = (props) => {
         };
         let result = await ImagePicker.launchImageLibraryAsync(options);
 
-        console.log(result);
-
         if (!result.cancelled) {
             const b64 = 'data:image/png;base64,'+result.base64;
             addFilePath(b64);
@@ -313,12 +280,9 @@ const NewListingScreen = (props) => {
                 privateDirectory: true,
             },
             base64: true,
-
         };
 
         let result = await ImagePicker.launchCameraAsync(options);
-
-        console.log(result);
 
         if (!result.cancelled) {
             const b64 = 'data:image/png;base64,'+result.base64;
@@ -326,7 +290,6 @@ const NewListingScreen = (props) => {
 
         }
     };
-
 
     const addFilePath = (u) => {
         if (isEmpty(data.photo1)) {
@@ -354,7 +317,6 @@ const NewListingScreen = (props) => {
     const isEmpty = (obj) => {
         return Object.keys(obj).length === 0;
     };
-
 
     const chooseCategory = (cat) => {
         for (let c in categories) {
@@ -436,15 +398,12 @@ const NewListingScreen = (props) => {
                 <PriceSelection text={'£££'} color={data.price == 3 ? ColourPalette.yellow : ColourPalette.darkBlue} el={5} onPress={() => priceChange("3")}/>
             </View>
 
-
-
             <Text style={styles.subtitle}>Pictures</Text>
             <View style={styles.camera}>
                 <ImageChooser title={imgChooser.capture.description} icon={imgChooser.capture.icon} action={imgChooser.capture.hand}/>
                 <ImageChooser title={imgChooser.upload.description} icon={imgChooser.upload.icon} action={imgChooser.upload.hand} />
             </View>
             {getPhotos()}
-
 
             <Text style={styles.subtitle}>Location <Text style={styles.star}>*</Text></Text>
 
@@ -456,9 +415,6 @@ const NewListingScreen = (props) => {
                 </View>}
             </View>
 
-            {/*<InputField placeholder="Additional information (e.g. apt number)" onChangeText={text => addInfoChange(text)}/>*/}
-
-
             <View style={styles.bottomSection}>
                 <Button title="Create" onPress={submitListing} />
             </View>
@@ -466,9 +422,6 @@ const NewListingScreen = (props) => {
         </Screen>
     );
 };
-
-
-
 
 const styles = StyleSheet.create({
     title: {
@@ -565,6 +518,5 @@ const styles = StyleSheet.create({
 
     }
 });
-
 
 export default NewListingScreen;

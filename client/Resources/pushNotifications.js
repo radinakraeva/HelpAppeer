@@ -19,7 +19,6 @@ const registerForPushNotificationsAsync = async () => {
         console.log(token);
     } else {
         console.log("Must use physical device for push notifications")
-        // alert('Must use physical device for Push Notifications');
     }
 
     if (Platform.OS === 'android') {
@@ -30,7 +29,6 @@ const registerForPushNotificationsAsync = async () => {
             lightColor: '#FF231F7C',
         });
     }
-
     return token;
 };
 
@@ -54,8 +52,5 @@ const sendPushNotification = async (expoPushToken, listingTitle) => {
         body: JSON.stringify(message),
     });
 }
-
-
-
 
 export default { registerForPushNotificationsAsync, sendPushNotification }

@@ -1,15 +1,12 @@
-import React, { useRef } from 'react';
-import {Animated, View, StyleSheet, Button, Image, SafeAreaView, Dimensions} from 'react-native';
+import React, {useRef} from 'react';
+import {Animated, Dimensions, Image, SafeAreaView, StyleSheet, View} from 'react-native';
 import ColourPalette from '../Resources/ColourPalette';
-
 import {useNavigation} from '@react-navigation/native';
 import 'react-native-gesture-handler';
-
 
 const AnimationScreen  = () => {
 
     const navigation = useNavigation();
-
     const fadeAnim1 = useRef(new Animated.Value(0)).current;
     const fadeAnim2 = useRef(new Animated.Value(0)).current;
     const fadeAnim3 = useRef(new Animated.Value(0)).current;

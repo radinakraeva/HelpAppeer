@@ -1,11 +1,8 @@
-import React, { useState} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity, TouchableWithoutFeedback} from 'react-native';
+import React, {useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
 import CircleImage from './CircleImage';
-import Icon from 'react-native-vector-icons/EvilIcons';
-
 import ColourPalette from '../Resources/ColourPalette';
 import {useNavigation} from "@react-navigation/native";
-import {NavigationInjectedProps, withNavigation} from 'react-navigation';
 import listingsApi from '../api/listingsApi';
 
 function ProfileListing({listing_id, title, category, image, profilePicture, priceCategory, creator, user, refreshFunc}){
@@ -23,9 +20,7 @@ function ProfileListing({listing_id, title, category, image, profilePicture, pri
             console.log(user);
 
             refreshFunc()
-            // navigation.navigate('ProfileScreen', {user: user})
             listingsApi.removeSpecificListings({listID: listing_id}).then(r => {
-                // navigation.navigate('ProfileScreen', {user: user})
                 refreshFunc()
             });
             refreshFunc()

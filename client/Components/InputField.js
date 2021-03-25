@@ -1,10 +1,6 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
-
-import Icon from 'react-native-vector-icons/AntDesign';
+import {StyleSheet, TextInput, View} from 'react-native';
 import ColourPalette from '../Resources/ColourPalette';
-import CircleIcon from './CircleIcon';
-
 
 const InputField = ({ size=50, onChange, ...otherProps}) => {
 
@@ -12,9 +8,7 @@ const InputField = ({ size=50, onChange, ...otherProps}) => {
         <View style={{...styles.container, height: size}}>
             <TextInput multiline={true} styles={styles.textInput} onChangeText={onChange} {...otherProps}/>
         </View>
-
     );
-
 };
 
 const styles = StyleSheet.create({
@@ -26,9 +20,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         alignItems: "baseline",
-        // marginTop: 15,
-        // paddingTop: 5,
-        // overflow: 'scroll',
     },
     textInput: {
         fontSize: 25,
@@ -36,7 +27,6 @@ const styles = StyleSheet.create({
         color: ColourPalette.darkBlue,
         alignItems: 'center',
     },
-
 });
 
 export default InputField;

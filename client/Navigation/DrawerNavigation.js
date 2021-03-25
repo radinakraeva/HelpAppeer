@@ -2,10 +2,8 @@ import React from 'react';
 import FeedScreen from '../Screens/FeedScreen';
 import ProfileScreen from '../Screens/ProfileScreen';
 
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import ColourPalette from '../Resources/ColourPalette';
-import LoginScreen from '../Screens/LoginScreen';
 import CardPaymentScreen from '../Screens/CardPaymentScreen';
 import ByeScreen from '../Screens/ByeScreen';
 import ChatListScreen from '../Screens/ChatListScreen';
@@ -19,7 +17,6 @@ const DrawerNavigation = () => {
                               drawerStyle={{width: '55%',
                                             backgroundColor: ColourPalette.darkBlue,
                                             paddingTop: '10%',
-
                               }}
                               drawerContentOptions={{
                                   activeTintColor: ColourPalette.darkBlue,
@@ -32,7 +29,6 @@ const DrawerNavigation = () => {
                                       padding: 2.5,
                                       fontSize: 17.5,
                                   }}}
-
             >
                 <Drawer.Screen name="Feed" component={FeedScreen} initialParams={{username: "as"}} />
                 <Drawer.Screen name="Profile" component={ProfileScreen} initialParams={{username: "as"}} />
@@ -42,7 +38,5 @@ const DrawerNavigation = () => {
             </Drawer.Navigator>
     );
 }
-
-
 
 export default DrawerNavigation;

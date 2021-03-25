@@ -1,16 +1,13 @@
 import React, {useEffect} from 'react';
-import {SafeAreaView, View, TextInput, StyleSheet, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 
 import 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColourPalette from "../Resources/ColourPalette";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import usersApi from "../api/usersApi";
 import {useNavigation} from '@react-navigation/native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ImageChooser from '../Components/ImageChooser';
 import ImagePreview from '../Components/ImagePreview';
 import * as ImagePicker from 'expo-image-picker';
@@ -19,7 +16,6 @@ import Constants from 'expo-constants';
 
 const SignupScreen  = () => {
 
-    // eslint-disable-next-line no-undef
     const navigation = useNavigation();
 
     const [data, setData] = React.useState({
@@ -40,7 +36,6 @@ const SignupScreen  = () => {
         if (Constants.isDevice) {
             tokenChange()
         }
-
     },[])
 
     const nameChange = (input) => {
@@ -121,9 +116,7 @@ const SignupScreen  = () => {
                 token: data.token,
                 picture: JSON.stringify(data.pic),
             }
-            // console.log(submission);
             usersApi.verify(data).then(r => {
-                // console.log("here " + r.data);
                 if (r.data === 'NO USER') {
                     usersApi.addUser(submission).then(() => alert('Added new user'));
                     navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: data.username}} );
@@ -151,7 +144,6 @@ const SignupScreen  = () => {
             <View style={styles.uploadedImages}>
                 {!isEmpty(data.pic) ? <ImagePreview filePath={data.pic}/> : null}
             </View>
-
         );
     };
 
@@ -168,9 +160,6 @@ const SignupScreen  = () => {
 
         };
         let result = await ImagePicker.launchImageLibraryAsync(options);
-
-        // console.log(result);
-
         if (!result.cancelled) {
             const b64 = 'data:image/png;base64,'+result.base64;
             addFilePath(b64);
@@ -184,7 +173,6 @@ const SignupScreen  = () => {
             alert("You Can Only Have 1 Profile Picture");
         }
     };
-
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -248,7 +236,6 @@ const SignupScreen  = () => {
 
         </SafeAreaView>
         </ScrollView>
-
     );
 
 };
@@ -322,4 +309,5 @@ const styles = StyleSheet.create({
     },
 
 });
-    export default SignupScreen;
+
+export default SignupScreen;

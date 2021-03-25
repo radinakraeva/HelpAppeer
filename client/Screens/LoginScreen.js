@@ -1,23 +1,17 @@
 import React from 'react';
-import {SafeAreaView,View,Image,TextInput,StyleSheet,Dimensions,Text,TouchableOpacity} from 'react-native';
-
+import {Dimensions, Image, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import 'react-native-gesture-handler';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ColourPalette from "../Resources/ColourPalette";
-
 import {useNavigation} from '@react-navigation/native';
 import usersApi from "../api/usersApi";
-import msgAPI from '../api/msgAPI';
 import pushNotifications from '../Resources/pushNotifications';
-// import AuthNavigator from "../Navigation/AuthNavigator";
 import Constants from 'expo-constants';
 
 
 const LoginScreen  = () => {
-    // eslint-disable-next-line no-undef
     const navigation = useNavigation();
-
 
     const [data, setData] = React.useState({
         password: '',
@@ -59,7 +53,6 @@ const LoginScreen  = () => {
             alert('Sorry All Fields Need To Be Filled. Please Try Again');
         } else {
             usersApi.verifyUser(data).then(r => {
-                console.log(r.data);
                 if(r.data === 'NO USER'){
                     alert('User with this username does not exist, please try again or register a new account');
                 }else if(r.data === 'AUTHORIZED'){
@@ -83,13 +76,9 @@ const LoginScreen  = () => {
                 }else if(r.data === 'INCORRECT'){
                     alert('Password is incorrect, please try again');
                 }
-                console.log('got respo New');
             });
-
-
         }
     };
-
 
     return (
 
@@ -185,8 +174,6 @@ const styles = StyleSheet.create({
         borderColor: ColourPalette.yellow,
         backgroundColor: ColourPalette.yellow,
     },
-
-
 });
 
 export default LoginScreen;

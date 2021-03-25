@@ -30,8 +30,6 @@ const getAListingWithPhoto = (listingID) => {
     return client.post("/getListingWithProfilePicture", {listingID: listingID})
 }
 
-
-
 export default { addListing, getListings, getListing, getSpecificListings, removeSpecificListings, getUser, getAListingWithPhoto }
 
 

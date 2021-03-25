@@ -1,18 +1,14 @@
-/* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, BackHandler} from 'react-native';
+import {BackHandler, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import Feed from '../Components/Feed';
-
 import ColourPalette from '../Resources/ColourPalette';
-import CircleIcon from '../Components/CircleIcon';
 import Button from '../Components/Button';
-import listingsApi from "../api/listingsApi";
 import {useNavigation} from '@react-navigation/native';
 import IconButton from '../Components/IconButton';
 import PriceSelection from '../Components/PriceSelection';
 
 
-export default function FeedScreen(props){
+export default function FeedScreen(){
 
     console.log('FROM GLOBAL' + global.username);
 
@@ -44,11 +40,6 @@ export default function FeedScreen(props){
 
         return (
             <View style={styles.filterMenu}>
-                {/*<Text style={styles.filterMenuTitle}>Sort by</Text>*/}
-                {/*<View style={styles.sortBy}>*/}
-                {/*    <PriceSelection text={'time'} color={filterMenu.sorting === 'time' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'time'})}/>*/}
-                {/*    <PriceSelection text={'distance'} color={filterMenu.sorting === 'distance' ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => toggleFilterMenu({...filterMenu, sorting: 'distance'})}/>*/}
-                {/*</View>*/}
                 <Text style={styles.filterMenuTitle}>Filter</Text>
                 <View style={styles.sortBy}>
                     <PriceSelection text={'£'} color={filterMenu.prices1 ? ColourPalette.yellow : ColourPalette.darkBlue} onPress={() => changePrices1()}/>
@@ -102,8 +93,6 @@ export default function FeedScreen(props){
         filterMenu.bills ? toggleFilterMenu({...filterMenu, bills: false}) : toggleFilterMenu({...filterMenu, bills: true});
     };
 
-//hello
-
     return (
         <SafeAreaView style = {styles.feedScreen} >
             <View style = {styles.topSection}>
@@ -111,16 +100,13 @@ export default function FeedScreen(props){
                     <IconButton iconName='bars' iconBgColor={ColourPalette.darkBlue} onPress={openSideMenu} size={50}/>
                 </View>
                 <View style = {styles.topLeftSection}>
-
                     <Text style = {styles.text}>Find a listing in</Text>
                     <Text style = {styles.locationText}>Glasgow</Text>
                 </View>
-
             </View>
 
             <Feed style = {styles.feed} filterCats={{food: filterMenu.food, medicine: filterMenu.medicine, bills: filterMenu.bills, general: filterMenu.general}} filter={[filterMenu.prices1,filterMenu.prices2,filterMenu.prices3]} username ={global.username}/>
             {filterMenu.visible ? showFilterMenu() : null}
-
             <View style = {styles.bottomSection}>
                 <View style={{marginHorizontal: 70}}>
                     <IconButton iconName='filter' iconBgColor = {filterMenu.visible ? ColourPalette.yellow : ColourPalette.darkBlue} size ={45} onPress={()=>changeMenu()} />
@@ -131,10 +117,7 @@ export default function FeedScreen(props){
                 </View>
             </View>
         </SafeAreaView>
-
     );
-
-
 }
 
 const styles = StyleSheet.create({

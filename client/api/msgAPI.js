@@ -1,7 +1,4 @@
 import client from './client'
-import {shouldThrowAnErrorOutsideOfExpo} from 'expo/build/environment/validatorState';
-
-const endpoint = '/messages';
 
 const getOpenConvos= (username) => {
     console.log('Gonna get open convos');
@@ -22,7 +19,6 @@ const sendMessage = (listing_id, send_user, reci_user, msg_contents, time_sent) 
         msg_contents: msg_contents,
         time_sent: time_sent});
 }
-
 
 const getConvoNames = () => {
     console.log('Getting convo names');

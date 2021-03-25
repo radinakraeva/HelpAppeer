@@ -1,7 +1,5 @@
 import client from './client'
 
-const endpoint = '/users';
-
 const verifyUser = (userInfo) => {
     return client.post("/verify", userInfo);
 }

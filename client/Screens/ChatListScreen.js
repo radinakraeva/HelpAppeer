@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, StyleSheet, FlatList} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import msgAPI from '../api/msgAPI';
 import ColourPalette from '../Resources/ColourPalette';
 import ChatSelector from '../Components/ChatSelector';
-import usersApi from '../api/usersApi';
 import IconButton from '../Components/IconButton';
 import {useNavigation} from "@react-navigation/native";
 
-export default function ChatListScreen(props){
+export default function ChatListScreen(){
 
     const [openConvos, setOpenConvos] = useState([]);
     const [convoNames, setConvoNames] = useState([]);
@@ -26,8 +25,6 @@ export default function ChatListScreen(props){
         }
     }, [])
 
-
-
     const loadOpenConvos = async () => {
         const x = await msgAPI.getOpenConvos(global.username);
         setOpenConvos(x.data);
@@ -38,8 +35,6 @@ export default function ChatListScreen(props){
         setConvoNames(names.data);
 
     }
-
-
 
     function timeDifference(date) {
         let date2 = new Date();
@@ -56,10 +51,6 @@ export default function ChatListScreen(props){
         return "Just now";
     }
 
-    const goBack = () => {
-        navigation.navigate("DrawerNavigation", {screen: "Feed"} );
-
-    };
 
     const getChatSelector =  (convo) => {
         convo = convo["item"];
@@ -132,8 +123,6 @@ export default function ChatListScreen(props){
             {chatList()}
         </SafeAreaView>
     );
-
-
 }
 
 const styles = StyleSheet.create({

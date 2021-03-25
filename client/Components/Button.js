@@ -3,7 +3,7 @@ import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 import ColourPalette from '../Resources/ColourPalette';
 
-export default function Button({title, onPress, width, borderRadius}){
+export default function Button({title, onPress}){
     return (
         <TouchableOpacity style = {styles.button} onPress = {onPress}>
                 <Text style = {styles.text} >{title}</Text>

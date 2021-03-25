@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 
 import Icon from 'react-native-vector-icons/AntDesign';
 import ColourPalette from '../Resources/ColourPalette';
@@ -15,17 +14,3 @@ export default function IconButton({iconName, onPress, iconBgColor, size = 40}){
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    general: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        overflow: 'hidden',
-    },
-    notPressed: {
-        backgroundColor: ColourPalette.grey,
-    },
-    pressed: {
-        backgroundColor: ColourPalette.yellow,
-    },
-});

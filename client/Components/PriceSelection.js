@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View,Text} from 'react-native'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import ColourPalette from '../Resources/ColourPalette';
 
 export default function PriceSelection({text, color, onPress, el=0}) {
@@ -9,10 +9,8 @@ export default function PriceSelection({text, color, onPress, el=0}) {
                 <Text style={{...styles.pound, color: color === ColourPalette.darkBlue ? ColourPalette.yellow : ColourPalette.darkBlue}} >{text}</Text>
             </TouchableOpacity>
         </View>
-
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -21,12 +19,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5,
         borderRadius: 25,
-
-
     },
     pound: {
         fontSize: 25,
         paddingHorizontal: 10,
-        // color: ColourPalette.grey,
     },
 });

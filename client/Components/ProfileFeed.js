@@ -1,21 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {Text, ScrollView,  View, FlatList} from 'react-native';
+import {FlatList} from 'react-native';
 import ProfileListing from './ProfileListing';
 import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
-import { getDistanceBetween } from 'geolocation-distance-between';
-import Listing from './Listing';
 
-export default function ProfileFeed({sort, filter, ...props}){
+export default function ProfileFeed({sort, filter}){
 
-    const listingsArray = []
     const [listings, setListings] = useState([]);
-
 
     const [location, setLocation] = React.useState({
         location: {},
     });
-
 
     const[refreshing, setRefreshing] = useState(false);
 
@@ -24,15 +19,9 @@ export default function ProfileFeed({sort, filter, ...props}){
         getLocation();
     }, []);
 
-
-
     const loadListings = async() => {
-        // console.log("gonna get listings")
         await listingsApi.getSpecificListings({userN: global.username}).then( r => {
             setListings(r.data);
-            // console.log(listings)
-            // console.log("hello")
-
         });
     }
 
@@ -62,19 +51,11 @@ export default function ProfileFeed({sort, filter, ...props}){
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            // profilePicture={require('../Resources/Images/Michael.jpg')}
             profilePicture={item.profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : item.profilePic}
             priceCategory={item.priceCategory}
             user = {global.username}
             creator={global.username}
             refreshFunc ={loadListings}
-
-            /*listing_id = {item.listing_id}
-            title={item.title}
-            category={item.category}
-            image = {getImage(item.category)}
-            profilePicture={require('../Resources/Images/Alina.jpg')}
-            priceCategory={item.priceCategory}*/
         />
     );
 

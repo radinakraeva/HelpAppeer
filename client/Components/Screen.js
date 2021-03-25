@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Platform, StatusBar, ScrollView} from 'react-native';
-
+import {SafeAreaView, ScrollView, StyleSheet} from 'react-native';
 
 const Screen = ({children}) => {
     return (

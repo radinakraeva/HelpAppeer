@@ -1,12 +1,9 @@
-import React, {useState} from 'react';
-import {StyleSheet, SafeAreaView, PermissionsAndroid, TouchableOpacity,View, Text, Image} from 'react-native';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import Button from '../Components/Button';
+import React from 'react';
+import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import CircleIcon from './CircleIcon';
 import ColourPalette from '../Resources/ColourPalette';
 
 export default function ImageChooser({title, icon, action}) {
-
 
     return (
         <SafeAreaView style={styles.container}>
@@ -48,9 +45,5 @@ const styles = StyleSheet.create({
         color: ColourPalette.darkBlue,
         fontFamily: 'Roboto',
     },
-
-
-
-
 
 });

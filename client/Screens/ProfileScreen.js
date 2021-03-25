@@ -1,25 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View, TextInput, StyleSheet, TouchableOpacity, Text,} from 'react-native';
-
+import React, {useEffect} from 'react';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import CircleImage from '../Components/CircleImage';
 import ColourPalette from '../Resources/ColourPalette';
-
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import ProfileFeed from '../Components/ProfileFeed';
 import usersApi from '../api/usersApi';
-import Feed from '../Components/Feed';
 import IconButton from '../Components/IconButton';
 import {useNavigation} from '@react-navigation/native';
 
-const ProfileScreen = (props) => {
+const ProfileScreen = () => {
 
     const navigation = useNavigation();
-
     const userN = global.username;
-    console.log("userN is "+userN);
 
     const [userData, setUserData] = React.useState({
         name:  '',
@@ -36,13 +27,10 @@ const ProfileScreen = (props) => {
         pic: {},
     });
 
-
     useEffect(() => getData(), []);
-
 
     const getData = () => {
         usersApi.getUser({userN: userN}).then( r => {
-            console.log("r.data is " + r.data);
 
             if (r.data != null) {
                 const data = r.data[0];
@@ -67,29 +55,17 @@ const ProfileScreen = (props) => {
             }
         });
                 usersApi.getProfileImage({userN: userN}).then(t => {
-                    console.log("t.data is for image is " + t.data);
 
                     if (t.data != null) {
                         const dataT = t.data[0];
-                        console.log("pic dataT" + dataT);
                         const p = JSON.parse(dataT.Picture);
-                        console.log("p is " + p);
 
                         setPicData({
                             pic: {p},
                         });
-
                     }
                 });
         }
-
-    const message = () => {
-        alert('Sorry This Profile Is Fixed For Testing');
-    };
-
-    const goBack = () => {
-        navigation.navigate("DrawerNavigation", {screen: "Feed"} );
-    };
 
     const openSideMenu = () => {
         navigation.openDrawer();
@@ -99,15 +75,6 @@ const ProfileScreen = (props) => {
         let name = userData.name
         const croppedName = name.slice(0,11) + "..."
         return croppedName
-        // for (let index in name){
-        //     if(convoNames[index].listing_id == id){
-        //         if (convoNames[index].listingName.length >= 25){
-        //             return convoNames[index].listingName.slice(0,24) + "...";
-        //         }
-        //         return convoNames[index].listingName;
-        //     }
-        // }
-        // return null
     }
 
     return (
@@ -128,22 +95,13 @@ const ProfileScreen = (props) => {
                     </View>
                 </View>
 
-            {/*<View style={styles.cent}>*/}
-            {/*    <MaterialCommunityIcons name='email' size={30} style={{color:ColourPalette.yellow}}/>*/}
-            {/*    <Text style={styles.fields}>{userData.email}</Text>*/}
-            {/*</View>*/}
             <View style={styles.bord}>
-                {/*<TouchableOpacity style={styles.alin} onPress={message}>*/}
-                {/*    <Text style={{fontSize: 20, paddingTop:5,paddingBottom:3, color:'gray' }}>Edit profile</Text>*/}
-                {/*</TouchableOpacity>*/}
             </View>
             <View style={{marginTop:1, borderBottomWidth: 3, borderColor:ColourPalette.yellow,alignItems: 'center', marginBottom: 10}}>
                 <Text style={{fontSize: 25, paddingTop: 7, paddingBottom: 7,color: ColourPalette.yellow,
                     fontWeight: 'bold',}} >Your Current Postings</Text>
             </View>
-
             <ProfileFeed style = {styles.feed} />
-
         </SafeAreaView>
 
     );

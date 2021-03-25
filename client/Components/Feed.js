@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Text, ScrollView,  View, FlatList, BackHandler} from 'react-native';
+import {FlatList} from 'react-native';
 import Listing from './Listing';
 import listingsApi from "../api/listingsApi";
 import * as Location from "expo-location";
-import { getDistanceBetween } from 'geolocation-distance-between';
-import usersApi from "../api/usersApi";
+import {getDistanceBetween} from 'geolocation-distance-between';
 
 export default function Feed({ filter, filterCats, ...props}){
 
@@ -44,7 +43,6 @@ export default function Feed({ filter, filterCats, ...props}){
         }
            };
 
-
     const loadListings = async() => {
          await listingsApi.getListings().then(r => {
              setListings(r.data);
@@ -52,7 +50,6 @@ export default function Feed({ filter, filterCats, ...props}){
          })
 
     }
-
 
     const getLocation = async () => {
         const {granted} = await Location.requestPermissionsAsync();
@@ -70,9 +67,7 @@ export default function Feed({ filter, filterCats, ...props}){
     function distance(lat1, lng1, lat2, lng2) { // miles optional
         let coordinateOne = {latitude: lat1, longitude: lng1};
         let coordinateTwo = {latitude: lat2, longitude: lng2};
-
         let distanceBetween = getDistanceBetween(coordinateOne, coordinateTwo);
-
         return distanceBetween.toFixed(1);
     }
 
@@ -94,7 +89,6 @@ export default function Feed({ filter, filterCats, ...props}){
             title={item.title}
             category={item.category}
             image = {getImage(item.category)}
-            // profilePicture={require('../Resources/Images/Michael.jpg')}
             profilePicture={item.profilePic == null ? require('../Resources/Images/defaultProfile.jpg') : item.profilePic}
             timeSincePosting={timeDifference(item.timeStamp, Date.now())}
             priceCategory={item.priceCategory}

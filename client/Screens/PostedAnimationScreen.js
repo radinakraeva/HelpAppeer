@@ -1,20 +1,15 @@
-import React, { useRef } from 'react';
-import {Animated, View, StyleSheet, Button, Image, SafeAreaView, Dimensions} from 'react-native';
+import React from 'react';
+import {Dimensions, Image, SafeAreaView, StyleSheet, View} from 'react-native';
 import ColourPalette from '../Resources/ColourPalette';
-
 import {useNavigation} from '@react-navigation/native';
 import 'react-native-gesture-handler';
 
-
-const PostedAnimationScreen  = (props) => {
+const PostedAnimationScreen  = () => {
 
     const navigation = useNavigation();
 
     const navCheck = () => {
-        // navigation.navigate("FeedScreen2", {username: global.username});
         navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: global.username}} );
-
-
     };
 
     const finalT = () => {
@@ -33,7 +28,6 @@ const PostedAnimationScreen  = (props) => {
                 }} onLoad={finalT}/>
             </View>
         </SafeAreaView>
-
     );
 }
 

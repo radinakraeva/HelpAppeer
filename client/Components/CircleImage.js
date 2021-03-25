@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, Image} from 'react-native';
-import usersApi from "../api/usersApi";
+import {Image, View} from 'react-native';
 
 export default function CircleImage({size = 40, backGroundColor = '#000', image, margin = 10}){
 
