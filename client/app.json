@@ -1,9 +1,10 @@
 {
   "expo": {
-    "name": "client",
-    "slug": "client",
+    "name": "helpAppeer",
+    "slug": "helpAppeer",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./Resources/Images/AppLogo.png",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
