@@ -37,7 +37,6 @@ const LoginScreen  = () => {
             ...data,
             username: input,
         });
-        global.username = input
     };
 
     const update = () => {
@@ -74,8 +73,12 @@ const LoginScreen  = () => {
                             }
                         })
                     }
+                    global.username = data.username
 
-                    navigation.navigate("DrawerNavigation", {screen: "Feed", params: {username: data.username}, });
+                    usernameChange("")
+                    passwordChange("")
+
+                    navigation.navigate("DrawerNavigation", {screen: "Feed" });
 
                 }else if(r.data === 'INCORRECT'){
                     alert('Password is incorrect, please try again');
@@ -93,12 +96,12 @@ const LoginScreen  = () => {
         <SafeAreaView style={styles.backing}>
             <Image style={styles.pic} source={require('../Resources/Images/LogIn.png')}/>
             <View style={styles.input} >
-                <TextInput style={styles.textInput} placeholder="Username" onChangeText={(input)=> usernameChange(input)}/>
+                <TextInput value={data.username} style={styles.textInput} placeholder="Username" onChangeText={(input)=> usernameChange(input)}/>
                 <FontAwesome5 style={styles.icon} name="user-circle" size={30}/>
             </View>
 
             <View style={styles.input}>
-                <TextInput style={styles.textInput} placeholder="Password" secureTextEntry={data.secureTextEntry} onChangeText={(input)=> passwordChange(input)}/>
+                <TextInput value={data.password} style={styles.textInput} placeholder="Password" secureTextEntry={data.secureTextEntry} onChangeText={(input)=> passwordChange(input)}/>
                 <TouchableOpacity onPress={update}>
                     {data.secureTextEntry ?
                         <Feather style={styles.icon2} name="eye-off" size={30}/>
