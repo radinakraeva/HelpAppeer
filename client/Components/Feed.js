@@ -51,7 +51,6 @@ export default function Feed({ filter, filterCats, ...props}){
              setAllListings(r.data);
          })
 
-
     }
 
 

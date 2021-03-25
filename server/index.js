@@ -227,7 +227,7 @@ app.post('/getSpecificListing',(req, res) => {
                 res.send(null);
             } else if (result) {
                 if(result[0]){
-                    console.log(result);
+                    // console.log(result);
                     res.send(renderToListingsList(result));
                 }
 
@@ -261,7 +261,7 @@ app.post('/getProfilePhoto', (req, res) => {
             } else if (result) {
                 if(result[0]){
                     console.log("database result")
-                    console.log(result);
+                    // console.log(result);
                     res.send(result);
                 }
 
@@ -281,7 +281,7 @@ app.post('/getListings', (req, res) => {
             if (error) {
                 console.log(error);
             } else if (result) {
-                console.log("RESULT IS "+result)
+                // console.log("RESULT IS "+result)
                 // console.log(renderToListingsList(result));
                 res.send(renderToListingsList(result));
             }

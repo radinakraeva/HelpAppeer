@@ -20,7 +20,7 @@ const ByeScreen  = () => {
     // const fadeAnim3 = useRef(new Animated.Value(0)).current;
 
     const navCheck = () => {
-        navigation.navigate("LoginScreen2");
+        navigation.navigate("LoginScreen");
     };
 
     const finalT = () => {

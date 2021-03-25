@@ -111,10 +111,12 @@ export default function ChatScreen(props){
         messagesList.current.scrollToEnd();
 
         //send notif to receiver
-        // const rec = msgAPI.getReceiver(receiver);
-        // if (rec != '') {
-        //     sendPushNotification(rec).then(()=>console.log("notif sent!"), ()=>console.log("notif failed"));
-        // }
+        sendNotif()
+
+        setTimeout(loadMessages, 300);
+    }
+
+    const sendNotif = () => {
         usersApi.getNotifToken(receiver).then(r=> {
             if (r.data != null) {
                 const token = r.data[0];
@@ -125,8 +127,6 @@ export default function ChatScreen(props){
 
             }
         })
-
-        setTimeout(loadMessages, 300);
     }
 
     const updateNewMessage = (input) =>{
@@ -135,7 +135,7 @@ export default function ChatScreen(props){
 
     const goBack = () => {
         pageOpen = false;
-        navigation.navigate('ChatListScreen', {username: username})
+        navigation.navigate('DrawerNavigation', {screen: "Messages"})
     };
 
     function timeDifference(date){
@@ -171,6 +171,7 @@ export default function ChatScreen(props){
         msgAPI.sendMessage(listing_id,username,receiver,
             "Hi! I have accepted the listing you posted ( the name is above :) ) I'm on my way to pick it up now. If you have any questions, let me know, and I'll ask you if I have any questions. See you soon",
             formattedDate);
+        sendNotif()
         props.route.params.nowPending = false;
     }
 
