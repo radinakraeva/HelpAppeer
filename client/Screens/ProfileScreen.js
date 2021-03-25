@@ -71,13 +71,6 @@ const ProfileScreen = () => {
         navigation.openDrawer();
     };
 
-    const cropUsername = () =>{
-        let name = userData.name
-        if (name.length>=12) {
-             return name.slice(0,11) + "..."
-        }
-        return name
-    }
 
     return (
         <SafeAreaView style={styles.backing} >
@@ -87,7 +80,7 @@ const ProfileScreen = () => {
                     </View>
                     <View style={styles.profilePart}>
                         <View>
-                            <Text style={styles.writing}>{cropUsername()}</Text>
+                            <Text style={styles.writing}>{userData.name}</Text>
                             <Text style={styles.user}>{userData.username}</Text>
                         </View>
                         <View style={{width: 100}}>
